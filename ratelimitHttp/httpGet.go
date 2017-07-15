@@ -41,7 +41,7 @@ func main() {
 
 		seed := Seed(min, max)
 
-		time.Sleep(4 * time.Millisecond)
+		time.Sleep(5 * time.Millisecond)
 
 		// fmt.Println("")
 		// fmt.Println("::::: http get:::::")
@@ -68,7 +68,14 @@ func main() {
 
 			json.Unmarshal([]byte(string(contents)), &login)
 
-			fmt.Println(login.Msg)
+			if login.Msg != "" {
+
+				fmt.Println(login.Msg)
+				login.Msg = ""
+
+			} else {
+				fmt.Println(string(contents))
+			}
 		}
 	}
 }

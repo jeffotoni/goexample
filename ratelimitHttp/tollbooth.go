@@ -30,16 +30,30 @@ func main() {
 
 	port := "12345"
 
-	// Create a request limiter per handler.
-	http.Handle("/", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(900, time.Millisecond), Hello))
+	limiter := tollbooth.NewLimiter(1, time.Second)
+
+	limiter = tollbooth.NewLimiterExpiringBuckets(1, time.Second, time.Hour, 0)
+
+	limiter.IPLookups = []string{"RemoteAddr", "X-Forwarded-For", "X-Real-IP"}
+
+	limiter.Methods = []string{"GET", "POST"}
+
+	// limiter.Headers = make(map[string][]string)
+	// limiter.Headers["X-Access-Token"] = []string{"abc123", "xyz098"}
 
 	// Create a request limiter per handler.
+	//http.Handle("/", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(900, time.Millisecond), Hello))
+
+	// Create a request limiter per handler.
+	/// tollbooth.LimitFuncHandler(tollbooth.NewLimiter(2, time.Second), Login)
 	http.Handle("/login", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(2, time.Second), Login))
 
 	fmt.Println("Start port:", port)
 	fmt.Println("Endpoints:")
 	fmt.Println("http://localhost:" + port + "/")
 	fmt.Println("http://localhost:" + port + "/login")
+	fmt.Println("Max bytes:", 1<<20, "bytes")
+	//fmt.Println(limiter)
 
 	s := &http.Server{
 
