@@ -28,12 +28,12 @@ func main() {
 	vetUrl := make(map[int]string)
 
 	//vetUrl[0] = "http://localhost:12345/"
-	//vetUrl[1] = "http://localhost:12345"
-	vetUrl[0] = "http://localhost:12345/login"
-	vetUrl[1] = "http://localhost:12345/login"
+	vetUrl[0] = "http://localhost:12345"
+	vetUrl[1] = "http://localhost:12345/ping"
+	vetUrl[2] = "http://localhost:12345/login"
 
 	min := 0
-	max := 2
+	max := 3
 
 	var login = &Login{}
 
@@ -41,7 +41,7 @@ func main() {
 
 		seed := Seed(min, max)
 
-		time.Sleep(5 * time.Millisecond)
+		time.Sleep(10 * time.Millisecond)
 
 		// fmt.Println("")
 		// fmt.Println("::::: http get:::::")

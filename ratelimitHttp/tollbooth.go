@@ -45,7 +45,6 @@ func main() {
 	//http.Handle("/", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(900, time.Millisecond), Hello))
 
 	// Create a request limiter per handler.
-	/// tollbooth.LimitFuncHandler(tollbooth.NewLimiter(2, time.Second), Login)
 	http.Handle("/login", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(2, time.Second), Login))
 
 	fmt.Println("Start port:", port)
