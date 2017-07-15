@@ -13,6 +13,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	// "io"
+	"math/rand"
 	"net/http"
 	"os"
 	"time"
@@ -20,13 +21,26 @@ import (
 
 func main() {
 
-	url := "http://localhost:12345/"
+	vetUrl := make(map[int]string)
+
+	vetUrl[0] = "http://localhost:12345/"
+	vetUrl[1] = "http://localhost:12345"
+	vetUrl[2] = "http://localhost:12345/login"
+	vetUrl[3] = "http://localhost:12345/login/"
+
+	min := 0
+	max := 4
 
 	for {
 
+		seed := Seed(min, max)
+
 		time.Sleep(100 * time.Millisecond)
 
-		response, err := http.Get(url)
+		fmt.Println("")
+		fmt.Println("::::: http get:::::")
+		fmt.Println(vetUrl[seed])
+		response, err := http.Get(vetUrl[seed])
 
 		if err != nil {
 
@@ -49,4 +63,9 @@ func main() {
 			fmt.Println(string(contents))
 		}
 	}
+}
+
+func Seed(min int, max int) int {
+
+	return (min + rand.Intn(max-min))
 }
