@@ -14,7 +14,7 @@ import (
 	"io/ioutil"
 	// "io"
 	"net/http"
-	// "os"
+	"os"
 	"time"
 )
 
@@ -31,6 +31,7 @@ func main() {
 		if err != nil {
 
 			fmt.Println(err)
+			os.Exit(1)
 
 		} else {
 
