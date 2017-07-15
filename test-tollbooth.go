@@ -18,14 +18,14 @@ import (
 
 func Hello(w http.ResponseWriter, req *http.Request) {
 
-	w.Write([]byte("Hello, World!"))
+	w.Write([]byte("Hello, Jefferson !"))
 }
 
 func main() {
 
-	port := 12345
+	port := "12345"
 	// Create a request limiter per handler.
-	http.Handle("/", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(10, time.Second), Hello))
+	http.Handle("/", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(2, time.Second), Hello))
 
 	fmt.Println("Start port:", port)
 
