@@ -1,0 +1,17 @@
+#
+# @autor jeffotoni
+# @package config
+# @date 17/04/2017
+# This is a configuration config system
+# Lines database postgres config
+#
+
+[section]
+; config datadbase postgresql
+ping		= ok
+domain 		= localhost
+port 		= 5432
+database	= ukkobox # database name
+user		= ukkobox # database user
+password	= pass123 # password
+
