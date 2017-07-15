@@ -31,7 +31,7 @@ func main() {
 	port := "12345"
 
 	// Create a request limiter per handler.
-	http.Handle("/", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(2, time.Second), Hello))
+	http.Handle("/", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(900, time.Millisecond), Hello))
 
 	// Create a request limiter per handler.
 	http.Handle("/login", tollbooth.LimitFuncHandler(tollbooth.NewLimiter(2, time.Second), Login))
@@ -41,6 +41,15 @@ func main() {
 	fmt.Println("http://localhost:" + port + "/")
 	fmt.Println("http://localhost:" + port + "/login")
 
-	http.ListenAndServe(":"+port, nil)
+	s := &http.Server{
+
+		Addr: ":" + port,
+		// Handler:        myHandler,
+		ReadTimeout:    10 * time.Second,
+		WriteTimeout:   10 * time.Second,
+		MaxHeaderBytes: 1 << 20,
+	}
+
+	s.ListenAndServe()
 
 }

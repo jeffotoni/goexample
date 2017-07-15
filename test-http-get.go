@@ -25,21 +25,21 @@ func main() {
 
 	vetUrl[0] = "http://localhost:12345/"
 	vetUrl[1] = "http://localhost:12345"
-	vetUrl[2] = "http://localhost:12345/login"
-	vetUrl[3] = "http://localhost:12345/login/"
+	//vetUrl[2] = "http://localhost:12345/login"
+	//vetUrl[3] = "http://localhost:12345/login/"
 
 	min := 0
-	max := 4
+	max := 2
 
 	for {
 
 		seed := Seed(min, max)
 
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(4 * time.Millisecond)
 
-		fmt.Println("")
-		fmt.Println("::::: http get:::::")
-		fmt.Println(vetUrl[seed])
+		// fmt.Println("")
+		// fmt.Println("::::: http get:::::")
+		// fmt.Println(vetUrl[seed])
 		response, err := http.Get(vetUrl[seed])
 
 		if err != nil {
