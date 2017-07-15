@@ -18,12 +18,12 @@ import (
 
 func Hello(w http.ResponseWriter, req *http.Request) {
 
-	w.Write([]byte("Hello, Jefferson !"))
+	w.Write([]byte("Hello!!"))
 }
 
 func Login(w http.ResponseWriter, req *http.Request) {
 
-	w.Write([]byte(`{"valid":"login"}`))
+	w.Write([]byte(`{"msg":"ok"}`))
 }
 
 func main() {

@@ -10,26 +10,32 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	// "io"
 	"math/rand"
 	"net/http"
 	"os"
 	"time"
 )
 
+type Login struct {
+	Msg string `json:"msg"`
+}
+
 func main() {
 
 	vetUrl := make(map[int]string)
 
-	vetUrl[0] = "http://localhost:12345/"
-	vetUrl[1] = "http://localhost:12345"
-	//vetUrl[2] = "http://localhost:12345/login"
-	//vetUrl[3] = "http://localhost:12345/login/"
+	//vetUrl[0] = "http://localhost:12345/"
+	//vetUrl[1] = "http://localhost:12345"
+	vetUrl[0] = "http://localhost:12345/login"
+	vetUrl[1] = "http://localhost:12345/login"
 
 	min := 0
 	max := 2
+
+	var login = &Login{}
 
 	for {
 
@@ -60,7 +66,9 @@ func main() {
 				fmt.Println(err)
 			}
 
-			fmt.Println(string(contents))
+			json.Unmarshal([]byte(string(contents)), &login)
+
+			fmt.Println(login.Msg)
 		}
 	}
 }
