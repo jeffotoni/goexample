@@ -34,7 +34,7 @@ func main() {
 
 	limiter.Methods = []string{"GET", "POST"}
 
-	r.GET("/ping", func(c *gin.Context) {
+	r.GET("/ping", tollbooth_gin.LimitHandler(limiter), func(c *gin.Context) {
 
 		c.JSON(200, gin.H{
 
