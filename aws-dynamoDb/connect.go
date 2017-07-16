@@ -9,28 +9,38 @@
 
 package main
 
-import "github.com/aws/aws-sdk-go/service/dynamodb"
+import (
+	"fmt"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/dynamodb"
+)
 
 func main() {
 
-	vc := dynamodb.New(session.New())
+	config := &aws.Config{
+		Region: aws.String("us-east-1"),
+	}
+
+	svc := dynamodb.New(session.New(config))
 
 	input := &dynamodb.ScanInput{
 
-		ExpressionAttributeNames: map[string]*string{
+		// ExpressionAttributeNames: map[string]*string{
 
-			"AT": aws.String("id"),
-			"ST": aws.String("login"),
-		},
-		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
-			":a": {
-				S: aws.String("No One You Know"),
-			},
-		},
+		// 	"AT": aws.String("id"),
+		// 	"ST": aws.String("login"),
+		// },
+		// ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
+		// 	":a": {
+		// 		S: aws.String("No One You Know"),
+		// 	},
+		// },
 
-		FilterExpression:     aws.String("login = :jeff"),
-		ProjectionExpression: aws.String(""),
-		TableName:            aws.String("ukklogin"),
+		// FilterExpression:     aws.String("login = :jeff"),
+		// ProjectionExpression: aws.String(""),
+		TableName: aws.String("ukklogin"),
 	}
 
 	result, err := svc.Scan(input)
