@@ -36,7 +36,7 @@ func main() {
 	var seed string
 	var resultString string
 
-	for i := 10; i < 1100; i++ {
+	for i := 10; i < 110; i++ {
 
 		login_name = "login_" + fmt.Sprintf("%d", i) + "@gmail.com"
 
