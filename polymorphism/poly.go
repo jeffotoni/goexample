@@ -11,25 +11,27 @@ package main
 
 import "math"
 
-type Adder interface {
+type AddFace interface {
 	Add(a float64) float64
 }
 
-type floatAdder float64
+type floatAddFace float64
 
-func (f floatAdder) Add(a float64) float64 {
+func (f floatAddFace) Add(a float64) float64 {
 
 	return float64(f) + a
 }
 
-type intAdder int
+type intAddFace int
 
-func (i intAdder) Add(a float64) float64 {
+func (i intAddFace) Add(a float64) float64 {
 
+	println("IntFace: ", a)
+	println("IntFace + a: ", float64(i)+a)
 	return float64(i) + a
 }
 
-func StdDev(a []Adder) float64 {
+func StdDev(a []AddFace) float64 {
 
 	var Prom float64
 	sum := 0.0
@@ -54,6 +56,8 @@ func StdDev(a []Adder) float64 {
 		Total += a[i].Add(-Prom) * a[i].Add(-Prom)
 	}
 
+	println("vet Total: ", Total)
+
 	Total = Total / N
 	Total = math.Sqrt(Total)
 
@@ -62,9 +66,9 @@ func StdDev(a []Adder) float64 {
 
 func main() {
 
-	floats := []Adder{floatAdder(1.0), floatAdder(2.0), floatAdder(3.0), floatAdder(4.0), floatAdder(5.0)}
+	floats := []AddFace{floatAddFace(1.0), floatAddFace(2.0), floatAddFace(3.0), floatAddFace(4.0), floatAddFace(5.0)}
 	println(StdDev(floats))
 
-	ints := []Adder{intAdder(1), intAdder(2), intAdder(3)}
+	ints := []AddFace{intAddFace(1), intAddFace(2), intAddFace(3)}
 	println(StdDev(ints))
 }
