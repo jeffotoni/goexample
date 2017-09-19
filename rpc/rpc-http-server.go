@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"net/rpc"
 	//"os"
+	//"sort"
 	"sync"
 	"time"
 )
@@ -73,7 +74,7 @@ func (s *Stop) WriteMemory(args *Args2, replys *string) error {
 		fmt.Println(stringMemory)
 
 		//fmt.Println("service[", i, "]", "stop")
-		time.Sleep(1 * time.Second)
+		time.Sleep(50 * time.Millisecond)
 
 		iCount++
 	}
@@ -121,11 +122,31 @@ func ReadMemory() {
 
 func ListMemory() {
 
+	// var keys []int
+
 	for {
 
 		time.Sleep(10 * time.Second)
 
-		fmt.Println("list Memory")
+		// Mux2.RLock()
+		// for k := range Mux2.m {
+
+		// 	keys = append(keys, k)
+		// }
+		// Mux2.RUnlock()
+
+		// sort.Ints(keys)
+
+		// fmt.Println("list Memory")
+
+		// Mux2.RLock()
+		// for _, k := range keys {
+
+		// 	fmt.Println("Key:", k, "Value:", Mux2.m[k])
+
+		// 	time.Sleep(1 * time.Second)
+		// }
+		// Mux2.RUnlock()
 
 		Mux.RLock()
 		for j, val := range Mux2.m {
