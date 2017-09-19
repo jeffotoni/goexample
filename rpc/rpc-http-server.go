@@ -26,6 +26,11 @@ var (
 		sync.RWMutex
 		m map[int]string
 	}{m: make(map[int]string)}
+
+	Mux2 = struct {
+		sync.RWMutex
+		m map[int]string
+	}{m: make(map[int]string)}
 )
 
 // Method Multiply arguments
@@ -85,7 +90,7 @@ func ReadMemory() {
 
 	for {
 
-		time.Sleep(10 * time.Second)
+		time.Sleep(6 * time.Second)
 
 		fmt.Println("Read map in Memory")
 
@@ -99,6 +104,14 @@ func ReadMemory() {
 
 			fmt.Println("[", j, "] = ", val)
 
+			Mux2.Lock()
+			Mux2.m[j] = "service[" + fmt.Sprintf("%d", j) + "] map "
+			Mux2.Unlock()
+
+			//Mux.Lock()
+			delete(Mux.m, j)
+			//Mux.Unlock()
+
 			time.Sleep(200 * time.Millisecond)
 		}
 
@@ -106,19 +119,22 @@ func ReadMemory() {
 	}
 }
 
-func DelMemory() {
+func ListMemory() {
 
 	for {
 
-		time.Sleep(2 * time.Second)
+		time.Sleep(10 * time.Second)
 
-		fmt.Println("Read Memory")
+		fmt.Println("list Memory")
 
-		for j, val := range mapMemory {
+		Mux.RLock()
+		for j, val := range Mux2.m {
 
 			fmt.Println("Map[", j, "] = ", val)
+
 			time.Sleep(1 * time.Second)
 		}
+		Mux.RUnlock()
 	}
 }
 
@@ -136,6 +152,8 @@ func main() {
 	rpc.HandleHTTP()
 
 	go ReadMemory()
+
+	go ListMemory()
 
 	// Opening the port for communication
 	err := http.ListenAndServe(":1234", nil)
