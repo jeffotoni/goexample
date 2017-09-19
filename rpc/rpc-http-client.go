@@ -39,7 +39,7 @@ func main() {
 	args2 := Args2{"Rpc client kill program!"} // Defining the arguments
 	var stop string
 
-	// Calling my method StopServer Of the type Stop
-	client.Call("Stop.StopServer", args2, &stop)
+	// Calling my method WriteMemory Of the type Stop
+	client.Call("Stop.WriteMemory", args2, &stop)
 	fmt.Printf("Stop: %s\n", args2.A)
 }

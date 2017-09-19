@@ -42,7 +42,7 @@ func (t *Matt) Multiply(args *Args, reply *int) error {
 	return nil
 }
 
-// Method StopServer arguments
+// Method WriteMemory arguments
 type Args2 struct {
 	A string
 }
@@ -50,8 +50,8 @@ type Args2 struct {
 // type stop
 type Stop string
 
-// My method StopServer
-func (s *Stop) StopServer(args *Args2, replys *string) error {
+// My method WriteMemory
+func (s *Stop) WriteMemory(args *Args2, replys *string) error {
 
 	*replys = args.A + " ok! "
 	fmt.Println("Stopping the server by rpc!")
@@ -62,13 +62,13 @@ func (s *Stop) StopServer(args *Args2, replys *string) error {
 		stringMemory = "service[" + fmt.Sprintf("%d", iCount) + "] map "
 
 		Mux.Lock()
-		mapMemory[iCount] = stringMemory
+		Mux.m[iCount] = stringMemory
 		Mux.Unlock()
 
 		fmt.Println(stringMemory)
 
 		//fmt.Println("service[", i, "]", "stop")
-		time.Sleep(2 * time.Second)
+		time.Sleep(1 * time.Second)
 
 		iCount++
 	}
@@ -81,29 +81,32 @@ func (s *Stop) StopServer(args *Args2, replys *string) error {
 	return nil
 }
 
-func WriteMemory() {
+func ReadMemory() {
 
 	for {
 
-		time.Sleep(3 * time.Second)
+		time.Sleep(10 * time.Second)
 
 		fmt.Println("Read map in Memory")
 
-		//Mux.RLock()
+		//for j := 0; j < iCount; j++ {
+
+		Mux.RLock()
 		for j, val := range Mux.m {
 
-			//view := Mux.m[iCount]
+			//view := Mux.m[j]
+			//fmt.Println("Map :: ", view)
 
-			fmt.Println("Map[", j, "] = ", val)
+			fmt.Println("[", j, "] = ", val)
 
-			time.Sleep(1 * time.Second)
+			time.Sleep(200 * time.Millisecond)
 		}
 
-		//Mux.RUnlock()
+		Mux.RUnlock()
 	}
 }
 
-func ReadMemory() {
+func DelMemory() {
 
 	for {
 
@@ -132,7 +135,7 @@ func main() {
 	// Start handler
 	rpc.HandleHTTP()
 
-	go WriteMemory()
+	go ReadMemory()
 
 	// Opening the port for communication
 	err := http.ListenAndServe(":1234", nil)
