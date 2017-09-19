@@ -8,6 +8,12 @@ import (
 	"time"
 )
 
+var (
+	stringMemory string
+	iCount       = 0
+	mapMemory    = map[int]string{}
+)
+
 type Args struct {
 	A, B int
 }
@@ -31,16 +37,31 @@ type Stop string
 func (s *Stop) StopServer(args *Args2, replys *string) error {
 
 	*replys = args.A + " ok! "
-	fmt.Println("Stopping the server by rpc!")
+
+	fmt.Println("Mapping RCP memory the server by rpc!")
 
 	var count = 5
+
 	for i := 0; i < count; i++ {
 
-		fmt.Println("service[", i, "]", "stop")
+		stringMemory = "service[" + fmt.Sprintf("%d", iCount) + "] map "
+
+		mapMemory[iCount] = stringMemory
+
+		fmt.Println(stringMemory)
+
 		time.Sleep(2 * time.Second)
+
+		iCount++
 	}
 
-	os.Exit(1)
+	fmt.Println("iCount: ", iCount)
+
+	time.Sleep(time.Second * 2)
+
+	fmt.Println(mapMemory)
+
+	// os.Exit(1)
 	return nil
 }
 

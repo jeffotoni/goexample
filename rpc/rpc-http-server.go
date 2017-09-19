@@ -12,8 +12,14 @@ import (
 	"fmt"
 	"net/http"
 	"net/rpc"
-	"os"
+	//"os"
 	"time"
+)
+
+var (
+	stringMemory string
+	iCount       = 0
+	mapMemory    = map[int]string{}
 )
 
 // Method Multiply arguments
@@ -47,11 +53,25 @@ func (s *Stop) StopServer(args *Args2, replys *string) error {
 	var count = 5
 	for i := 0; i < count; i++ {
 
-		fmt.Println("service[", i, "]", "stop")
+		stringMemory = "service[" + fmt.Sprintf("%d", iCount) + "] map "
+
+		mapMemory[iCount] = stringMemory
+
+		fmt.Println(stringMemory)
+
+		//fmt.Println("service[", i, "]", "stop")
 		time.Sleep(2 * time.Second)
+
+		iCount++
 	}
 
-	os.Exit(1)
+	fmt.Println("iCount: ", iCount)
+
+	time.Sleep(time.Second * 2)
+
+	fmt.Println(mapMemory)
+
+	//os.Exit(1)
 	return nil
 }
 
