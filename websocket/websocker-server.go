@@ -18,6 +18,11 @@ import (
 
 var err error
 
+func WriteScren() {
+
+	fmt.Println("Hello, new method....")
+}
+
 func ListenWebSocker(ws *websocket.Conn) {
 
 	for { // loop
@@ -31,6 +36,8 @@ func ListenWebSocker(ws *websocket.Conn) {
 
 		msg := "Hello I'm the websocket server!"
 		websocket.Message.Send(ws, msg) // Sending message to the client
+
+		WriteScren()
 	}
 }
 
