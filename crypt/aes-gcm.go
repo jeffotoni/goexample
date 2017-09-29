@@ -15,18 +15,48 @@ import (
 	"encoding/hex"
 	"fmt"
 	"io"
+	//"os"
 )
 
 const (
-	KEY = "AES256Key-32characters1234567891"
+	KEY       = "AES256Key-32characters1234567891"
+	KeySize   = 32
+	NonceSize = 24
 )
+
+var (
+	Nonce []byte
+)
+
+func GenerateKey() (*[KeySize]byte, error) {
+
+	key := new([KeySize]byte)
+	_, err := io.ReadFull(rand.Reader, key[:])
+	if err != nil {
+		return nil, err
+	}
+	return key, nil
+}
+
+func GenerateNonce() (*[NonceSize]byte, error) {
+
+	nonce := new([NonceSize]byte)
+
+	_, err := io.ReadFull(rand.Reader, nonce[:])
+	if err != nil {
+		return nil, err
+	}
+
+	return nonce, nil
+}
 
 func EncryptGcm(text string) string {
 
 	// The key argument should be the AES key, either 16 or 32 bytes
 	// to select AES-128 or AES-256.
 	key := []byte(KEY)
-	plaintext := []byte("here plain text")
+
+	plaintext := []byte(text)
 
 	block, err := aes.NewCipher(key)
 
@@ -37,21 +67,33 @@ func EncryptGcm(text string) string {
 
 	// Never use more than 2^32 random nonces with a given key
 	// because of the risk of a repeat.
-	nonce := make([]byte, 12)
+	//Nonce, err := GenerateNonce()
 
-	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
+	Nonce := make([]byte, 12)
+	if _, err := io.ReadFull(rand.Reader, Nonce); err != nil {
 		panic(err.Error())
 	}
 
-	fmt.Println(nonce)
+	//fmt.Println("nonce:", string(Nonce))
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	// if _, err := io.ReadFull(rand.Reader, Nonce); err != nil {
+	// 	panic(err.Error())
+	// }
+
+	//fmt.Println(Nonce)
 
 	aesgcm, err := cipher.NewGCM(block)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	ciphertext := aesgcm.Seal(nil, nonce, plaintext, nil)
-	fmt.Println(ciphertext)
+	ciphertext := aesgcm.Seal(nil, Nonce, plaintext, nil)
+
+	return fmt.Sprintf("%s", ciphertext)
 }
 
 func DecryptGcm(text string) string {
@@ -59,9 +101,11 @@ func DecryptGcm(text string) string {
 	// The key argument should be the AES key, either 16 or 32 bytes
 	// to select AES-128 or AES-256.
 	key := []byte(KEY)
-	ciphertext, _ := hex.DecodeString("2df87baf86b5073ef1f03e3cc738de75b511400f5465bb0ddeacf47ae4dc267d")
+	ciphertext, _ := hex.DecodeString(text)
 
-	nonce, _ := hex.DecodeString("afb8a7579bf971db9f8ceeed")
+	nonce, _ := hex.DecodeString("37b8e8a308c354048d245f6d")
+
+	fmt.Println(nonce)
 
 	block, err := aes.NewCipher(key)
 	if err != nil {
@@ -78,7 +122,7 @@ func DecryptGcm(text string) string {
 		panic(err.Error())
 	}
 
-	fmt.Printf("%s\n", plaintext)
+	return fmt.Sprintf("%s", plaintext)
 	// Output: exampleplaintext
 }
 
@@ -87,4 +131,10 @@ func DecryptGcm(text string) string {
 //
 func main() {
 
+	textCry := EncryptGcm("Let's encrypt our text here.")
+
+	fmt.Println(textCry)
+
+	textDescry := DecryptGcm(textCry)
+	fmt.Println(textDescry)
 }
