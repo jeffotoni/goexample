@@ -19,9 +19,9 @@ import (
 )
 
 const (
-	KEY       = "AES256Key-32characters1234567891"
+	KEY       = "AES256Key-32Characters1234567890"
 	KeySize   = 32
-	NonceSize = 24
+	NonceSize = 12
 )
 
 var (
@@ -61,39 +61,32 @@ func EncryptGcm(text string) string {
 	block, err := aes.NewCipher(key)
 
 	if err != nil {
-
-		panic(err.Error())
+		fmt.Println(err.Error())
 	}
 
 	// Never use more than 2^32 random nonces with a given key
 	// because of the risk of a repeat.
 	//Nonce, err := GenerateNonce()
 
-	Nonce := make([]byte, 12)
+	Nonce = make([]byte, NonceSize)
 	if _, err := io.ReadFull(rand.Reader, Nonce); err != nil {
-		panic(err.Error())
+		fmt.Println(err.Error())
 	}
 
 	//fmt.Println("nonce:", string(Nonce))
 
 	if err != nil {
-		panic(err.Error())
+		fmt.Println(err.Error())
 	}
-
-	// if _, err := io.ReadFull(rand.Reader, Nonce); err != nil {
-	// 	panic(err.Error())
-	// }
-
-	//fmt.Println(Nonce)
 
 	aesgcm, err := cipher.NewGCM(block)
 	if err != nil {
-		panic(err.Error())
+		fmt.Println(err.Error())
 	}
 
 	ciphertext := aesgcm.Seal(nil, Nonce, plaintext, nil)
 
-	return fmt.Sprintf("%s", ciphertext)
+	return fmt.Sprintf("%x", ciphertext)
 }
 
 func DecryptGcm(text string) string {
@@ -103,27 +96,25 @@ func DecryptGcm(text string) string {
 	key := []byte(KEY)
 	ciphertext, _ := hex.DecodeString(text)
 
-	nonce, _ := hex.DecodeString("37b8e8a308c354048d245f6d")
-
-	fmt.Println(nonce)
+	nonce, _ := hex.DecodeString(fmt.Sprintf("%x", Nonce))
 
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		panic(err.Error())
+		fmt.Println(err.Error())
 	}
 
 	aesgcm, err := cipher.NewGCM(block)
 	if err != nil {
-		panic(err.Error())
+		fmt.Println(err.Error())
 	}
 
 	plaintext, err := aesgcm.Open(nil, nonce, ciphertext, nil)
 	if err != nil {
-		panic(err.Error())
+		//panic(err.Error())
+		fmt.Println(err.Error())
 	}
 
 	return fmt.Sprintf("%s", plaintext)
-	// Output: exampleplaintext
 }
 
 //
@@ -132,7 +123,6 @@ func DecryptGcm(text string) string {
 func main() {
 
 	textCry := EncryptGcm("Let's encrypt our text here.")
-
 	fmt.Println(textCry)
 
 	textDescry := DecryptGcm(textCry)
