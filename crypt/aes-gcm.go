@@ -50,7 +50,7 @@ func GenerateNonce() (*[NonceSize]byte, error) {
 	return nonce, nil
 }
 
-func EncryptGcm(text string) string {
+func EncryptGCM(text string) string {
 
 	// The key argument should be the AES key, either 16 or 32 bytes
 	// to select AES-128 or AES-256.
@@ -89,7 +89,7 @@ func EncryptGcm(text string) string {
 	return fmt.Sprintf("%x", ciphertext)
 }
 
-func DecryptGcm(text string) string {
+func DecryptGCM(text string) string {
 
 	// The key argument should be the AES key, either 16 or 32 bytes
 	// to select AES-128 or AES-256.
@@ -122,9 +122,9 @@ func DecryptGcm(text string) string {
 //
 func main() {
 
-	textCry := EncryptGcm("Let's encrypt our text here.")
+	textCry := EncryptGCM("Let's encrypt our text here.")
 	fmt.Println(textCry)
 
-	textDescry := DecryptGcm(textCry)
+	textDescry := DecryptGCM(textCry)
 	fmt.Println(textDescry)
 }
