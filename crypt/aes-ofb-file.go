@@ -21,7 +21,7 @@ const (
 	KEY = "AES256Key-32Characters1234567890"
 )
 
-func EncryptFile(fileName string) string {
+func EncryptOFBFile(fileName string) string {
 
 	key := []byte(KEY)
 
@@ -68,7 +68,7 @@ func EncryptFile(fileName string) string {
 //
 //
 //
-func DecryptFile(fileName string) string {
+func DecryptOFBFile(fileName string) string {
 
 	key := []byte(KEY)
 
@@ -115,10 +115,10 @@ func DecryptFile(fileName string) string {
 func main() {
 
 	// multiple 16 len text
-	fileCry := EncryptFile("mozilla.pdf")
+	fileCry := EncryptOFBFile("mozilla.pdf")
 
 	fmt.Println(fileCry)
 
-	fileDecry := DecryptFile(fileCry)
+	fileDecry := DecryptOFBFile(fileCry)
 	fmt.Println(fileDecry)
 }
