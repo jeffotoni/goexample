@@ -30,6 +30,8 @@ type Args2 struct {
 // type stop
 type Stop string
 
+type CleanEnvType string
+
 func printCommand(cmd *exec.Cmd) {
 	fmt.Printf("==> Executing: %s\n", strings.Join(cmd.Args, " "))
 }
@@ -44,6 +46,14 @@ func printOutput(outs []byte) {
 	if len(outs) > 0 {
 		fmt.Printf("==> Output: %s\n", string(outs))
 	}
+}
+
+func (s *CleanEnvType) CleanEnv(args *Args2, replys *string) error {
+
+	os.Setenv("START", "0")
+
+	fmt.Println("Clean START")
+	return nil
 }
 
 func (s *Stop) StopServer(args *Args2, replys *string) error {
@@ -87,23 +97,6 @@ func (s *Stop) StopServer(args *Args2, replys *string) error {
 	// Only output the commands stdout
 	printOutput(cmdOutput.Bytes()) // => go version go1.3 darwin/amd64
 
-	// start application
-	// now again
-	//cmd := exec.Command("sh", "./start.sh", "&")
-	//cmd.Run()
-	//cmd.Start()
-	//cmd.Wait()
-
-	// cmd.Env = append(os.Environ(),
-
-	// 	"START="+startString, // ignored
-	// )
-
-	// if err := cmd.Run(); err != nil {
-
-	// 	fmt.Println(err)
-	//}
-
 	return nil
 }
 
@@ -125,6 +118,9 @@ func main() {
 	// Recording the method Stop
 	stop := new(Stop)
 	rpc.Register(stop)
+
+	cleanenv := new(CleanEnvType)
+	rpc.Register(cleanenv)
 
 	// Start handler
 	rpc.HandleHTTP()

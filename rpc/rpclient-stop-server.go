@@ -78,17 +78,12 @@ func simulation() {
 		}
 	}()
 }
+
 func main() {
 
 	startClient, _ := strconv.Atoi(os.Getenv("START"))
 
 	fmt.Println("Env: ", startClient)
-
-	// if startClient > 0 {
-
-	// 	fmt.Println("Ok, client start one.")
-	// 	simulation()
-	// }
 
 	// start server
 	// client
@@ -103,27 +98,28 @@ func main() {
 	// Start handler
 	rpc.HandleHTTP()
 
-	go func() {
-
-		// Opening the port for communication
-		err := http.ListenAndServe(":1235", nil)
-
-		if err != nil {
-
-			fmt.Println("Error at now ")
-			fmt.Println(err.Error())
-		}
-
-	}()
-
 	if startClient == 0 {
 
 		fmt.Println("call server stop my service a few moments")
-		simulation()
+		go simulation()
 
 	} else {
 
 		fmt.Println("client online again!")
 	}
+
+	fmt.Println("service port: 12345")
+
+	// Opening the port for communication
+	err := http.ListenAndServe(":1235", nil)
+
+	if err != nil {
+
+		fmt.Println("Error at now ")
+		fmt.Println(err.Error())
+	}
+
+	// go func() {
+	// }()
 
 }
