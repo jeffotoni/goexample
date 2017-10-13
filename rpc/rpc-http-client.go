@@ -29,12 +29,12 @@ func main() {
 	// Synchronous call
 	client, _ := rpc.DialHTTP("tcp", "localhost:1234")
 
-	args := Args{335, 32} // Defining the arguments
-	var reply int
+	// args := Args{335, 32} // Defining the arguments
+	// var reply int
 
-	// Calling my method Muilt
-	client.Call("Matt.Multiply", args, &reply)
-	fmt.Printf("Matt: %d*%d=%d\n", args.A, args.B, reply)
+	// // Calling my method Muilt
+	// client.Call("Matt.Multiply", args, &reply)
+	// fmt.Printf("Matt: %d*%d=%d\n", args.A, args.B, reply)
 
 	args2 := Args2{"Rpc client kill program!"} // Defining the arguments
 	var stop string
