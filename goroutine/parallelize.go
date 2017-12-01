@@ -17,7 +17,7 @@ import (
 )
 
 // Parallelize parallelizes the function calls
-func Parallelize(functions ...func()) {
+func Paralle(functions ...func()) {
 
 	var waitGroup sync.WaitGroup
 	waitGroup.Add(len(functions))
@@ -32,7 +32,7 @@ func Parallelize(functions ...func()) {
 	}
 }
 
-func dowork(goroutine, loopindex int) {
+func Dow(goroutine, loopindex int) {
 	// simulate work
 	time.Sleep(time.Second * time.Duration(5))
 	fmt.Printf("gr[%d]: i=%d\n", goroutine, loopindex)
@@ -40,7 +40,7 @@ func dowork(goroutine, loopindex int) {
 
 func f(n int) {
 	for i := 0; i < 10; i++ {
-		dowork(n, i)
+		Dow(n, i)
 		amt := time.Duration(rand.Intn(250))
 		time.Sleep(time.Millisecond * amt)
 	}
@@ -60,5 +60,5 @@ func main() {
 		f(2)
 	}
 
-	Parallelize(func1, func2, func3)
+	Paralle(func1, func2, func3)
 }
