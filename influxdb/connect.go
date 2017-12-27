@@ -15,20 +15,20 @@ const (
 )
 
 var (
-	connect client.Client
-	err     error
+	client client.Client
+	err    error
 )
 
 func main() {
 
 	// Create a new HTTPClient
-	connect, err = client.NewHTTPClient(client.HTTPConfig{
+	client, err = client.NewHTTPClient(client.HTTPConfig{
 		Addr:     "http://localhost:8086",
 		Username: username,
 		Password: password,
 	})
 
-	fmt.Println(connect.Ping(time.Duration))
+	// fmt.Println(client.Ping(time.Duration))
 
 	if err != nil {
 		log.Fatal(err)
@@ -59,7 +59,7 @@ func main() {
 	bp.AddPoint(pt)
 
 	// Write the batch
-	if err := connect.Write(bp); err != nil {
+	if err := client.Write(bp); err != nil {
 		log.Fatal(err)
 	}
 }
