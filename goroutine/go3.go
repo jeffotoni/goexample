@@ -1,5 +1,5 @@
 /*
-* Example sync.Mutex
+* Example make(chan)
 *
 * @package     main
 * @author      @jeffotoni

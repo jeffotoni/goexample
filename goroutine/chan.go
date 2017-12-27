@@ -1,5 +1,5 @@
 /*
-* Example parallelism
+* Example make(chan)
 *
 * @package     main
 * @author      @jeffotoni

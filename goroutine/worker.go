@@ -1,5 +1,5 @@
 /*
-* Example sync.Mutex
+* Example Worker
 *
 * @package     main
 * @author      @jeffotoni
