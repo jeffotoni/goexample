@@ -1,11 +1,18 @@
+/*
+* Golang presentation
+*
+* @package     main
+* @author      @jeffotoni
+* @size        2017
+ */
 package main
 
 import (
 	"fmt"
-	"log"
-	"time"
-
 	"github.com/influxdata/influxdb/client/v2"
+	"log"
+	"net/http"
+	"time"
 )
 
 const (
@@ -15,24 +22,50 @@ const (
 )
 
 var (
-	client client.Client
-	err    error
+	ic  client.Client
+	err error
 )
 
-func main() {
+func hello(res http.ResponseWriter, req *http.Request) {
 
-	// Create a new HTTPClient
-	client, err = client.NewHTTPClient(client.HTTPConfig{
-		Addr:     "http://localhost:8086",
-		Username: username,
-		Password: password,
-	})
+	res.Write([]byte(fmt.Sprintf("The first hello !")))
+}
 
-	// fmt.Println(client.Ping(time.Duration))
+func connect() client.Client {
+
+	// If you
+	// have not
+	// connected
+	if ic == nil {
+
+		fmt.Println("connect one")
+		ic, err = client.NewHTTPClient(client.HTTPConfig{
+			Addr:     "http://localhost:8086",
+			Username: username,
+			Password: password,
+		})
+	}
 
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	startingTime := time.Now().UTC()
+	time.Sleep(10 * time.Millisecond)
+	endingTime := time.Now().UTC()
+
+	var duration time.Duration = endingTime.Sub(startingTime)
+
+	_, _, errx := ic.Ping(duration)
+
+	if errx != nil {
+		log.Fatal(err)
+	}
+
+	return ic
+}
+
+func insert(influx client.Client) {
 
 	// Create a new point batch
 	bp, err := client.NewBatchPoints(client.BatchPointsConfig{
@@ -59,7 +92,20 @@ func main() {
 	bp.AddPoint(pt)
 
 	// Write the batch
-	if err := client.Write(bp); err != nil {
+	if err := influx.Write(bp); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func main() {
+
+	influx := connect()
+	insert(influx)
+
+	http.HandleFunc("/", hello)
+
+	log.Println("Start listening...")
+	if err := http.ListenAndServe(":9002", nil); err != nil {
 		log.Fatal(err)
 	}
 }
