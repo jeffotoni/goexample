@@ -1,18 +1,27 @@
+/*
+* Example tollbooth
+*
+* @package     main
+* @author      @jeffotoni
+* @size        16/07/2017
+*
+ */
+
 package main
 
 import (
-		"bufio"
-			"fmt"
-				"os"
-			)
+	"bufio"
+	"fmt"
+	"os"
+)
 
-			func main() {
-					
-				f, _ := os.Create("/tmp/example.log")
-				defer f.Close()
-				w := bufio.NewWriter(f)
-				//w := bufio.NewWriter(os.Stdout)
-				fmt.Fprint(w, "Hello, ")
-				fmt.Fprint(w, "world!")
-				w.Flush() // Don't forget to flush!
-			}
+func main() {
+
+	f, _ := os.Create("/tmp/example.log")
+	defer f.Close()
+	w := bufio.NewWriter(f)
+	//w := bufio.NewWriter(os.Stdout)
+	fmt.Fprint(w, "Hello, ")
+	fmt.Fprint(w, "world!")
+	w.Flush() // Don't forget to flush!
+}
