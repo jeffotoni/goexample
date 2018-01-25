@@ -15,7 +15,7 @@ import (
 )
 
 // const tag
-const tagNane = "default"
+const tagName = "default"
 
 // struct config
 type Config struct {
@@ -28,7 +28,7 @@ type Config struct {
 	Login   string `default:"postgres"`
 }
 
-func LoadConf(s interface{}) (err error) {
+func Default(s interface{}) (err error) {
 
 	st := reflect.TypeOf(s)
 
@@ -62,7 +62,7 @@ func main() {
 
 	c := Config{}
 
-	err := LoadConf(&c)
+	err := Default(&c)
 
 	if err != nil {
 
