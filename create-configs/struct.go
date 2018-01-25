@@ -28,31 +28,32 @@ type Config struct {
 	Login   string `default:"postgres"`
 }
 
-func Default(s interface{}) (err error) {
+func Default(struc interface{}) (err error) {
 
-	st := reflect.TypeOf(s)
+	structref := reflect.TypeOf(struc)
 
-	if st.Kind() != reflect.Ptr {
+	if structref.Kind() != reflect.Ptr {
 
 		err = errors.New("Not a pointer")
 		return
 	}
 
-	refField := st.Elem()
-	if refField.Kind() != reflect.Struct {
+	elemField := structref.Elem()
+	if elemField.Kind() != reflect.Struct {
 		err = errors.New("Not a struct")
 		return
 	}
 
 	//refValue := reflect.ValueOf(s).Elem()
-	for i := 0; i < refField.NumField(); i++ {
+	for i := 0; i < elemField.NumField(); i++ {
 
-		field := refField.Field(i)
+		field := elemField.Field(i)
 		// value := refValue.Field(i)
 		// kind := field.Type.Kind()
 		tagVal := field.Tag.Get(tagName)
 
-		reflect.ValueOf(s).Elem().Field(i).SetString(tagVal)
+		// just string
+		reflect.ValueOf(struc).Elem().Field(i).SetString(tagVal)
 	}
 
 	return
