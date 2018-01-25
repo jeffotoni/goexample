@@ -18,10 +18,10 @@ func main() {
 	// Route => handler
 	e.GET("/", func(c echo.Context) error {
 
-		return c.String(http.StatusOK, "Hello, World!\n")
+		return c.String(http.StatusOK, "Hello, World, first deploy elasticbeanstalk!\n")
 
 	})
 
 	// Start server
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(":80"))
 }
