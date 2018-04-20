@@ -9,8 +9,9 @@
 package main
 
 import (
-	"github.com/howeyc/fsnotify"
 	"log"
+
+	"github.com/howeyc/fsnotify"
 )
 
 func main() {
@@ -37,12 +38,12 @@ func main() {
 		}
 	}()
 
-	err = watcher.Watch("/home/netcatc/Downloads")
+	err = watcher.Watch("/home/netcatc")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = watcher.Watch("/home/netcatc/Downloads/jeff-notify")
+	err = watcher.Watch("/home/netcatc")
 	if err != nil {
 		log.Fatal(err)
 	}
