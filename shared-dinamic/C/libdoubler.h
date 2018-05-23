@@ -1,6 +1,6 @@
 /* Created by "go tool cgo" - DO NOT EDIT. */
 
-/* package command-line-arguments */
+/* package doubler */
 
 
 #line 1 "cgo-builtin-prolog"

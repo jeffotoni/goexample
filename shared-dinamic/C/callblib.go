@@ -31,6 +31,5 @@ func main() {
 
 	//s := string(buf[:bytes.IndexByte(buf, 0)])
 	//fmt.Println(s)
-
 	//fmt.Println(x.DoubleIt(10))
 }

@@ -35,7 +35,14 @@ func main() {
 
 	//curl -X POST localhost:9999/hello -d "name=jefferson"
 
+	// headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Origin", "Accept", "Content-Type"})
+	// methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+	// corsObj := handlers.AllowedOrigins([]string{"*"})
+
 	http.HandleFunc("/hello", Hello)
+
+	log.Println("Listening...")
+	//log.Fatal(http.ListenAndServe(":9999", handlers.CORS(headersOk, methodsOk, corsObj)(router)))
 
 	log.Fatal(http.ListenAndServe(":9999", nil))
 }

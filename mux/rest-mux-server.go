@@ -10,9 +10,11 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	//"github.com/rs/cors"
+	"log"
+	"net/http"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
@@ -44,6 +46,7 @@ func ProductsHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 
 	r := mux.NewRouter()
+
 	//r2 := mux.NewRouter()
 
 	//r2.HandleFunc("/postest", HomeHandler)
@@ -59,8 +62,28 @@ func main() {
 	// curl -X POST localhost:9999
 	http.Handle("/", r)
 
-	go http.ListenAndServe(":9999", r)
-	go func() { http.ListenAndServe(":8080", nil) }()
-	func() { http.ListenAndServe(":8081", nil) }()
+	headersOk := handlers.AllowedHeaders([]string{"Origin", "Accept", "Content-Type"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+	corsObj := handlers.AllowedOrigins([]string{"*"})
+
+	// c := cors.New(cors.Options{
+
+	// 	AllowedOrigins:   []string{"*"},
+	// 	AllowCredentials: true,
+	// })
+
+	// handler := c.Handler(r)
+
+	log.Println("Listening...")
+
+	// log.Fatal(http.ListenAndServe(":8090", handler))
+
+	log.Fatal(http.ListenAndServe(":8090", handlers.CORS(headersOk, methodsOk, corsObj)(r)))
+
+	//go http.ListenAndServe(":9999", r)
+
+	//go func() { http.ListenAndServe(":8080", nil) }()
+
+	//func() { http.ListenAndServe(":8081", nil) }()
 
 }

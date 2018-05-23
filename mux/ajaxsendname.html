@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+  <head>
+    <title>axios Test ajax</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+  </head>
+  <body class="container">
+    <h1>file upload</h1>
+
+    <form role="form" class="form" onsubmit="return false;" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name">Digite seu nome</label>
+        <input id="name" name="name" type="text" class="form-control"/>
+      </div>
+      <button id="sendajax" type="button" class="btn btn-primary">Enviar Name</button>
+    </form>
+
+    <div id="output" class="container">xxxxxx</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
+    <script>
+      (function () {
+        
+        var output = document.getElementById('output');
+        
+        document.getElementById('sendajax').onclick = function () {
+
+          var data = new FormData();
+          
+          var token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoicmFmYWVsQGdtYWlsLmNvbSIsInVpZCI6IjU5YTk5NzVlIiwiZXhwIjoxNTA1MTUwNzc3LCJpc3MiOiJqd3QgdWtrb2JveTC8.JAItBn1Q8X_df6c3bqELkB1PIAv_qlKq699K723a0GrV699OpIyiQBIatzXmLwAOlCwHLQP-p-ivZGx6lTE2zEC0ItRn1-wQXNO-Wsl_siKEydQqP3wIgeTCryyF9XgP_jN_oRhi5mGZ2RmAFTOKnQZu_4xYyeIaEJR900iHXmA'
+
+          // data.append('file', document.getElementById('file').files[0]);
+          console.log(document.getElementById('name').value + " ::: ")
+          data.append('name', document.getElementById('name').value);
+          //data.append('type_send', "0");
+
+          var config = {
+            //headers: { 'Content-Type': 'application/json', 'Authorization': "Bearer " + token } ,
+            headers: { 'Content-Type': 'application/json'} ,
+          };
+
+          axios.post('http://localhost:8090/hello', data, config)
+
+            .then(function (res) {
+              output.className = 'container';
+              output.innerHTML = res.data;
+            })
+            .catch(function (err) {
+
+              output.className = 'container text-danger';
+              output.innerHTML = err.message;
+            });
+        };
+      })();
+
+
+    </script>
+
+
+  </body>
+</html>
