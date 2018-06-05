@@ -9,12 +9,15 @@
 package main
 
 import (
-	"log"
-
+	"fmt"
 	"github.com/howeyc/fsnotify"
+	"log"
 )
 
 func main() {
+
+	fmt.Println("autocomplete..")
+	log.Println("log....")
 
 	// via syscall sistema operacional
 	watcher, err := fsnotify.NewWatcher()

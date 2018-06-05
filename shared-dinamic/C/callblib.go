@@ -8,7 +8,9 @@ import "log"
 
 func main() {
 
-	fmt.Println("test lib")
+	fmt.Println("testando...")
+
+	log.Println("log..teste")
 
 	lib, err := dl.Open("./libdoubler.so", 0)
 	if err != nil {

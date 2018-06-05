@@ -33,9 +33,10 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
+	log.Println("log... teste...")
 	//curl -X POST localhost:9999/hello -d "name=jefferson"
 
-	// headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Origin", "Accept", "Content-Type"})
+	// headersOk := handlers.AllowedHeaders([]string{"X-Requested-With", "Origin", "Accept", "Content-Type"})  jefferson
 	// methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
 	// corsObj := handlers.AllowedOrigins([]string{"*"})
 
