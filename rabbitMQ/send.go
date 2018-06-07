@@ -2,6 +2,8 @@
  * @AUTOR @jeffotoni
  * @DATE 05/06/2018
  * @DESCRIPTION Send rabbitmq
+ * @EXAMPLE DOCKER
+ * docker run -d --network s31 --ip="192.0.0.16" --rm --name rabbit jeffotoni/rabbitmq.alpine3.7
  */
 
 package main
@@ -27,7 +29,7 @@ func isConnect(Conn *amqp.Connection) (*amqp.Connection, error) {
 
 	if Conn == nil {
 
-		Conn, C2Error = amqp.Dial("amqp://guest:guest@192.0.0.4:5672/")
+		Conn, C2Error = amqp.Dial("amqp://guest:guest@192.0.0.16:5672/")
 	}
 
 	return Conn, C2Error
