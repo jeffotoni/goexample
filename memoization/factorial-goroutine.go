@@ -3,10 +3,11 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"time"
 )
 
 const (
-	N int = 128
+	N int = 40
 )
 
 func FactorialClosure() func(n uint64) uint64 {
@@ -29,11 +30,20 @@ func main() {
 		arr[i] = rand.Intn(100)
 	}
 
+	fmt.Println("FACTORIAL GOROUTINE")
+
+	time.Sleep(time.Millisecond * 100)
+
 	fact := FactorialClosure()
+
+	start := time.Now()
 
 	for i := uint64(0); i < uint64(N); i++ {
 		go func(v uint64) {
 			fmt.Printf("Factorial for %d is : %d \n", uint64(v), fact(uint64(v)))
 		}(i)
 	}
+
+	end := time.Now()
+	fmt.Printf("Tempo gasto %s\n", end.Sub(start))
 }
