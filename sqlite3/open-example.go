@@ -74,10 +74,10 @@ func Add(db *sql.DB) {
 	db.Close()
 }
 
-func createDb() {
+func createDb(db *sql.DB) {
 
-	db, err := sql.Open("sqlite3", "./foo.db")
-	checkErr(err)
+	//db, err := sql.Open("sqlite3", "./foo.db")
+	//checkErr(err)
 
 	statement, _ := db.Prepare(CREATE_TABLE2)
 	statement.Exec()
@@ -90,11 +90,14 @@ func main() {
 
 	db1, _ := sql.Open("sqlite3", "./foo.db")
 	db2, _ := sql.Open("sqlite3", "./foo.db")
+	db3, _ := sql.Open("sqlite3", "./foo.db")
 
-	// createDb()
+	//createDb(db3)
+
 	// Add()
 	go Listar(db1)
-	// Add()
+
+	go Add(db3)
 
 	Listar(db2)
 
