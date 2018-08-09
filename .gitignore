@@ -24,3 +24,5 @@ _cgo_export.*
 
 _testmain.go
 
+*.db
+*.log

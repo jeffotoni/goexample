@@ -1,5 +1,0 @@
-error open nosql:  open ./db/gbolt.db: no such file or directory
-Error no LoginObj:  error noSql Open boltDB
-save login:  error noSql Open boltDB {"key":"login","login":"jeff.otoni@gmail.com","created":"2018-08-07 17:50:14","success":false,"count":1}
-User:  
-Vezes Logado:  0
