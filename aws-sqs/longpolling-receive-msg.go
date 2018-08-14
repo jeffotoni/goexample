@@ -97,6 +97,7 @@ func main() {
 				fmt.Println("aguardando 10s para remover")
 				time.Sleep(time.Second * 10)
 
+				// export qURL=http://colocaaquisuaurl
 				qURL := os.Getenv("qURL")
 
 				resultDelete, err := svc.DeleteMessage(&sqs.DeleteMessageInput{
