@@ -29,6 +29,8 @@ func main() {
 	var name string
 	var timeout int64
 
+	os.Setenv("qURL", "https://sqs.us-east-1.amazonaws.com/873761630739/lambda-test-queue")
+
 	flag.StringVar(&name, "n", "", "Queue name")
 	flag.Int64Var(&timeout, "t", 20, "(Optional) Timeout in seconds for long polling")
 	flag.Parse()

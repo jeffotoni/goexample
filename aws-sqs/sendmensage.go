@@ -22,6 +22,8 @@ import (
 
 func main() {
 
+	os.Setenv("qURL", "https://sqs.us-east-1.amazonaws.com/873761630739/lambda-test-queue")
+
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
 	}))
@@ -34,7 +36,7 @@ func main() {
 		// URL to our queue
 		qURL := os.Getenv("qURL")
 
-		i := 0
+		i := 101
 
 		for {
 
@@ -46,7 +48,7 @@ func main() {
 				MessageAttributes: map[string]*sqs.MessageAttributeValue{
 					"Title": {
 						DataType:    aws.String("String"),
-						StringValue: aws.String("Golang AWS SQS 10" + fmt.Sprintf("%d", i)),
+						StringValue: aws.String("Golang AWS SQS Test Send...<div></div> = " + fmt.Sprintf("%d", i)),
 					},
 					"Author": {
 						DataType:    aws.String("String"),
@@ -54,7 +56,7 @@ func main() {
 					},
 					"WeeksOn": {
 						DataType:    aws.String("Number"),
-						StringValue: aws.String("1000"),
+						StringValue: aws.String("102"),
 					},
 				},
 
