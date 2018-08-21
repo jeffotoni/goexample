@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 )
 
@@ -21,10 +22,13 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 
 		}
 
-		body = []byte(strings.Trim(string(body), "\n"))
+		// convert para string, forca remocao do \n
+		// e mantem o byte para o body
+		body = []byte(strings.TrimRight(string(body), "\r\n"))
 
 		//src := body
 
+		// buffer
 		dst := new(bytes.Buffer)
 
 		// quando nao conheco a struct
@@ -37,7 +41,7 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("Unmarshal", err)
 		}
 
-		fmt.Println(data)
+		fmt.Println("Unmarshal", data)
 
 		err = json.Compact(dst, body)
 
@@ -46,18 +50,32 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("json.compact: ", err)
 		}
 
-		err = json.NewDecoder(r.Body).Decode(data)
+		fmt.Println("Dst body: ", dst)
+
+		//criando json newEncoder
+		enc := json.NewEncoder(os.Stdout)
+
+		// de encode Data
+		err = enc.Encode(data)
+
+		fmt.Println("Encode: ", data)
+
+		//err = json.NewDecoder(r.Body).Decode(data)
 
 		if err != nil {
 
 			fmt.Println("Error json.newDecoder: ", err)
 		}
 
-		err = json.Unmarshal([]byte(dst.String()), &data)
+		// unmarshal pode usar com map -> quando nao
+		// sabemos qual struct pode vim
+		err = json.Unmarshal([]byte(strings.TrimRight(dst.String(), "\n")), &data)
 
-		fmt.Println(data)
+		fmt.Println("Unmarshal2: ", data)
+		fmt.Println("vetor map: ", data["password"])
 
-		fmt.Println(dst)
+		// json.compact
+		fmt.Println("Data map: ", strings.TrimSuffix(fmt.Sprintf("%s", data["password"]), "\n"))
 
 		//r.ParseForm()
 		w.Header().Set("Server", "A Go Web Server")
