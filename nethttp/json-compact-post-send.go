@@ -17,7 +17,7 @@ func main() {
 	// jsonValue, _ := json.Marshal(values)
 	// resp, err := http.Post(authAuthenticatorUrl, "application/json", bytes.NewBuffer(jsonValue))
 
-	var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast.\n"}`)
+	var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast."}`)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	req.Header.Set("X-Custom-Header", "Golang Client")
 	req.Header.Set("Content-Type", "application/json")

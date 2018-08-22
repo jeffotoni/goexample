@@ -74,8 +74,12 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Unmarshal2: ", data)
 		fmt.Println("vetor map: ", data["password"])
 
+		read_line := strings.TrimRightFunc(fmt.Sprintf("%s", data["password"]), func(c rune) bool {
+			//In windows newline is \r\n
+			return c == '\r' || c == '\n'
+		})
 		// json.compact
-		fmt.Println("Data map: ", strings.TrimSuffix(fmt.Sprintf("%s", data["password"]), "\n"))
+		fmt.Println("Data map read_line: ", read_line)
 
 		//r.ParseForm()
 		w.Header().Set("Server", "A Go Web Server")
