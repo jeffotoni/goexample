@@ -17,7 +17,24 @@ func main() {
 	// jsonValue, _ := json.Marshal(values)
 	// resp, err := http.Post(authAuthenticatorUrl, "application/json", bytes.NewBuffer(jsonValue))
 
-	var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast."}`)
+	var jsonStr = []byte(`{
+"id": 0,
+"jsonrpc": "2.0",
+"result": {
+"address": "47VDcqrjmfuBv5Z45uAGCjiG2Y8uMmyewPWJzciszdN64NLigTUNjh6DJLkTC2TnU2JvhFqyins7qJYrN98Wxm7MHsZJPUb",
+"addresses": [{
+"address": "47VDcqrjmfuBv5Z45uAGCjiG2Y8uMmyewPWJzciszdN64NLigTUNjh6DJLkTC2TnU2JvhFqyins7qJYrN98Wxm7MHsZJPUb",
+"address_index": 0,
+"label": "Primary account",
+"used": false
+},{
+"address": "862mLCYYkh4AU2e2RYGx51STwE16aNLsFf7jhkggLYzD7ZuHhycdGtYArYbW2nFtYG7HwsLxcQ7LsGka3YHKHpTbBgmEhm2",
+"address_index": 1,
+"label": "teste",
+"used": false
+}]
+}
+}`)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
 	req.Header.Set("X-Custom-Header", "Golang Client")
 	req.Header.Set("Content-Type", "application/json")
