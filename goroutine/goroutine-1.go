@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"sync"
@@ -119,6 +120,29 @@ func main() {
 					fmt.Println("Result Go1 S3: ", result)
 					fmt.Println("Go1 S3 processar...")
 
+					// uma forma de capturar valor em mpa
+					// do json
+					data := []byte(fmt.Sprintf("%s", result))
+
+					// usando json.RawMessage
+					//Source := (*json.RawMessage)(&data)
+					//var objmap map[string]*json.RawMessage
+					//err := json.Unmarshal(*Source, &objmap)
+					//////
+
+					// transformando json em objeto
+					var objmap map[string]interface{}
+					err := json.Unmarshal(data, &objmap)
+
+					if err != nil {
+
+						fmt.Println("Error json", err)
+
+					} else {
+						//fmt.Println("Json Processado no S3: ", string(*objmap["login"]))
+						fmt.Println("Json Processado no S3: ", objmap["login"])
+					}
+
 				} else {
 
 					fmt.Println("erro result Load - Go1 S3", ok)
@@ -196,6 +220,29 @@ func main() {
 					// quebra o json localmente
 					fmt.Println("Result Go3 Walk: ", result)
 					fmt.Println("Go3 Walk processar...")
+
+					// uma forma de capturar valor em mpa
+					// do json
+					data := []byte(fmt.Sprintf("%s", result))
+
+					// usando json.RawMessage
+					//Source := (*json.RawMessage)(&data)
+					//var objmap map[string]*json.RawMessage
+					//err := json.Unmarshal(*Source, &objmap)
+					//////
+
+					// transformando json em objeto
+					var objmap map[string]interface{}
+					err := json.Unmarshal(data, &objmap)
+
+					if err != nil {
+
+						fmt.Println("Error json Walk:", err)
+
+					} else {
+						//fmt.Println("Json Processado no S3: ", string(*objmap["login"]))
+						fmt.Println("Json Processado no Walk: ", objmap["login"])
+					}
 
 				} else {
 
