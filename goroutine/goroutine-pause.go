@@ -1,3 +1,11 @@
+/*
+* Golang Goroutine
+*
+* @package     main
+* @author      @jeffotoni
+* @size        2018
+ */
+
 package main
 
 import "fmt"
@@ -32,8 +40,10 @@ func prepare() (pause func(t time.Duration), start, play, quit, wait func()) {
 		}
 	}
 
+	// @jeffotoni
+	// start func
 	start = func() {
-		// chWork, chWorkBackup
+
 		ch := make(chan struct{})
 		defer close(ch)
 
