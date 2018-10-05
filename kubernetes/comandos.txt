@@ -1,0 +1,9 @@
+kubectl get svc -n namespace
+kubectl create ns netcatc
+kubectl get ns
+kubectl apply -f namespace.yaml
+kubectl describe svc devops-service -n namespace
+kubectl pods -n namespace
+
+
+minikube list

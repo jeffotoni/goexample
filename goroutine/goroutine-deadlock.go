@@ -5,10 +5,12 @@ import (
 )
 
 func main() {
+
 	ch := make(chan string, 2)
-	ch <- "naveen"
-	ch <- "paul"
-	ch <- "steve"
+	ch <- "DevOpsBh"
+	ch <- "2018 Bh"
+	ch <- "Deadlock"
+
 	fmt.Println(<-ch)
 	fmt.Println(<-ch)
 }
