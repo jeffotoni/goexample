@@ -22,6 +22,7 @@ func main() {
 
 	strtext := ""
 	j := 0
+	totalall := 0
 	for scanner.Scan() {
 
 		linhatwitt := scanner.Text()
@@ -35,12 +36,15 @@ func main() {
 			}
 		}
 
+		totalall = totalall + total
 		strprint := fmt.Sprintf("[%d/%d]", j, total) + " " + strtext
 		fmt.Println(strprint)
 
 		strtext = ""
 		j++
 	}
+
+	fmt.Println("Total: ", totalall)
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
