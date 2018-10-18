@@ -13,7 +13,9 @@ func main() {
 		port = "8080"
 	}
 	http.HandleFunc("/", hello)
-	println("run server port:" + port)
+	{
+		println("run server port:" + port)
+	}
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
 
