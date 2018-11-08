@@ -11,6 +11,7 @@ func main() {
 	qntFiles := 30
 	Goroutine := 200
 
+	//strings.
 	rand.Seed(time.Now().UnixNano())
 
 	jobs := make(chan int, qntFiles)
@@ -30,47 +31,17 @@ func main() {
 		qntFiles := <-results
 		fmt.Println(qntFiles)
 	}
-	//////////////
 
-	//wg := sync.WaitGroup{}
-	// ch := make(chan struct{}, Goroutine)
-
-	// for w := 0; w < qntFiles; w++ {
-	// 	wg.Add(1)
-	// 	go func(ch <-chan struct{}) {
-
-	// 		processo(ch)
-
-	// 		wg.Done()
-
-	// 	}(ch)
-	// }
-
-	// for q := 0; q < Goroutine; q++ {
-	// 	ch <- struct{}{}
-	// }
-
-	//wg.Wait()
 }
 
 func worker(id int, jobs <-chan int, results chan<- string) {
+
 	for j := range jobs {
 
 		//time.Sleep(time.Second)
 		results <- GenerateFilename(j, id)
 	}
 }
-
-// func processo(ch <-chan struct{}) {
-// loop:
-// 	select {
-// 	case <-ch:
-// 		nomeGerado := GenerateFilename()
-// 		fmt.Println("Executando proceso...", nomeGerado)
-// 	default:
-// 		break loop
-// 	}
-// }
 
 func GenerateFilename(j, id int) string {
 	//start := time.Now()
