@@ -23,7 +23,7 @@ func upload(c echo.Context) error {
 	// Read form fields
 	name := c.FormValue("name")
 	email := c.FormValue("email")
-
+	
 	//-----------
 	// Read file
 	//-----------

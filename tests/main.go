@@ -1,5 +1,9 @@
 package main
 
+import (
+	"log"
+)
+
 type App struct {
 	Name string
 }
@@ -14,6 +18,7 @@ func main() {
 	a = App{}
 	a.Name = "jefferson"
 
+	log.Println("teste..")
 	println("\n" + a.Name)
 	Sum(5, 5)
 }
