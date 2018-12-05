@@ -45,6 +45,6 @@ func HashFile(filePath string) (string, error) {
 
 func main() {
 
-	hash, _ := HashFile("mozilla.pdf")
+	hash, _ := HashFile("golang.pdf")
 	fmt.Println(hash)
 }

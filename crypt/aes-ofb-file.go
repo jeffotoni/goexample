@@ -115,7 +115,7 @@ func DecryptOFBFile(fileName string) string {
 func main() {
 
 	// multiple 16 len text
-	fileCry := EncryptOFBFile("mozilla.pdf")
+	fileCry := EncryptOFBFile("golang.pdf")
 
 	fmt.Println(fileCry)
 
