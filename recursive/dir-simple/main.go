@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
-	"path"
 	"time"
 )
 
@@ -42,13 +42,18 @@ func LerDir(Pathf string) {
 	files := LerFile(Pathf)
 
 	for _, file := range files {
+
+		fmt.Println(file.Name())
+
 		if file.ModTime().Add(duration).Before(time.Now()) {
-			err = os.Remove(path.Join(Pathf, file.Name()))
+
+			//fmt.Println(file.Name)
+			/*err := os.Remove(path.Join(Pathf, file.Name()))
 			if err != nil {
 				log.Fatalf("error deleting file: %v", err)
 			} else {
 				log.Println("removendo file: ", file.Name())
-			}
+			}*/
 		}
 	}
 }
