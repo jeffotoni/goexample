@@ -1,0 +1,2 @@
+export AWS_INSTANCIE=your_instance
+AWS_REGION=us-region

@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 )
 
 // Funcao que escreve um texto no arquivo e retorna um erro caso tenha algum problema
@@ -45,14 +46,18 @@ func main() {
 	go func() {
 
 		var j int
+		var over [][]int
 
 		for {
 
 			j++
-			//time.Sleep(time.Second * 2)
+			time.Sleep(time.Microsecond)
 			fmt.Println("teste 2: ", j)
 
+			// eating a lot of memory
 			conteudo = append(conteudo, "789-"+strconv.Itoa(j))
+			a := make([]int, 0, 999999)
+			over = append(over, a)
 
 			err := escreverTexto(conteudo, "foo.txt")
 			if err != nil {

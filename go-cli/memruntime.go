@@ -12,7 +12,7 @@ func main() {
 	PrintMemUsage()
 
 	var overall [][]int
-	for i := 0; i < 4; i++ {
+	for i := 0; i < 40; i++ {
 
 		// Allocate memory using make() and append to overall (so it doesn't get
 		// garbage collected). This is to create an ever increasing memory usage
@@ -22,7 +22,7 @@ func main() {
 
 		// Print our memory usage at each interval
 		PrintMemUsage()
-		time.Sleep(time.Second)
+		time.Sleep(time.Second * 3)
 	}
 
 	// Clear our memory and print usage, unless the GC has run 'Alloc' will remain the same
