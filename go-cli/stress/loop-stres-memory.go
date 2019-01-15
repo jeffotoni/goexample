@@ -56,7 +56,8 @@ func main() {
 
 			// eating a lot of memory
 			conteudo = append(conteudo, "789-"+strconv.Itoa(j))
-			a := make([]int, 0, 999999)
+			//a := make([]int, 0, 999999)
+			a := make([]int, 0, 99)
 			over = append(over, a)
 
 			err := escreverTexto(conteudo, "foo.txt")
