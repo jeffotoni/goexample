@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -19,10 +20,12 @@ func main() {
 	var errStdout, errStderr error
 	stdout := io.MultiWriter(os.Stdout, &stdoutBuf)
 	stderr := io.MultiWriter(os.Stderr, &stderrBuf)
-	/*err := cmd.Start()
+
+	err := cmd.Start()
 	if err != nil {
 		log.Fatalf("cmd.Start() failed with '%s'\n", err)
-	}*/
+	}
+
 	go func() {
 		_, errStdout = io.Copy(stdout, stdoutIn)
 	}()
@@ -31,15 +34,16 @@ func main() {
 		_, errStderr = io.Copy(stderr, stderrIn)
 	}()
 
-	//err = cmd.Wait()
-	err := cmd.Run()
-	if err != nil {
-		log.Fatalf("cmd.Run() failed with %s\n", err)
-	}
+	// err = cmd.Wait()
+	// //err := cmd.Run()
+	// if err != nil {
+	// 	log.Fatalf("cmd.Run() failed with %s\n", err)
+	// }
+
 	if errStdout != nil || errStderr != nil {
 		log.Fatal("failed to capture stdout or stderr\n")
 	}
-	outStr, errStr := string(stdoutBuf.Bytes()), string(stderrBuf.Bytes())
-	fmt.Printf("\nout:\n%s\nerr:\n%s\n", outStr, errStr)
 
+	slurp, _ := ioutil.ReadAll(stdoutIn)
+	fmt.Printf("Jeff:: %s\n", slurp)
 }
