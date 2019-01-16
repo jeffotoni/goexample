@@ -126,7 +126,7 @@ func FileExist(name string) bool {
 
 func main() {
 
-	examplePtr := flag.String("file", "server-1.yaml", " Help:")
+	examplePtr := flag.String("file", "server-1.yaml or server-1.yaml,server-2.yaml,server-3.yaml", " Help:")
 	flag.Parse()
 
 	if len(os.Args) < 2 {
@@ -140,24 +140,21 @@ func main() {
 	if len(vet) > 0 {
 		for _, v := range vet {
 			if FileExist(v) {
-				fmt.Println("[ok found]", v)
+				fmt.Println("\033[0;33m[ok found]\033[0m", v)
 				ExecSession(v)
 			} else {
-				fmt.Println("File not exist: ", v)
+				fmt.Println("\033[0;31m[error]033[0m File not exist: ", v)
 			}
 		}
 	} else {
 		// just one file
 		if FileExist(fileYaml) {
-			fmt.Println(fileYaml)
+			fmt.Println("\033[0;33m[ok found]\033[0m", fileYaml)
 			ExecSession(fileYaml)
 		} else {
-			fmt.Println("File not exist: ", fileYaml)
+			fmt.Println("\033[0;31m[error]033[0m File not exist: ", fileYaml)
 		}
 	}
-
-	// Uncomment to store in variable
-	//fmt.Println(b.String())
 }
 
 func ExecSession(fileYaml string) {

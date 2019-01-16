@@ -1,0 +1,20 @@
+# Using yaml as the default for reading recipes
+version: "1.0"
+
+# Config server
+host: "IP_HOST"
+port: 22
+user: "centos"
+
+# type file or env
+type: "env"
+#type: "file"
+
+# when it is by file
+file: "key.pem"
+
+# type key
+env: "KEY_AWS"
+
+#comands
+commands: ["echo ################ servers-1 ###############","ls -lha", "exit"]
