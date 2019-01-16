@@ -1,1 +1,8 @@
-docker run -p 8086:8086 -v $(pwd):/var/lib/influxdb --name=influxdb influxdb
+#ref: https://docs.influxdata.com/influxdb/v1.7/guides/writing_data/
+
+$ docker run 
+-d \
+-p 8086:8086 \
+-v $(pwd):/var/lib/influxdb \
+--name=influxdb \
+influxdb

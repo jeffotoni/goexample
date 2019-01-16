@@ -8,16 +8,17 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 
 	"golang.org/x/crypto/ssh"
 )
 
-var KEY_PEM = `-----BEGIN RSA PRIVATE KEY-----
+// const KEY_PEM = `-----BEGIN RSA PRIVATE KEY-----
 
------END RSA PRIVATE KEY-----`
+// -----END RSA PRIVATE KEY-----`
 
-func PublicKeyFile() ssh.AuthMethod {
-	buffer := []byte(KEY_PEM)
+func PublicKey(Key string) ssh.AuthMethod {
+	buffer := []byte(Key)
 	key, err := ssh.ParsePrivateKey(buffer)
 	if err != nil {
 		return nil
@@ -25,47 +26,60 @@ func PublicKeyFile() ssh.AuthMethod {
 	return ssh.PublicKeys(key)
 }
 
-func main() {
+type ConfHost struct {
+	Host, User, Password, Key string
+	Port                      int
+}
 
-	hostname := "server.com"
-	port := "22"
-	username := "centos"
-	//password := ""
+func (c *ConfHost) Config() *ssh.ClientConfig {
 
 	// SSH client config
 	config := &ssh.ClientConfig{
-		User: username,
+		User: c.User,
 		Auth: []ssh.AuthMethod{
-			//ssh.Password(password),
-			PublicKeyFile(),
+			PublicKey(c.Key),
+			//ssh.Password(c.Password),
 		},
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
-	// Connect to host
-	client, err := ssh.Dial("tcp", hostname+":"+port, config)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer client.Close()
+	return config
+}
 
-	// Create sesssion
-	sess, err := client.NewSession()
+func (cf *ConfHost) ConnectSession() (*ssh.Session, error) {
+
+	config := cf.Config()
+
+	// Connect to host
+	connect, err := ssh.Dial("tcp", cf.Host+":"+strconv.Itoa(cf.Port), config)
 	if err != nil {
-		log.Fatal("Failed to create session: ", err)
+		return nil, fmt.Errorf("Failed to dial: %s", err)
 	}
-	defer sess.Close()
+	//defer connect.Close()
+	session, err := connect.NewSession()
+	if err != nil {
+		return nil, fmt.Errorf("Failed to create session: %s", err)
+	}
+
+	return session, nil
+}
+
+func main() {
+
+	// read from file, settings recipe
+	cf := ConfHost{User: "xxxxx", Port: 22, Host: "xxxxx", Key: os.Getenv("KEY_AWS")}
+
+	// connect ssh host
+	sess, err := cf.ConnectSession()
+	if err != nil {
+		log.Println("session: ", err)
+	}
 
 	// StdinPipe for commands
 	stdin, err := sess.StdinPipe()
 	if err != nil {
-		log.Fatal(err)
+		log.Println("session: ", err)
 	}
-
-	// stdoutIn, err := sess.StdoutPipe()
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
 
 	// Uncomment to store output in variable
 	//var b bytes.Buffer
@@ -80,13 +94,15 @@ func main() {
 	// Start remote shell
 	err = sess.Shell()
 	if err != nil {
-		log.Fatal(err)
+		log.Println("shell: ", err)
 	}
 
 	// send the commands
 	commands := []string{
-		"echo '################ executando ###############'",
-		// "", //coloca aqui os comandos
+		"echo '################ Exec ###############'",
+		"sudo -i",
+		"apt update",
+		"apt list --upgradable",
 		"exit",
 	}
 
@@ -99,6 +115,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	sess.Close()
 
 	// Uncomment to store in variable
 	//fmt.Println(b.String())
