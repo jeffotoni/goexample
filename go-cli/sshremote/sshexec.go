@@ -11,19 +11,21 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 
 	"golang.org/x/crypto/ssh"
 	yaml "gopkg.in/yaml.v2"
 )
 
 type ConfigYaml struct {
-	Version string `yaml:"version"`
-	Host    string `yaml:"host"`
-	User    string `yaml:"user"`
-	Port    int    `yaml:"port"`
-	Type    string `yaml:"type"`
-	File    string `yaml:"file"`
-	Env     string `yaml:"env"`
+	Version  string   `yaml:"version"`
+	Host     string   `yaml:"host"`
+	User     string   `yaml:"user"`
+	Port     int      `yaml:"port"`
+	Type     string   `yaml:"type"`
+	File     string   `yaml:"file"`
+	Env      string   `yaml:"env"`
+	Commands []string `yaml:"commands"`
 }
 
 // GetConfig Method responsible for struct
@@ -74,9 +76,9 @@ func PublicKey(Key string) ssh.AuthMethod {
 	return ssh.PublicKeys(key)
 }
 
-func (c *ConfigYaml) Config() *ssh.ClientConfig {
+func (c *ConfigYaml) Config() (config *ssh.ClientConfig) {
 	if c.Type == "file" {
-		config := &ssh.ClientConfig{
+		config = &ssh.ClientConfig{
 			User: c.User,
 			Auth: []ssh.AuthMethod{
 				PublicKeyFile(c.File),
@@ -84,15 +86,15 @@ func (c *ConfigYaml) Config() *ssh.ClientConfig {
 			HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 		}
 	} else {
-		config := &ssh.ClientConfig{
+		config = &ssh.ClientConfig{
 			User: c.User,
 			Auth: []ssh.AuthMethod{
-				PublicKey(c.Key),
+				PublicKey(os.Getenv(c.Env)),
 			},
 			HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 		}
 	}
-	return config
+	return
 }
 
 func (cf *ConfigYaml) ConnectSession() (*ssh.Session, error) {
@@ -111,6 +113,17 @@ func (cf *ConfigYaml) ConnectSession() (*ssh.Session, error) {
 	return session, nil
 }
 
+func FileExist(name string) bool {
+
+	//if _, err := os.Stat(name); os.IsNotExist(err) {
+	if stat, err := os.Stat(name); err == nil && !stat.IsDir() {
+
+		return true
+	}
+
+	return false
+}
+
 func main() {
 
 	examplePtr := flag.String("file", "server-1.yaml", " Help:")
@@ -120,8 +133,34 @@ func main() {
 		flag.PrintDefaults()
 		return
 	}
-	fileYaml := *examplePtr
 
+	// file or files
+	fileYaml := *examplePtr
+	vet := strings.Split(fileYaml, ",")
+	if len(vet) > 0 {
+		for _, v := range vet {
+			if FileExist(v) {
+				fmt.Println("[ok found]", v)
+				ExecSession(v)
+			} else {
+				fmt.Println("File not exist: ", v)
+			}
+		}
+	} else {
+		// just one file
+		if FileExist(fileYaml) {
+			fmt.Println(fileYaml)
+			ExecSession(fileYaml)
+		} else {
+			fmt.Println("File not exist: ", fileYaml)
+		}
+	}
+
+	// Uncomment to store in variable
+	//fmt.Println(b.String())
+}
+
+func ExecSession(fileYaml string) {
 	// get Yaml
 	cf := GetYaml(fileYaml)
 
@@ -154,13 +193,14 @@ func main() {
 	}
 
 	// send the commands
-	commands := []string{
-		"echo '################ Exec ###############'",
-		"sudo -i",
-		"apt update",
-		"apt list --upgradable",
-		"exit",
-	}
+	// commands := []string{
+	// 	"echo '################ " + fileYaml + " ###############'",
+	// 	//"apt update",
+	// 	//"apt list --upgradable",
+	// 	"exit",
+	// }
+
+	commands := cf.Commands
 
 	for _, cmd := range commands {
 		_, _ = fmt.Fprintf(stdin, "%s\n", cmd)
@@ -173,7 +213,4 @@ func main() {
 	}
 
 	sess.Close()
-
-	// Uncomment to store in variable
-	//fmt.Println(b.String())
 }
