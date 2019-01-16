@@ -5,17 +5,65 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"strconv"
 
 	"golang.org/x/crypto/ssh"
+	yaml "gopkg.in/yaml.v2"
 )
 
-// const KEY_PEM = `-----BEGIN RSA PRIVATE KEY-----
+type ConfigYaml struct {
+	Version string `yaml:"version"`
+	Host    string `yaml:"host"`
+	User    string `yaml:"user"`
+	Port    int    `yaml:"port"`
+	Type    string `yaml:"type"`
+	File    string `yaml:"file"`
+	Env     string `yaml:"env"`
+}
 
-// -----END RSA PRIVATE KEY-----`
+// GetConfig Method responsible for struct
+// of the yaml it returns the Config object
+// then the conf conf config definition
+// is made in yaml.Unmarshal and will receive &confg
+func GetYaml(path_yaml string) *ConfigYaml {
+
+	// Config structure instance
+	//var conf = &ConfigYaml{}
+	var conf *ConfigYaml
+
+	var yamlByte []byte
+	var err error
+
+	// Reading file and loading in buffer byte
+	if yamlByte, err = ioutil.ReadFile(path_yaml); err != nil {
+		log.Println("Error: ", err)
+	}
+
+	// Doing magic yaml
+	if err := yaml.Unmarshal(yamlByte, &conf); err != nil {
+		log.Println("Error", err)
+	}
+
+	return conf
+}
+
+func PublicKeyFile(file string) ssh.AuthMethod {
+	buffer, err := ioutil.ReadFile(file)
+	if err != nil {
+		return nil
+	}
+
+	key, err := ssh.ParsePrivateKey(buffer)
+	if err != nil {
+		return nil
+	}
+	return ssh.PublicKeys(key)
+}
 
 func PublicKey(Key string) ssh.AuthMethod {
 	buffer := []byte(Key)
@@ -26,30 +74,29 @@ func PublicKey(Key string) ssh.AuthMethod {
 	return ssh.PublicKeys(key)
 }
 
-type ConfHost struct {
-	Host, User, Password, Key string
-	Port                      int
-}
-
-func (c *ConfHost) Config() *ssh.ClientConfig {
-
-	// SSH client config
-	config := &ssh.ClientConfig{
-		User: c.User,
-		Auth: []ssh.AuthMethod{
-			PublicKey(c.Key),
-			//ssh.Password(c.Password),
-		},
-		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+func (c *ConfigYaml) Config() *ssh.ClientConfig {
+	if c.Type == "file" {
+		config := &ssh.ClientConfig{
+			User: c.User,
+			Auth: []ssh.AuthMethod{
+				PublicKeyFile(c.File),
+			},
+			HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		}
+	} else {
+		config := &ssh.ClientConfig{
+			User: c.User,
+			Auth: []ssh.AuthMethod{
+				PublicKey(c.Key),
+			},
+			HostKeyCallback: ssh.InsecureIgnoreHostKey(),
+		}
 	}
-
 	return config
 }
 
-func (cf *ConfHost) ConnectSession() (*ssh.Session, error) {
-
+func (cf *ConfigYaml) ConnectSession() (*ssh.Session, error) {
 	config := cf.Config()
-
 	// Connect to host
 	connect, err := ssh.Dial("tcp", cf.Host+":"+strconv.Itoa(cf.Port), config)
 	if err != nil {
@@ -66,8 +113,17 @@ func (cf *ConfHost) ConnectSession() (*ssh.Session, error) {
 
 func main() {
 
-	// read from file, settings recipe
-	cf := ConfHost{User: "xxxxx", Port: 22, Host: "xxxxx", Key: os.Getenv("KEY_AWS")}
+	examplePtr := flag.String("file", "server-1.yaml", " Help:")
+	flag.Parse()
+
+	if len(os.Args) < 2 {
+		flag.PrintDefaults()
+		return
+	}
+	fileYaml := *examplePtr
+
+	// get Yaml
+	cf := GetYaml(fileYaml)
 
 	// connect ssh host
 	sess, err := cf.ConnectSession()
