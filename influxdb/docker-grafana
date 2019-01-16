@@ -1,0 +1,1 @@
+docker run -d  -v $(pwd)/grafana-storage:/var/lib/grafana --name=grafana -p 3000:3000 grafana/grafana
