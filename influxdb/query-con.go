@@ -9,7 +9,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/influxdata/influxdb1-client/v2"
+	client "github.com/influxdata/influxdb1-client/v2"
 )
 
 const (
@@ -30,8 +30,6 @@ func Connect() client.Client {
 	// have not
 	// connected
 	if ic == nil {
-
-		fmt.Println("connect one")
 		ic, err = client.NewHTTPClient(client.HTTPConfig{
 			Addr:     Host,
 			Username: username,
@@ -58,8 +56,19 @@ func Connect() client.Client {
 	return ic
 }
 
+func Query(c client.Client, measurement string) {
+	defer c.Close()
+	q := client.Query{
+		Command:  "select * from " + measurement,
+		Database: MyDB,
+	}
+	if response, err := c.Query(q); err == nil && response.Error() == nil {
+		fmt.Println(response.Results)
+	}
+}
+
 func main() {
 
 	con := Connect()
-	fmt.Println(con)
+	Query(con, "user_steps")
 }

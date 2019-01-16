@@ -1,0 +1,11 @@
+ curl -G 'http://localhost:8086/query?pretty=true' --data-urlencode "db=gometrics" --data-urlencode "q=SELECT * FROM \"cpu_usage\""
+
+curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE gometrics"
+
+curl -i -XPOST http://localhost:8086/query --data-urlencode "q=DROP DATABASE gometrics"
+
+curl -i -XPOST http://localhost:8086/query --data-urlencode "q=SHOW DATABASES" 
+
+curl -i -XPOST 'http://localhost:8086/write?db=gometrics' --data-binary
+'cpu_load_short,host=server02 value=0.6'
+

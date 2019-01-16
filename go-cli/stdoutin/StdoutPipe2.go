@@ -1,3 +1,7 @@
+// Go in action
+// @jeffotoni
+// 2019-01-16
+
 package main
 
 import (
@@ -19,6 +23,7 @@ func printName(jString string) {
   if err != nil {
     log.Fatal(err)
   }
+
   scanner := bufio.NewScanner(cmdReader)
   go func() {
     for scanner.Scan() {
@@ -26,6 +31,7 @@ func printName(jString string) {
       fmt.Println("\033[0;33m[ok]\033[0m " + scanner.Text())
     }
   }()
+
   if err := cmd.Start(); err != nil {
     log.Fatal(err)
   }
