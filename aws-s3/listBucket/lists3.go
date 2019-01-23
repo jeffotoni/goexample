@@ -37,7 +37,12 @@ func main() {
 		//Prefix: aws.String("root/subfolder"),
 	}
 
-	f, err := os.OpenFile("./list-bucket.csv", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	// path and name csv
+	pathCsv := "./list-bucket.csv"
+	os.Remove(pathCsv) // remove path
+
+	// open and new file append
+	f, err := os.OpenFile(pathCsv, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(0)
@@ -52,7 +57,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	fmt.Println("####### load/ list-bucket.csv of " + *flagBucket + " #######")
+	fmt.Println("Generate file: list-bucket.csv of " + *flagBucket + "")
 	var i int
 	resp, _ := svc.ListObjects(params)
 	for _, key := range resp.Contents {
@@ -64,5 +69,5 @@ func main() {
 		}
 	}
 
-	fmt.Println("##### file generated successfully.")
+	fmt.Println("file generated successfully.")
 }
