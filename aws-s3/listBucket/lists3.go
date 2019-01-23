@@ -18,8 +18,8 @@ import (
 // define flags
 var (
 	pathCsv    = "./list-bucket.csv"
-	flagRegion = flag.String("region", "us-east-1", "example:")
-	flagBucket = flag.String("bucket", "myBucket", "example:")
+	flagRegion = flag.String("region", "us-east-1", "example: eu-west-1")
+	flagBucket = flag.String("bucket", "", "example: Mybucket")
 	i          = 0
 )
 

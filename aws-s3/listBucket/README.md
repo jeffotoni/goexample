@@ -44,13 +44,13 @@ id line, name, size.
 To execute just do the following:
 
 ```go
-$ go run lists3.go --region = us-east-1 --bucket = mybucket
+$ go run lists3.go --region=us-east-1 --bucket=mybucket
 ```
 
 or
 
 ```go
 $ go build
-$ ./lists3 --region = us-east-1 --bucket = mybucket
+$ ./lists3 --region=us-east-1 --bucket=mybucket
 ```
 
