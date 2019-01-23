@@ -15,12 +15,15 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
+// define flags
 var (
 	pathCsv    = "./list-bucket.csv"
 	flagRegion = flag.String("region", "us-east-1", "example:")
 	flagBucket = flag.String("bucket", "myBucket", "example:")
+	i          = 0
 )
 
+// init
 func init() {
 
 	flag.Parse()
@@ -37,6 +40,7 @@ func init() {
 
 func main() {
 
+	// session aws, keys and secret and ~/.aws/credentials
 	svc := s3.New(session.New(), &aws.Config{Region: aws.String(*flagRegion)})
 	params := &s3.ListObjectsInput{
 		Bucket: aws.String(*flagBucket),
@@ -54,16 +58,18 @@ func main() {
 	}
 	defer f.Close()
 
+	// initializing line file
 	var line string
 	line = "line,object name,size\n"
-
 	if _, err = f.WriteString(line); err != nil {
 		fmt.Println(err)
 		os.Exit(0)
 	}
 
+	// write screen
 	fmt.Println("Generate file: list-bucket.csv of " + *flagBucket + "")
-	var i int
+
+	// list objects not bucket
 	resp, _ := svc.ListObjects(params)
 	for _, key := range resp.Contents {
 		if *key.Size > 0 {
@@ -72,6 +78,5 @@ func main() {
 			f.WriteString(line)
 		}
 	}
-
 	fmt.Println("file generated successfully.")
 }
