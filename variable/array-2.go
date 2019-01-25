@@ -27,4 +27,6 @@ func main() {
 	// Letting Go compiler infer the length of the array
 	a5 := [...]string{"C", "C++", "B", "Fortran", "Lisp", "Pascal", "Assembly"}
 	fmt.Println(a5)
+
+	fmt.Println(a5[1:4])
 }
