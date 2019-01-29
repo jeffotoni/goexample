@@ -1,5 +1,5 @@
 /*
-* Golang not notify
+* Golang in action
 *
 * @package     main
 * @author      @jeffotoni
