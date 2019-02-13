@@ -1,4 +1,4 @@
-# Archivio Brasil One / ArchivioOneApiServer
+# Simple Sniff on Go
 
 A simple program using google's gopacket package to communicate with the pcap.h library, a tcpdump on Go.
 You can capture packets on your network.
