@@ -1,0 +1,110 @@
+== Info:   Trying 127.0.0.1...
+== Info: TCP_NODELAY set
+== Info: Connected to localhost (127.0.0.1) port 5010 (#0)
+=> Send header, 502 bytes (0x1f6)
+0000: 47 45 54 20 2f 61 70 69 2f 76 31 2f 66 69 6c 65 GET /api/v1/file
+0010: 77 6f 72 6b 2f 32 34 62 65 36 63 63 37 61 33 36 work/24be6cc7a36
+0020: 35 30 61 34 66 63 65 37 36 33 66 33 66 31 39 34 50a4fce763f3f194
+0030: 64 31 35 35 34 61 62 33 32 66 36 32 62 20 48 54 d1554ab32f62b HT
+0040: 54 50 2f 31 2e 31 0d 0a 48 6f 73 74 3a 20 6c 6f TP/1.1..Host: lo
+0050: 63 61 6c 68 6f 73 74 3a 35 30 31 30 0d 0a 55 73 calhost:5010..Us
+0060: 65 72 2d 41 67 65 6e 74 3a 20 63 75 72 6c 2f 37 er-Agent: curl/7
+0070: 2e 35 38 2e 30 0d 0a 41 63 63 65 70 74 3a 20 2a .58.0..Accept: *
+0080: 2f 2a 0d 0a 43 6f 6e 74 65 6e 74 2d 54 79 70 65 /*..Content-Type
+0090: 3a 20 61 70 70 6c 69 63 61 74 69 6f 6e 2f 6a 73 : application/js
+00a0: 6f 6e 0d 0a 41 75 74 68 6f 72 69 7a 61 74 69 6f on..Authorizatio
+00b0: 6e 3a 20 42 65 61 72 65 72 20 65 79 4a 68 62 47 n: Bearer eyJhbG
+00c0: 63 69 4f 69 4a 53 55 7a 49 31 4e 69 49 73 49 6e ciOiJSUzI1NiIsIn
+00d0: 52 35 63 43 49 36 49 6b 70 58 56 43 4a 39 2e 65 R5cCI6IkpXVCJ9.e
+00e0: 79 4a 31 63 32 56 79 49 6a 6f 69 4d 6a 4d 30 4e yJ1c2VyIjoiMjM0N
+00f0: 57 70 6c 5a 6d 59 79 4d 44 45 35 62 32 35 6c 49 WplZmYyMDE5b25lI
+0100: 69 77 69 5a 58 68 77 49 6a 6f 78 4e 54 55 79 4d iwiZXhwIjoxNTUyM
+0110: 54 4d 32 4d 44 45 33 4c 43 4a 70 63 33 4d 69 4f TM2MDE3LCJpc3MiO
+0120: 69 4a 71 64 33 51 67 51 58 4a 6a 61 47 6c 32 61 iJqd3QgQXJjaGl2a
+0130: 57 39 50 62 6d 55 67 51 58 42 70 63 32 56 79 64 W9PbmUgQXBpc2Vyd
+0140: 6d 56 79 49 6e 30 2e 4f 53 5f 35 46 62 65 52 74 mVyIn0.OS_5FbeRt
+0150: 44 62 36 72 43 56 53 45 4a 33 67 5f 64 57 66 32 Db6rCVSEJ3g_dWf2
+0160: 41 35 35 75 36 5f 30 52 51 30 61 37 43 4a 67 5a A55u6_0RQ0a7CJgZ
+0170: 59 36 6a 5f 56 58 4c 34 75 31 6e 33 76 50 35 58 Y6j_VXL4u1n3vP5X
+0180: 59 52 50 6a 53 62 36 42 36 73 4b 5f 58 52 49 34 YRPjSb6B6sK_XRI4
+0190: 54 49 55 63 34 4e 49 4e 4c 4a 5f 38 66 70 46 34 TIUc4NINLJ_8fpF4
+01a0: 66 2d 54 72 35 5a 61 50 4c 49 56 74 41 38 45 56 f-Tr5ZaPLIVtA8EV
+01b0: 32 45 7a 72 6d 32 53 79 6f 74 70 54 53 79 70 78 2Ezrm2SyotpTSypx
+01c0: 51 6a 52 34 66 44 78 4e 61 30 49 31 4c 4d 2d 67 QjR4fDxNa0I1LM-g
+01d0: 4c 71 6f 63 38 55 53 4c 34 74 44 46 65 61 45 35 Lqoc8USL4tDFeaE5
+01e0: 47 7a 74 4b 57 59 42 57 65 79 63 76 70 76 49 30 GztKWYBWeycvpvI0
+01f0: 59 59 0d 0a 0d 0a                               YY....
+<= Recv header, 17 bytes (0x11)
+0000: 48 54 54 50 2f 31 2e 31 20 32 30 30 20 4f 4b 0d HTTP/1.1 200 OK.
+0010: 0a                                              .
+<= Recv header, 52 bytes (0x34)
+0000: 43 61 63 68 65 2d 43 6f 6e 74 72 6f 6c 3a 20 6e Cache-Control: n
+0010: 6f 2d 63 61 63 68 65 2c 20 6e 6f 2d 73 74 6f 72 o-cache, no-stor
+0020: 65 2c 20 6d 75 73 74 2d 72 65 76 61 6c 69 64 61 e, must-revalida
+0030: 74 65 0d 0a                                     te..
+<= Recv header, 40 bytes (0x28)
+0000: 43 6f 6e 74 65 6e 74 2d 54 79 70 65 3a 20 74 65 Content-Type: te
+0010: 78 74 2f 68 74 6d 6c 3b 20 63 68 61 72 73 65 74 xt/html; charset
+0020: 3d 75 74 66 2d 38 0d 0a                         =utf-8..
+<= Recv header, 12 bytes (0xc)
+0000: 45 78 70 69 72 65 73 3a 20 30 0d 0a             Expires: 0..
+<= Recv header, 18 bytes (0x12)
+0000: 50 72 61 67 6d 61 3a 20 6e 6f 2d 63 61 63 68 65 Pragma: no-cache
+0010: 0d 0a                                           ..
+<= Recv header, 29 bytes (0x1d)
+0000: 58 2d 53 65 72 76 65 72 3a 20 41 72 63 68 69 76 X-Server: Archiv
+0010: 69 6f 42 72 61 73 69 6c 4f 6e 65 0d 0a          ioBrasilOne..
+<= Recv header, 37 bytes (0x25)
+0000: 44 61 74 65 3a 20 57 65 64 2c 20 31 33 20 46 65 Date: Wed, 13 Fe
+0010: 62 20 32 30 31 39 20 31 36 3a 35 39 3a 32 32 20 b 2019 16:59:22 
+0020: 47 4d 54 0d 0a                                  GMT..
+<= Recv header, 21 bytes (0x15)
+0000: 43 6f 6e 74 65 6e 74 2d 4c 65 6e 67 74 68 3a 20 Content-Length: 
+0010: 36 38 32 0d 0a                                  682..
+<= Recv header, 2 bytes (0x2)
+0000: 0d 0a                                           ..
+<= Recv data, 682 bytes (0x2aa)
+0000: 7b 22 73 74 61 74 75 73 22 3a 22 73 75 63 63 65 {"status":"succe
+0010: 73 73 22 2c 22 6d 65 73 73 61 67 65 22 3a 22 66 ss","message":"f
+0020: 69 6c 65 77 6f 72 6b 20 66 6f 75 6e 64 22 2c 22 ilework found","
+0030: 50 61 67 65 22 3a 7b 22 74 69 74 6c 65 22 3a 22 Page":{"title":"
+0040: 4c 69 73 74 61 20 64 65 20 46 69 6c 65 77 6f 72 Lista de Filewor
+0050: 6b 73 20 64 6f 20 55 73 75 5c 75 30 30 32 36 61 ks do Usu\u0026a
+0060: 61 63 75 74 65 3b 72 69 6f 20 5b 73 67 69 5d 22 acute;rio [sgi]"
+0070: 2c 22 68 74 74 70 22 3a 22 68 74 74 70 73 3a 2f ,"http":"https:/
+0080: 2f 77 77 77 2e 61 72 63 68 69 76 69 6f 62 72 61 /www.archiviobra
+0090: 73 69 6c 2e 63 6f 6d 2e 62 72 22 2c 22 75 73 65 sil.com.br","use
+00a0: 72 22 3a 22 53 67 69 22 2c 22 75 73 65 72 5f 74 r":"Sgi","user_t
+00b0: 6f 6b 65 6e 22 3a 22 30 65 36 36 32 39 39 34 65 oken":"0e662994e
+00c0: 61 65 63 65 66 31 63 30 35 30 37 39 66 37 36 62 aecef1c05079f76b
+00d0: 64 64 35 64 31 37 34 65 32 36 34 34 61 39 34 22 dd5d174e2644a94"
+00e0: 2c 22 4c 69 73 74 46 69 6c 65 77 6f 72 6b 22 3a ,"ListFilework":
+00f0: 5b 7b 22 66 77 5f 69 64 5f 63 72 79 70 74 22 3a [{"fw_id_crypt":
+0100: 22 52 34 42 4f 54 4f 2d 71 57 6f 4f 65 7a 4d 32 "R4BOTO-qWoOezM2
+0110: 6d 58 4b 38 6a 36 54 58 58 33 5f 55 68 66 72 56 mXK8j6TXX3_UhfrV
+0120: 6b 52 59 50 73 47 63 70 42 32 41 3d 3d 22 2c 22 kRYPsGcpB2A==","
+0130: 66 77 5f 6e 6f 6d 65 22 3a 22 54 65 73 74 65 20 fw_nome":"Teste 
+0140: 4a 6f 79 20 4e 65 77 22 2c 22 66 77 5f 6e 6f 6d Joy New","fw_nom
+0150: 65 5f 73 68 6f 72 74 22 3a 22 54 65 73 74 65 20 e_short":"Teste 
+0160: 4a 6f 79 20 4e 65 77 22 2c 22 66 77 5f 63 6c 69 Joy New","fw_cli
+0170: 65 6e 74 65 22 3a 22 54 65 73 74 65 20 54 65 73 ente":"Teste Tes
+0180: 74 65 22 2c 22 66 77 5f 63 6c 69 65 6e 74 65 5f te","fw_cliente_
+0190: 73 68 6f 72 74 22 3a 22 54 65 73 74 65 20 54 65 short":"Teste Te
+01a0: 73 74 65 22 2c 22 66 77 5f 70 65 72 6d 69 73 73 ste","fw_permiss
+01b0: 61 6f 22 3a 22 61 64 6d 69 6e 20 66 75 6c 6c 22 ao":"admin full"
+01c0: 2c 22 66 77 5f 73 74 61 74 75 73 22 3a 31 7d 2c ,"fw_status":1},
+01d0: 7b 22 66 77 5f 69 64 5f 63 72 79 70 74 22 3a 22 {"fw_id_crypt":"
+01e0: 38 6d 49 36 52 74 63 38 49 7a 6d 48 62 58 43 49 8mI6Rtc8IzmHbXCI
+01f0: 46 54 62 75 59 51 2d 6d 6c 66 75 4b 46 54 6f 2d FTbuYQ-mlfuKFTo-
+0200: 78 36 62 31 2d 56 5f 31 59 41 3d 3d 22 2c 22 66 x6b1-V_1YA==","f
+0210: 77 5f 6e 6f 6d 65 22 3a 22 46 69 6c 65 77 6f 72 w_nome":"Filewor
+0220: 6b 78 79 22 2c 22 66 77 5f 6e 6f 6d 65 5f 73 68 kxy","fw_nome_sh
+0230: 6f 72 74 22 3a 22 46 69 6c 65 77 6f 72 6b 78 79 ort":"Fileworkxy
+0240: 22 2c 22 66 77 5f 63 6c 69 65 6e 74 65 22 3a 22 ","fw_cliente":"
+0250: 54 75 72 69 6c 65 73 73 61 22 2c 22 66 77 5f 63 Turilessa","fw_c
+0260: 6c 69 65 6e 74 65 5f 73 68 6f 72 74 22 3a 22 54 liente_short":"T
+0270: 75 72 69 6c 65 73 73 61 22 2c 22 66 77 5f 70 65 urilessa","fw_pe
+0280: 72 6d 69 73 73 61 6f 22 3a 22 70 65 72 73 6f 6e rmissao":"person
+0290: 61 6c 69 7a 61 64 6f 22 2c 22 66 77 5f 73 74 61 alizado","fw_sta
+02a0: 74 75 73 22 3a 31 7d 5d 7d 7d                   tus":1}]}}
+== Info: Connection #0 to host localhost left intact
