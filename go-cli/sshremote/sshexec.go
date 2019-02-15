@@ -126,6 +126,7 @@ func FileExist(name string) bool {
 
 func main() {
 
+	// pass parametrs
 	examplePtr := flag.String("file", "server-1.yaml or server-1.yaml,server-2.yaml,server-3.yaml", " Help:")
 	flag.Parse()
 
