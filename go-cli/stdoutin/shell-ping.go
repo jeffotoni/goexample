@@ -7,12 +7,19 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"os"
 	"os/exec"
 	"strings"
 )
 
 func main() {
-	cmdName := "ping 127.0.0.1"
+
+	if len(os.Args) < 2 {
+		fmt.Println("Ex: ping 127.0.0.1")
+		return
+	}
+
+	cmdName := "ping " + os.Args[1]
 	cmdArgs := strings.Fields(cmdName)
 
 	cmd := exec.Command(cmdArgs[0], cmdArgs[1:]...)
