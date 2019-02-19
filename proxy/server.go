@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/sourcegraph/apiproxy"
+	"github.com/sourcegraph/httpcache"
 )
 
 func main() {
@@ -24,3 +25,20 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 
 }
+
+// func NewProxy(spec *serviceSpec.ServiceSpec, director func(*http.Request),
+// respDirector func(*http.Response) error, dialTimeout, dialKAlive, transTLSHTimeout,
+// transRHTimeout time.Duration) *MultiReverseProxy {
+// 	return &MultiReverseProxy{
+// 		proxy: &httputil.ReverseProxy{
+// 			Director:       director, //Request director function
+// 			ModifyResponse: respDirector,
+// 			Transport: &http.Transport{
+// 				Dial: (&net.Dialer{
+// 					Timeout:   dialTimeout, //limits the time spent establishing a TCP connection (if a new one is needed).
+// 					KeepAlive: dialKAlive,  //limits idle keep a live connection.
+// 				}).Dial,
+// 				TLSHandshakeTimeout:   transTLSHTimeout, //limits the time spent performing the TLS handshake.
+// 				ResponseHeaderTimeout: transRHTimeout,   //limits the time spent reading the headers of the response.
+// 			},
+// 		},
