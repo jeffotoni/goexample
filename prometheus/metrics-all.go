@@ -57,15 +57,24 @@ func main() {
         w.Write([]byte("push jeff"))
     })
     pullHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+        msg := "Pullx"
+        token := "39393x38383c8383883dd939393939ddd9393"
+
+        // length := len(msg)
+        // length += len(token)
+        // lengths := strconv.Itoa(length)
+
         w.Header().Add("X-Server", "ApiServer")
         w.Header().Add("Content-Type", "application/json")
         w.Header().Add("Cache-Control", "no-cache, no-store, must-revalidate")
         w.Header().Add("Pragma", "no-cache")
         w.Header().Add("Expires", "0")
-        w.Header().Add("Authorization", "39393x38383c8383883dd939393939ddd9393")
+        w.Header().Add("Authorization", token)
+        //w.Header().Add("Content-Length", lengths)
         w.WriteHeader(http.StatusOK)
         //io.WriteString(w, "Pull")
-        w.Write([]byte("Pullx"))
+        w.Write([]byte(msg))
     })
 
     // Register all of the metrics in the standard registry.
@@ -88,13 +97,20 @@ func main() {
         ),
     )
 
+    mux := http.NewServeMux()
+
     //http.Handle("/metrics", promhttp.Handler())
-    http.Handle("/push", pushChain)
-    http.Handle("/pull", pullChain)
+    mux.Handle("/push", pushChain)
+    mux.Handle("/pull", pullChain)
+
+    muxServer := &http.Server{
+        Addr:    ":8089",
+        Handler: mux,
+    }
 
     go func() {
         log.Println("Run Apiserver Addr:8089")
-        if err := http.ListenAndServe(":8089", nil); err != nil {
+        if err := muxServer.ListenAndServe(); err != nil {
 
             log.Fatal(err)
         }
