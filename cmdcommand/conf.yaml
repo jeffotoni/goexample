@@ -1,0 +1,3 @@
+echo ################ DEPLOY BUILD LOCAL ###############
+ls -lh
+pwd
