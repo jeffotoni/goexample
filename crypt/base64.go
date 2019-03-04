@@ -9,12 +9,20 @@
 package main
 
 import (
+	"encoding/base64"
 	b64 "encoding/base64"
 	"flag"
 	"fmt"
 	"os"
 	"strings"
 )
+
+func Encode64String(content string) string {
+	if len(content) > 0 {
+		return base64.StdEncoding.EncodeToString([]byte(content))
+	}
+	return ""
+}
 
 //
 func UkkBase64Encode(textString string) string {
@@ -57,7 +65,8 @@ func main() {
 		textnew = *enctext
 	}
 
-	encbase64 := UkkBase64Encode(textnew)
+	//encbase64 := UkkBase64Encode(textnew)
+	encbase64 := Encode64String(textnew)
 
 	//decbase64 := UkkBase64Decode(encbase64)
 
