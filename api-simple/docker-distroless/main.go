@@ -2,6 +2,10 @@
 // @jeffotoni
 // 2019-04-05
 
+/// docker build -t example-distroless -f Dockerfile .
+/// docker run --rm -it example-distroless
+/// curl localhost:8080/api/hello
+
 package main
 
 import (
@@ -31,5 +35,3 @@ func main() {
         log.Printf("Eror while serving metrics: %s", err)
     }
 }
-
-/// curl localhost:8080/api/hello
