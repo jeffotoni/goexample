@@ -2,6 +2,9 @@
 // @jeffotoni
 // 2019-04-05
 
+/// curl localhost:8080/api/hello
+//////////////////////////////////////
+
 package main
 
 import (
@@ -31,5 +34,3 @@ func main() {
         log.Printf("Eror while serving metrics: %s", err)
     }
 }
-
-/// curl localhost:8080/api/hello
