@@ -52,7 +52,6 @@ func work() {
 			os.Exit(1)
 		}
 		// work = append(work, i)
-
 		// garante que o objeto não seja liberado e seu
 		// finalizador não seja executado antes do ponto
 		// no programa em que o KeepAlive é chamado.
