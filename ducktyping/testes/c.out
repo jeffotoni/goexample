@@ -1,0 +1,16 @@
+mode: set
+ducktyping/testes/method.go:18.28,20.2 1 1
+ducktyping/testes/method.go:22.37,25.28 3 1
+ducktyping/testes/method.go:28.2,28.20 1 1
+ducktyping/testes/method.go:25.28,27.3 1 1
+ducktyping/testes/method.go:31.34,33.25 2 1
+ducktyping/testes/method.go:36.2,36.22 1 1
+ducktyping/testes/method.go:33.25,35.3 1 1
+ducktyping/testes/method.go:39.36,41.2 1 1
+ducktyping/testes/method.go:43.29,47.16 3 1
+ducktyping/testes/method.go:52.2,53.8 2 1
+ducktyping/testes/method.go:47.16,50.3 2 0
+ducktyping/testes/method.go:56.13,58.2 1 1
+ducktyping/testes/method.go:60.13,67.16 4 1
+ducktyping/testes/method.go:72.2,73.14 2 1
+ducktyping/testes/method.go:67.16,70.3 2 0
