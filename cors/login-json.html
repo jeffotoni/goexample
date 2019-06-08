@@ -1,0 +1,131 @@
+<!-- 
+    @jeffotoni
+    2019-01-04
+    HTML LOGIN front-end in Go
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- 
+    Google login
+-->
+<meta name="google-signin-scope" content="email">
+<meta name="google-signin-client_id" content="keyclient">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+<title>Login front-end in Go</title>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<link href="web/static/css/login-theme2.css" rel="stylesheet" id="login-theme2-css">
+<link rel="icon" href="web/static/img/favicon.ico" />
+
+</head>
+<body>
+<div class="login-form">
+
+    <h2 class="text-center red">Golang API</h2>
+    <form action="/login" method="post" enctype="">
+        <div class="text-center social-btn">
+            <!-- <a href="#" class="btn btn-primary btn-block"><i class="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>
+            <a href="#" class="btn btn-info btn-block"><i class="fa fa-twitter"></i> Sign in with <b>Twitter</b></a> -->
+			<a href="#" class="btn btn-danger btn-block"><i class="fa fa-google"></i> Sign in with <b>Google</b></a>
+        </div>
+		<div class="or-seperator"><i>or</i></div>
+        {{if .MsgError}}
+        <p class="text-center-red">{{.MsgError}}</p>
+        {{end}}
+        <div class="form-group">
+        	<div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" class="form-control" 
+                id="email" name="email" placeholder="Email" required="required">
+            </div>
+        </div>
+		<div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                <input type="password" class="form-control" 
+                id="password" 
+                name="password" placeholder="****" required="required">
+            </div>
+        </div>
+
+        {{if .IfLabelone}}
+            <div class="form-group">
+                <button type="button" 
+                class="btn btn-success btn-block login-btn">{{.IfLabelone}}</button>
+            </div>
+        {{end}}
+
+        <div class="form-group">
+            <button type="button" 
+            name="onsing" id="onsing"
+            class="btn btn-success btn-block login-btn">{{.Labelone}}</button>
+        </div>
+        <div class="clearfix">
+            <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
+            <a href="forgot/password" class="pull-right text-success">Forgot Password?</a>
+        </div>  
+        
+    </form>
+    <div class="hint-text big">Don't have an account? <a href="register" class="text-success">Register Now!</a></div>
+</div>
+
+<script>
+
+     $("#onsing").click(function() {
+        
+        //// start
+        var t = confirm("Vamos testar CORS usando AXIOS!");
+        if (t == true) {
+
+            const endpoint = "http://localhost:8080/auth"
+
+            const body = {
+                email: $("#email").val(), 
+                password: $("#password").val() 
+            }
+
+            const config = {
+                 headers: {
+                    'Content-Type': 'application/json'
+                  }
+            }
+
+            axios.post(endpoint, body, config)
+                .then(function(response){
+
+                /////////////////////////////////////
+                console.log('Enviado..')
+                // console.log(response)
+                console.log(response.data.status)
+                console.log(response.data.msg)
+                console.log(response.request.status)
+                /////////////////////////////////////
+            })
+            .catch((err) => {
+                /////////////////////
+                console.log("error axios send")
+                console.log(err)
+                /////////////////
+            });
+        } else {
+
+            console.log("Ok, não disparmos o Request...");
+        }
+        /////////fim
+    });
+
+</script>
+    
+</body>
+</html>
