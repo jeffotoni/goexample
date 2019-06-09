@@ -2,26 +2,18 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/rs/cors"
-	//"io/ioutil"
+	"fmt"
+	//"github.com/rs/cors"
+	"github.com/jeffotoni/goexample/cors/pkg/cors"
 	"log"
 	"net/http"
 	"time"
 )
 
-const (
-	_                 = iota
-	KB            int = 1 << (10 * iota)
-	MB            int = 100 << (10 * iota)
-	GB            int = 1000 << (10 * iota)
-	MaxHeaderByte     = GB
-)
-
 var (
-	confServer *http.Server
-	ServerPort = "8080"
-
-	CorsAllow          = []string{"http://localhost:8282"}
+	ServerPort         = "8080"
+	confServer         *http.Server
+	CorsAllow          = []string{"http://my.com.br", "http://localhost:9090"}
 	CorsAllowedMethods = []string{"HEAD", "GET", "POST", "PUT", "PATCH", "DELETE"}
 	CorsAllowedHeaders = []string{"*"}
 )
@@ -29,27 +21,27 @@ var (
 func main() {
 
 	mux := http.NewServeMux()
+
 	corsx := cors.New(cors.Options{
 		AllowedOrigins:   CorsAllow,
 		AllowedMethods:   CorsAllowedMethods,
 		AllowedHeaders:   CorsAllowedHeaders,
 		AllowCredentials: true,
+		Debug:            true,
 	})
 
 	mux.HandleFunc("/auth", Auth)
-
-	// cors allow
-	cors.AllowAll().Handler(mux)
+	mux.HandleFunc("/hello", Hello)
 
 	// cors mux
 	handlerCors := corsx.Handler(mux)
 
 	confServer = &http.Server{
-		Addr:           ":" + ServerPort,
-		Handler:        handlerCors,
-		ReadTimeout:    30 * time.Second,
-		WriteTimeout:   20 * time.Second,
-		MaxHeaderBytes: MaxHeaderByte,
+		Addr:         ":" + ServerPort,
+		Handler:      handlerCors,
+		ReadTimeout:  30 * time.Second,
+		WriteTimeout: 20 * time.Second,
+		//MaxHeaderBytes: MaxHeaderByte,
 	}
 
 	println("\033[0;33mRun Server Cors port: 8080\033[0m")
@@ -64,10 +56,28 @@ type AuthJson struct {
 	Password string `json:"password"`
 }
 
+func Hello(w http.ResponseWriter, r *http.Request) {
+	jsonMsg := `{"msg":"hello.."}`
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(jsonMsg))
+	return
+}
+
 func Auth(w http.ResponseWriter, r *http.Request) {
 
+	w.Header().Set("Content-Type", "application/json")
 	println("[auth access]")
-	println(r.Header.Get("Content-Type"))
+	fmt.Println(r.Header)
+
+	fmt.Println("origin: ", r.Header.Get("Origin"))
+	if CorsValid(CorsAllow, r.Header.Get("Origin")) {
+		println("exist e permitido!")
+	} else {
+		println("header Auth :: dominio nao é permitido acessar!")
+		return
+	}
+
+	println("Content-Type: " + r.Header.Get("Content-Type"))
 
 	if r.Header.Get("Content-Type") == "application/x-www-form-urlencoded" {
 
@@ -75,7 +85,7 @@ func Auth(w http.ResponseWriter, r *http.Request) {
 		println("first name: " + r.FormValue("email"))
 		println("last name: " + r.FormValue("password"))
 		jsonMsg := `{"status":"ok", "msg":"tudo ocorreu bem na Cors..., acessou via form urlencoded"}`
-		w.WriteHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(jsonMsg))
 		return
 	}
@@ -111,11 +121,19 @@ func Auth(w http.ResponseWriter, r *http.Request) {
 
 		println("email: " + auth.Email)
 		println("password: " + auth.Password)
-
 		jsonMsg := `{"status":"ok", "msg":"recebido seu json com sucesso"}`
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(jsonMsg))
 		return
 	}
+}
 
+func CorsValid(slice []string, item string) bool {
+	set := make(map[string]struct{}, len(slice))
+	for _, s := range slice {
+		set[s] = struct{}{}
+	}
+
+	_, ok := set[item]
+	return ok
 }

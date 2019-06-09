@@ -5,14 +5,13 @@ import (
 	"text/template"
 )
 
-var port string = "9090"
+var port string = "9292"
 var tmpl *template.Template
 
 type Login struct {
-	MsgError      string
-	IfLabelone    string
-	Labelone      string
-	IfLabeloneSub string
+	MsgError   string
+	IfLabelone string
+	Labelone   string
 }
 
 func HandlerLoginHtml(w http.ResponseWriter, r *http.Request) {
@@ -33,10 +32,9 @@ func HandlerLoginHtml(w http.ResponseWriter, r *http.Request) {
 	}
 
 	login := Login{
-		MsgError:      "",
-		IfLabelone:    "",
-		Labelone:      "logar!",
-		IfLabeloneSub: "logar submit",
+		MsgError:   "",
+		IfLabelone: "",
+		Labelone:   "logar!",
 	}
 
 	tmpl.Execute(w, login)

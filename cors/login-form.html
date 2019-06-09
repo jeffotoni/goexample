@@ -33,7 +33,7 @@
 <div class="login-form">
 
     <h2 class="text-center red">Golang API</h2>
-    <form action="/login" method="post" enctype="">
+    <form action="http://localhost:8080/hello" method="post" enctype="">
         <div class="text-center social-btn">
             <!-- <a href="#" class="btn btn-primary btn-block"><i class="fa fa-facebook"></i> Sign in with <b>Facebook</b></a>
             <a href="#" class="btn btn-info btn-block"><i class="fa fa-twitter"></i> Sign in with <b>Twitter</b></a> -->
@@ -62,15 +62,18 @@
         {{if .IfLabelone}}
             <div class="form-group">
                 <button type="button" 
+                name="onsing" id="onsing"
                 class="btn btn-success btn-block login-btn">{{.IfLabelone}}</button>
             </div>
         {{end}}
 
+        {{if .IfLabeloneSub}}
         <div class="form-group">
-            <button type="button" 
-            name="onsing" id="onsing"
-            class="btn btn-success btn-block login-btn">{{.Labelone}}</button>
+            <button type="submit"
+            class="btn btn-success btn-block login-btn">{{.IfLabeloneSub}}</button>
         </div>
+        {{end}}
+
         <div class="clearfix">
             <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
             <a href="forgot/password" class="pull-right text-success">Forgot Password?</a>
