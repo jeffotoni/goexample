@@ -21,7 +21,11 @@ func Hello(w http.ResponseWriter, r *http.Request) {
 func main() {
 
     mux := http.NewServeMux()
+
+    //mux.Handle("/api/ping", http.HandlerFunc(Hello))
     mux.Handle("/api/hello", http.HandlerFunc(Hello))
+    // mux.Handle("/api/products", http.HandlerFunc(Hello))
+    // mux.Handle("/api/products/{id}", http.HandlerFunc(Hello))
 
     server :=
         &http.Server{
@@ -29,7 +33,6 @@ func main() {
             Handler: mux,
         }
 
-    fmt.Printf("Server Run port: 8080\n")
     if err := server.ListenAndServe(); err != nil {
         log.Printf("Eror while serving metrics: %s", err)
     }

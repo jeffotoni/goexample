@@ -1,0 +1,21 @@
+
+
+Olá galerinha do Go...
+
+Vamos falar hoje sobre Cors..
+
+O que é Cors ?
+
+(CORS) Cross-Origin Resource Sharing
+conhecido também como 
+"compartilhamento de recursos de origem cruzada, 
+
+é uma especificação de uma tecnologia de navegadores 
+que define meios para um servidor permitir que seus 
+recursos sejam acessados por uma página web de um domínio diferente." 
+
+Lindo não é? 🤣😂
+
+SPA (SIMPLE PAGE APPLICATION)
+
+Em Go tudo torna-se mais simples quando o assunto é back-end. 👊💕
