@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  api:
+    hostname: api
+    build: .
+    container_name: api
+    ports:
+      - '8888:8888'
+    command: [
+      "-secret=my_secret_key",
+      "-dbhost=db",
+    ]
+    depends_on:
+      - db
+
+  db:
+    hostname: postgres
+    image: postgres:11
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=api
+    ports:
+      - 5432:5432
+    volumes:
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
+      #- ./sql/data.sql:/docker-entrypoint-initdb.d/2-data.sql
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+    driver: local
