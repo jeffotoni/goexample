@@ -8,24 +8,24 @@
 package main
 
 import (
-	"expvar"
-	_ "expvar"
+	//"expvar"
+	//_ "expvar"
 	"log"
 	"net/http"
 )
 
-func init() {
+// func init() {
 
-	http.HandleFunc("/debug/vars", expvarHandler)
+// 	http.HandleFunc("/debug/vars", expvarHandler)
 
-	Publish("cmdline", Func(cmdline))
+// 	Publish("cmdline", Func(cmdline))
 
-	Publish("memstats", Func(memstats))
-}
+// 	Publish("memstats", Func(memstats))
+// }
 
-var (
-	exp_points_processed = expvar.NewInt("points_processed")
-)
+// var (
+// 	exp_points_processed = expvar.NewInt("points_processed")
+// )
 
 func Hello(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)

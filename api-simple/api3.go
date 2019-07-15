@@ -8,12 +8,30 @@
 package main
 
 import (
-    "fmt"
+    //"fmt"
     "log"
     "net/http"
 )
 
 func Hello(w http.ResponseWriter, r *http.Request) {
+
+    switch r.Method {
+    case http.MethodPost:
+        log.Println("Method: ", http.MethodPost)
+        break
+    case http.MethodGet:
+        log.Println("Method: ", http.MethodGet)
+        break
+    case http.MethodPut:
+        log.Println("Method: ", http.MethodPut)
+        break
+    case http.MethodDelete:
+        log.Println("Method: ", http.MethodDelete)
+        break
+    default:
+        log.Println("Method não permitido: ", r.Method)
+    }
+
     w.WriteHeader(http.StatusOK)
     w.Write([]byte("Hello, welcome to the world, Go!"))
 }
@@ -33,6 +51,7 @@ func main() {
             Handler: mux,
         }
 
+    log.Println("Server Run port: 8080")
     if err := server.ListenAndServe(); err != nil {
         log.Printf("Eror while serving metrics: %s", err)
     }
