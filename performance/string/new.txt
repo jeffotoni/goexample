@@ -1,0 +1,6 @@
+goos: linux
+goarch: amd64
+BenchmarkStringBuildNaive-4     	 3000000	       545 ns/op
+BenchmarkStringBuildBuilder-4   	10000000	       133 ns/op
+PASS
+ok  	_/home/netcatc/repositorioSvn/gits3projetos/gitjeff/goexample/string	3.649s

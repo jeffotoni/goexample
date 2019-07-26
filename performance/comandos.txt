@@ -1,0 +1,15 @@
+
+
+Flat é a duração gasta em determinada função e cum é cumulativa da função atual mais as chamadas acima dela.
+
+go test -v
+go test -bench=.
+go test -cpuprofile cpu.pprof -memprofile mem.pprof -bench .
+go tool pprof --text ./gostring.test cpu.pprof 
+go tool pprof --text ./gostring.test cpu.pprof --lines
+
+
+$ go get github.com/google/pprof
+pprof -http=localhost:6060 pprof-2 mem.pprof
+pprof -http=localhost:6060 pprof-2 cpu.pprof
+
