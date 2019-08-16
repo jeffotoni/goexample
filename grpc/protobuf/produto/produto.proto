@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package produto;
+
+message Produto {
+    int64 ID = 1;
+    string nome = 2;
+    bool done = 3;
+}

@@ -3,11 +3,11 @@ package main
 import "fmt"
 import "time"
 
-var fin = make(chan bool)
 var stream = make(chan int)
+var fin = make(chan bool)
 
 func produce() {
-    for i := 0; i < 100; i++ {
+    for i := 0; i < 10; i++ {
         fmt.Println("sending")
         stream <- i
         fmt.Println("sent")
@@ -22,13 +22,13 @@ func consume() {
     for {
         data := <-stream
         fmt.Println("Consumer: ", data)
-        time.Sleep(1500 * time.Millisecond)
+        time.Sleep(500 * time.Millisecond)
     }
 }
 
 func main() {
-    go produce()
     go consume()
+    go produce()
     <-fin
     fmt.Println("After calling DONE")
 }
