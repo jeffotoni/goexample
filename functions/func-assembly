@@ -1,0 +1,2 @@
+func1:1:1: invalid character U+007F
+func1:1:2: syntax error: package statement must be first
