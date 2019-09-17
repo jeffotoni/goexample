@@ -7,7 +7,7 @@ GOPROXY=direct
 GOSUMDB=off
 AWS_DEFAULT_PROFILE=default
 LAMBDA_NOME=sizeobject
-BUCKET_DEPLOY=namebucket_zip_lambda
+BUCKET_DEPLOY=your-bucket-deploy
 
 build:
 	@echo "\033[0;33m################ go run #####################\033[0m"
