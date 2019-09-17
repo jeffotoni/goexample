@@ -6,8 +6,16 @@ GO111MODULE=on
 GOPROXY=direct
 GOSUMDB=off
 AWS_DEFAULT_PROFILE=default
-LAMBDA_NOME=nome_do_lambda
+LAMBDA_NOME=sizeobject
 BUCKET_DEPLOY=namebucket_zip_lambda
+
+build:
+	@echo "\033[0;33m################ go run #####################\033[0m"
+	@echo "\033[0;32mUpdated\033[0m \033[0;33m[ok start...]\033[0m \n"
+	GOOS=linux GOARCH=amd64 go build -o $(LAMBDA_NOME) $(LAMBDA_NOME).go
+	zip -r $(LAMBDA_NOME).zip $(LAMBDA_NOME)
+	@echo ""
+	@echo "\033[0;33mprontinho...........\033[0m"
 
 update:
 	@echo "\033[0;33m################ go run #####################\033[0m"

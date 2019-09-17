@@ -1,3 +1,7 @@
+// Lambda in Go
+// @jeffotoni
+// 2019-09-17
+
 package main
 
 import (
