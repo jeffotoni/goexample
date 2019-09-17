@@ -15,7 +15,7 @@ import (
     "log"
 )
 
-var SIZE = int64(70000) // 7kb
+var SIZE = int64(70000) // 70kb
 
 type MsgResponse struct {
     Message string `json:"Answer:"`
@@ -50,7 +50,6 @@ func handlerS3(ctx context.Context, s3Event events.S3Event) (MsgResponse, error)
             continue
         }
 
-        // == 7kb
         if aws.Int64Value(result.ContentLength) > SIZE {
             _, err := svc.DeleteObject(&s3.DeleteObjectInput{
                 Bucket: aws.String(rs3.Bucket.Name),
