@@ -9,7 +9,6 @@ import (
 	"github.com/jeffotoni/goexample/grpc/protobuf/produto"
 	"io"
 	"os"
-	//"os/user"
 )
 
 var endianness = binary.LittleEndian
@@ -21,6 +20,7 @@ const (
 type length uint16
 
 func add(id int64, name string, done bool) (err error) {
+
 	u := &produto.Produto{
 		ID:   id,
 		Nome: name,
@@ -28,6 +28,7 @@ func add(id int64, name string, done bool) (err error) {
 	}
 
 	b, err := proto.Marshal(u)
+
 	if err != nil {
 		return fmt.Errorf("could not encode task: %v", err)
 	}
@@ -87,13 +88,13 @@ func list() (err error) {
 		}
 
 		// Unmarshal
+
 		var u produto.Produto
 		err = proto.Unmarshal(bs, &u)
 		if err != nil {
 			return fmt.Errorf("could not read produto: %v", err)
 		}
 
-		// Print
 		fmt.Println("id:", u.GetID())
 		fmt.Println("name:", u.GetNome())
 		fmt.Println("done:", u.GetDone())
