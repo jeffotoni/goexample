@@ -18,7 +18,7 @@ import (
 // define flags
 var (
 	flagRegion   = flag.String("region", "", "example: us-east-1")
-	flagInstance = flag.String("instance", "", "example: i-05bef719c14d68d10")
+	flagInstance = flag.String("instance", "", "example: i-05bef719c14d68d58")
 )
 
 // init
