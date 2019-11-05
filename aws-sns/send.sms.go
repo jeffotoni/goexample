@@ -1,7 +1,9 @@
 package main
 
 import (
+    "flag"
     "fmt"
+    "os"
 
     "github.com/aws/aws-sdk-go/aws"
     "github.com/aws/aws-sdk-go/aws/session"
@@ -20,13 +22,13 @@ const (
     // Transactional messages are critical messages that support
     // customer transactions, such as one-time passcodes for multi-factor authentication.
     // Amazon SNS optimizes the message delivery to achieve the highest reliability.
-    Transactional = "Transactional"
+    Transactional Type = "Transactional"
 )
 
 // Defaults.
 var (
     DefaultMaxPrice = 0.01
-    DefaultType     = Promotional
+    DefaultType     = Transactional
 )
 
 // SMS configures an SNS SMS client.
@@ -89,6 +91,17 @@ func Send(message, number string) error {
 
 func main() {
 
-    err := Send("Send SMS jeff..", "+15531987087256")
-    fmt.Println(err)
+    flagFone := flag.String("fone", "", "example: 319809876543")
+    flag.Parse()
+    if *flagFone == "" {
+        flag.PrintDefaults()
+        os.Exit(0)
+    }
+    fone := *flagFone
+    err := Send("Teste Send SMS jeff..", "+55"+fone)
+    if err == nil {
+        fmt.Println("Enviando com sucesso!")
+    } else {
+        fmt.Println("Error ao enviar: ", err.Error())
+    }
 }
