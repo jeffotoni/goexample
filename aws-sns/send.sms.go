@@ -92,13 +92,22 @@ func Send(message, number string) error {
 func main() {
 
     flagFone := flag.String("fone", "", "example: 319809876543")
+    flagMsg := flag.String("msg", "", "example: Send sms teste!")
     flag.Parse()
+
     if *flagFone == "" {
         flag.PrintDefaults()
         os.Exit(0)
     }
+
+    if *flagMsg == "" {
+        flag.PrintDefaults()
+        os.Exit(0)
+    }
+
     fone := *flagFone
-    err := Send("Teste Send SMS jeff..", "+55"+fone)
+    msg := *flagMsg
+    err := Send(msg, "+55"+fone)
     if err == nil {
         fmt.Println("Enviando com sucesso!")
     } else {
