@@ -34,8 +34,12 @@ message BookProto {
   repeated string chapters = 4;
 }
 */
+
+//$ sudo apt install protobuf-compiler
+//$ go get -u github.com/golang/protobuf/protoc-gen-go
 // protoc --go_out=. book.proto
 
+// go get -u -t github.com/tinylib/msgp
 /*
 //go:generate msgp -tests=false
 type BookDef struct {
