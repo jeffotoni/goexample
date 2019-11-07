@@ -1,0 +1,9 @@
+syntax = "proto2";
+package main;
+
+message BookProto {
+  required string title = 1;
+  required string author = 2;
+  optional int64 pages = 3;
+  repeated string chapters = 4;
+}

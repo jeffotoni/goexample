@@ -84,7 +84,6 @@ func (s *SMS) Send(message, number string) error {
 // Send `message` to `number` using defaults.
 func Send(message, number string) error {
     service := sns.New(session.New(aws.NewConfig().WithRegion("us-east-1")))
-    //service := sns.New(session.New(aws.NewConfig()))
     sms := SMS{Service: service}
     return sms.Send(message, number)
 }
