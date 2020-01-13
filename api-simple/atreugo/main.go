@@ -16,6 +16,7 @@ func main() {
 	})
 
 	server.Path("POST", "/api/user", func(ctx *atreugo.RequestCtx) error {
+
 		type t struct {
 			Nome  string `json:"nome"`
 			Login string `json:login`
