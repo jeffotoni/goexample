@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"sync"
+	"time"
 )
 
 func main() {
@@ -17,8 +18,9 @@ func main() {
 	}()
 	go func() {
 		<-ch
-		fmt.Println(v)
+		fmt.Println("done: ", v)
 		wg.Done()
 	}()
 	wg.Wait()
+	time.Sleep(time.Second * 2)
 }
