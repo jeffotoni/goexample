@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"text/template"
@@ -32,6 +33,8 @@ func main() {
 
 	var apps = App{Table{"MyClassAluno", []Columns{{"ClassVirtualAlunoOne", "ClassAlunoOne"}, {"ClassVirtualAlunoTwo", "ClassAlunoTwo"}}}}
 
+	//ShowTmpl(tmpl, apps)
+
 	f, err := os.Create(path_create)
 	if err != nil {
 		log.Println(err)
@@ -45,4 +48,12 @@ func main() {
 	}
 
 	log.Println("criado com sucesso")
+}
+
+func ShowTmpl(tmpl *template.Template, apps App) {
+	err := tmpl.Execute(os.Stdout, apps)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
