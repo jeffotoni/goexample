@@ -59,6 +59,12 @@ func main() {
 		return
 	}
 
+	b, err := ioutil.ReadAll(res.Body)
+	fmt.Println(err)
+	fmt.Println(string(b))
+
+	return
+
 	type UserList struct {
 		XMLName xml.Name
 		Body    struct {
@@ -69,12 +75,6 @@ func main() {
 			} `xml:"consultaCEPResponse"`
 		}
 	}
-
-	b, err := ioutil.ReadAll(res.Body)
-	fmt.Println(err)
-	fmt.Println(string(b))
-
-	return
 
 	result := new(UserList)
 	err = xml.NewDecoder(res.Body).Decode(result)
