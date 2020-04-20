@@ -5,14 +5,13 @@ import (
 	"crypto/tls"
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
 )
 
 func main() {
-	soapAction := "urn:consultaCEP"
+	//soapAction := "urn:consultaCEP"
 	httpMethod := "POST"
 	//username := ""
 	//password := ""
@@ -34,15 +33,14 @@ func main() {
 `,
 	))
 
-	println(string(payload))
 	req, err := http.NewRequest(httpMethod, url, bytes.NewReader(payload))
 	if err != nil {
 		log.Fatal("Error on creating request object. ", err.Error())
 		return
 	}
 
-	req.Header.Set("Content-type", "text/xml")
-	req.Header.Set("SOAPAction", soapAction)
+	req.Header.Set("Content-type", "text/xml; charset=utf-8")
+	//req.Header.Set("SOAPAction", soapAction)
 	//req.SetBasicAuth(username, password)
 
 	client := &http.Client{
@@ -59,46 +57,39 @@ func main() {
 		return
 	}
 
-	b, err := ioutil.ReadAll(res.Body)
-	fmt.Println(err)
-	fmt.Println(string(b))
-
-	return
-
-	type UserList struct {
-		XMLName xml.Name
+	type Envelope struct {
+		XMLName xml.Name `xml:"Envelope"`
+		Text    string   `xml:",chardata"`
+		Soap    string   `xml:"soap,attr"`
 		Body    struct {
-			XMLName             xml.Name
-			consultaCEPResponse struct {
-				XMLName xml.Name
-				Return  []string `xml:"return"`
+			Text                string `xml:",chardata"`
+			ConsultaCEPResponse struct {
+				Text   string `xml:",chardata"`
+				Ns2    string `xml:"ns2,attr"`
+				Return struct {
+					Text         string `xml:",chardata"`
+					Bairro       string `xml:"bairro"`
+					Cep          string `xml:"cep"`
+					Cidade       string `xml:"cidade"`
+					Complemento2 string `xml:"complemento2"`
+					End          string `xml:"end"`
+					Uf           string `xml:"uf"`
+				} `xml:"return"`
 			} `xml:"consultaCEPResponse"`
-		}
+		} `xml:"Body"`
 	}
 
-	result := new(UserList)
+	result := new(Envelope)
 	err = xml.NewDecoder(res.Body).Decode(result)
 	if err != nil {
 		log.Fatal("Error on unmarshaling xml. ", err.Error())
 		return
 	}
 
-	users := result.Body.consultaCEPResponse.Return
-	fmt.Println(strings.Join(users, ", "))
-
-	// 	<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
-	//     <soap:Body>
-	//         <ns2:consultaCEPResponse xmlns:ns2="http://cliente.bean.master.sigep.bsb.correios.com.br/">
-	//             <return>
-	//                 <bairro>Industrial</bairro>
-	//                 <cep>32223030</cep>
-	//                 <cidade>Contagem</cidade>
-	//                 <complemento2></complemento2>
-	//                 <end>Rua Senador Benedito Valadares</end>
-	//                 <uf>MG</uf>
-	//             </return>
-	//         </ns2:consultaCEPResponse>
-	//     </soap:Body>
-	// </soap:Envelope>
+	users := result.Body.ConsultaCEPResponse.Return
+	fmt.Println("users:", users)
+	fmt.Println("cep:", users.Cep)
+	fmt.Println("cidade:", users.Cidade)
+	fmt.Println("bairro:", users.Bairro)
 
 }
