@@ -22,6 +22,8 @@ func main() {
 		"",
 	)
 
+	println(url)
+
 	payload := []byte(strings.TrimSpace(`
     <x:Envelope xmlns:x="http://schemas.xmlsoap.org/soap/envelope/" xmlns:cli="http://cliente.bean.master.sigep.bsb.correios.com.br/">
     <x:Body>
@@ -57,7 +59,7 @@ func main() {
 		return
 	}
 
-	type Envelope struct {
+	type Correio struct {
 		XMLName xml.Name `xml:"Envelope"`
 		Text    string   `xml:",chardata"`
 		Soap    string   `xml:"soap,attr"`
@@ -79,7 +81,7 @@ func main() {
 		} `xml:"Body"`
 	}
 
-	result := new(Envelope)
+	result := new(Correio)
 	err = xml.NewDecoder(res.Body).Decode(result)
 	if err != nil {
 		log.Fatal("Error on unmarshaling xml. ", err.Error())
