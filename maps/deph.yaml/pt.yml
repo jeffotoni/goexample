@@ -1,0 +1,4 @@
+teste: oiamigo
+teste_nest:
+  chave: valor
+  chaveint: 12
