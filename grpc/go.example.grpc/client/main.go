@@ -91,7 +91,7 @@ func main() {
 	if len(flag.Args()) > 0 {
 		name = flag.Arg(0)
 	}
-	r, err := c.CepSearch(ctx, &pb.HelloRequest{Name: name})
+	r, err := c.SayHello(ctx, &pb.HelloRequest{Name: name})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}

@@ -6,9 +6,9 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/jeffotoni/goexample/grpc/go.example.grpc/helloworld"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	pb "google.golang.org/grpc/examples/helloworld/helloworld"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -20,7 +20,7 @@ var (
 type server struct{}
 
 // CepSearch implements helloworld.GreeterServer
-func (s *server) CepSearch(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
+func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 
 	//log.Printf("Handling CepSearch request [%v] with context %v", in, ctx)
 	return &pb.HelloReply{Message: "Vamos testar..: " + in.Name}, nil
