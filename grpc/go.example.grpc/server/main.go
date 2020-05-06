@@ -19,10 +19,10 @@ var (
 // server is used to implement helloworld.GreeterServer.
 type server struct{}
 
-// CepSearch implements helloworld.GreeterServer
+// SayHello implements helloworld.GreeterServer
 func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 
-	//log.Printf("Handling CepSearch request [%v] with context %v", in, ctx)
+	//log.Printf("Handling SayHello request [%v] with context %v", in, ctx)
 	return &pb.HelloReply{Message: "Vamos testar..: " + in.Name}, nil
 }
 
