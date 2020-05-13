@@ -113,6 +113,10 @@ func (A *Matrix) Set(i, j int, val float64) {
 	A.mux.Unlock()
 }
 
+func (A *Matrix) SetNaive(i, j int, val float64) {
+	A.data[i][j] = val
+}
+
 // MultNaive matrix multiplication O(n^3)
 func (A *Matrix) MultNaive(B, C *Matrix) (err error) {
 	var (
@@ -131,7 +135,7 @@ func (A *Matrix) MultNaive(B, C *Matrix) (err error) {
 			for k = 0; k < N; k++ {
 				sum += A.At(i, k) * B.At(k, j)
 			}
-			C.Set(i, j, sum)
+			C.SetNaive(i, j, sum)
 		}
 	}
 	return
