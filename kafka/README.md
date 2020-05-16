@@ -146,13 +146,13 @@ Em geral, mais partições em um cluster Kafka levam a uma taxa de transferênci
 
 ## PRODUCERS
 
-### Acks = 0
+#### Acks = 0
 o produtor não aguarda nenhum tipo de resposta do cluster. É o modo com throughput mais elevado. É importante levar em conta que nesse modo a perda de dados é possível uma vez que o produtor não aguarda nenhum tipo de sinal do cluster.
 
-### Acks = 1
+#### Acks = 1
 , o produtor aguarda por um ok do líder da partição. Sendo assim sabemos que ao menos 1 broker recebeu a mensagem. Já é uma configuração bem mais segura que Acks=0, mas não é 100% segura uma vez que o broker líder pode cair antes que a replicação seja realizada, e o produtor não seria notificado nesse cenário.
 
-### Acks = -1
+#### Acks = -1
 O produtor aguarda o retorno até que o líder e todas as réplicas recebam a mensagem. É o modo mais seguro, 
 
 
@@ -163,15 +163,15 @@ Não adianta ter mais consumidores do que partições. Caso o grupo 1 possuísse
 
 ## Estratégias de commit de offsets
 
-### No máximo uma vez
+#### No máximo uma vez
 Neste modo, o consumidor commita o offset para o Kafka assim que recebe a mensagem.
 Mensagens podem ser perdidas, mas nunca processadas com duplicação.
 
-### Pelo menos uma vez
+#### Pelo menos uma vez
 O offset é commitado após o processamento da mensagem
 Mensagens nunca serão perdidas, mas podem ser processadas com duplicação.
 
-### Exatamente uma vez
+#### Exatamente uma vez
 Uma mensagem tem a garantia de ser enviada uma única vez para um determinado consumidor.
 
 
