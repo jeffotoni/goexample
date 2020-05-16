@@ -14,7 +14,7 @@ $ docker-compose ps
 
 <h2 align="center">
   <br/>
-  <img src="https://github.com/jeffotoni/goexample/blob/master/kafka/img/docker-compose-ps.png" alt="logo" width="370" />
+  <img src="https://github.com/jeffotoni/goexample/blob/master/kafka/img/docker-compose-ps.png" alt="logo" width="1200" />
   <br />
   <br />
   <br />
@@ -26,7 +26,7 @@ Neste ambiente poderemos visualizar todo arsenal que o kafka disponibiliza de fo
 
 <h2 align="center">
   <br/>
-  <img src="https://github.com/jeffotoni/goexample/blob/master/kafka/img/confluent-browser.png" alt="logo" width="370" />
+  <img src="https://github.com/jeffotoni/goexample/blob/master/kafka/img/confluent-browser.png" alt="logo" width="1200" />
   <br />
   <br />
   <br />
@@ -47,7 +47,7 @@ $ pip3 install kafka-shell
 
 <h2 align="center">
   <br/>
-  <img src="https://github.com/jeffotoni/goexample/blob/master/kafka/img/kafka-shell.png" alt="logo" width="370" />
+  <img src="https://github.com/jeffotoni/goexample/blob/master/kafka/img/kafka-shell.png" alt="logo" width="1200" />
   <br />
   <br />
   <br />
