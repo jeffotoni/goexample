@@ -1,6 +1,6 @@
 ## Resumo kafka
 
-Vamos usar o confluent como plataforma e subir o kafka,zookeeper, kafka broker, Registry, ksql e rest-proxy.
+Vamos usar o confluent como plataforma e subir o kafka com todos seus serviços.
 
 
 Aqui todo o serviço que encontra-se em nosso docker-compose.yaml irá baixar as imagens e fazer seu start.
@@ -12,20 +12,46 @@ $ docker-compose ps
 
 ```
 
+<h2 align="center">
+  <br/>
+  <img src="https://github.com/jeffotoni/gocompilation/blob/master/golang-compilation.png" alt="logo" width="370" />
+  <br />
+  <br />
+  <br />
+</h2>
+
+
 Agora que o seriço está rodando podemos ir no browser e acessar [localhost:9021](http://localhost:9021)
 Neste ambiente poderemos visualizar todo arsenal que o kafka disponibiliza de forma visual.
+
+<h2 align="center">
+  <br/>
+  <img src="https://github.com/jeffotoni/gocompilation/blob/master/golang-compilation.png" alt="logo" width="370" />
+  <br />
+  <br />
+  <br />
+</h2>
+
+
+## Usando kafka-shell local
 
 Caso queira usar o kafka bash basta instalar usando o comando abaixo.
 
 Poderá encontrar aqui: [kafka-shell](https://github.com/devshawn/kafka-shell).
-
-## Usando kafka-shell local
 
 ```bash
 
 $ pip3 install kafka-shell
 
 ```
+
+<h2 align="center">
+  <br/>
+  <img src="https://github.com/jeffotoni/gocompilation/blob/master/golang-compilation.png" alt="logo" width="370" />
+  <br />
+  <br />
+  <br />
+</h2>
 
 Em nosso exemplo estamos usando a plataforma da confluent, e em seus brokers e zookeeper já possuem o kafka-sell, vou apresentar abaixo como executa-los.
 Como estamos usando docker-compose para subir todo serviço do kafka iremos usar docker-compose exec ou docker exec.
