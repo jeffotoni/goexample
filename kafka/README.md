@@ -34,8 +34,8 @@ Como estamos usando docker-compose para subir todo serviço do kafka iremos usar
 ### Criando Topico
 ```bash
 
-$ docker-compose exec broker kafka-topics --create --topic mytopic-test-2020 --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
-Created topic meu-topico-legal-jeff.
+$ docker-compose exec broker kafka-topics --create --topic my-topic-golang-test1 \
+--partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:2181
 
 ```
 
@@ -49,7 +49,7 @@ $ docker-compose exec broker kafka-topics --list --zookeeper zookeeper:2181
 ### Describe um tópico 
 ```bash
 
-$ docker-compose exec broker kafka-topics --describe meu-topico-legal-jeff --zookeeper zookeeper:2181
+$ docker-compose exec broker kafka-topics --describe my-topic-golang-test1 --zookeeper zookeeper:2181
 
 ```
 
@@ -58,7 +58,7 @@ $ docker-compose exec broker kafka-topics --describe meu-topico-legal-jeff --zoo
 ```bash
 
 $ docker-compose exec broker  \
-  bash -c "seq 100 | kafka-console-producer --request-required-acks 1 --broker-list localhost:9092 --topic meu-topico-legal-jeff && echo 'Produced 100 messages.'"
+  bash -c "seq 100 | kafka-console-producer --request-required-acks 1 --broker-list localhost:9092 --topic my-topic-golang-test1 && echo 'Produced 100 messages.'"
 
 ```
 
@@ -67,7 +67,7 @@ $ docker-compose exec broker  \
 ```bash
 
 $ docker-compose exec broker  \
-  kafka-console-consumer --bootstrap-server localhost:9092 --topic meu-topico-legal-jeff --from-beginning --max-messages 100
+  kafka-console-consumer --bootstrap-server localhost:9092 --topic my-topic-golang-test1 --from-beginning --max-messages 100
 
 ```
 
