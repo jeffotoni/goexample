@@ -19,7 +19,7 @@ Caso queira usar o kafka bash basta instalar usando o comando abaixo.
 
 Poderá encontrar aqui: [kafka-shell](https://github.com/devshawn/kafka-shell).
 
-## Usando kafka-shell
+## Usando kafka-shell local
 
 ```bash
 
@@ -31,7 +31,9 @@ Em nosso exemplo estamos usando a plataforma da confluent, e em seus brokers e z
 Como estamos usando docker-compose para subir todo serviço do kafka iremos usar docker-compose exec ou docker exec.
 
 
-### Criando Topico
+### Usando docker-compose exec para executar kafka-shell
+
+#### Criando Topico
 ```bash
 
 $ docker-compose exec broker kafka-topics --create --topic my-topic-golang-test1 \
@@ -39,21 +41,21 @@ $ docker-compose exec broker kafka-topics --create --topic my-topic-golang-test1
 
 ```
 
-### Listando todos meus topicos
+#### Listando todos meus topicos
 ```bash
 
 $ docker-compose exec broker kafka-topics --list --zookeeper zookeeper:2181
 
 ```
 
-### Describe um tópico 
+#### Describe um tópico 
 ```bash
 
 $ docker-compose exec broker kafka-topics --describe my-topic-golang-test1 --zookeeper zookeeper:2181
 
 ```
 
-### Producer mensanges
+#### Producer mensanges
 
 ```bash
 
@@ -63,7 +65,7 @@ $ docker-compose exec broker  \
 
 ```
 
-### Consumer mensagens
+#### Consumer mensagens
 
 ```bash
 
@@ -173,31 +175,31 @@ Mensagens nunca serão perdidas, mas podem ser processadas com duplicação.
 Uma mensagem tem a garantia de ser enviada uma única vez para um determinado consumidor.
 
 
-## bash curl
+## Bash curl rest-proxy
 
 
-### List Info Topics
+#### List Info Topics
 ```bash
 
 $ curl "http://localhost:8082/topics" | jq
 
 ```
 
-### List Info Topic específico
+#### List Info Topic específico
 ```bash
 
 $ curl "http://localhost:8082/topics/topicgo1" | jq
 
 ```
 
-### List Info Partitions Topic
+#### List Info Partitions Topic
 ```bash
 
 $ curl "http://localhost:8082/topics/topicgo1/partitions" | jq
 
 ```
 
-### Produce JSON Menssage
+#### Produce JSON Menssage
 
 ```bash
 $ curl -X POST -H "Content-Type: application/vnd.kafka.json.v2+json" \
@@ -206,7 +208,7 @@ $ curl -X POST -H "Content-Type: application/vnd.kafka.json.v2+json" \
 
 ```
 
-### Create a Consumer
+#### Create a Consumer
 
 ```bash
 $ curl -X POST -H "Content-Type: application/vnd.kafka.v2+json" \
@@ -215,7 +217,7 @@ $ curl -X POST -H "Content-Type: application/vnd.kafka.v2+json" \
 
 ```
 
-# Out
+#### Out
 ```json
   {
   	"instance_id":"my_consumer_instance",
@@ -223,13 +225,13 @@ $ curl -X POST -H "Content-Type: application/vnd.kafka.v2+json" \
   } 
 ```
 
-### Subscription Consumer
+#### Subscription Consumer
 ```bash
 $ curl -X POST -H "Content-Type: application/vnd.kafka.v2+json" --data '{"topics":["topicgo1"]}' \
  http://localhost:8082/consumers/go_json_consumer/instances/my_consumer_instance/subscription
  ```
 
-### Consume JSON Menssage
+#### Consume JSON Menssage
 
 ```bash
 $ curl -X GET -H "Accept: application/vnd.kafka.json.v2+json" \
@@ -237,7 +239,7 @@ $ curl -X GET -H "Accept: application/vnd.kafka.json.v2+json" \
 
 ```
 
-### Delete
+#### Delete
 ```bash
 curl -X DELETE -H "Content-Type: application/vnd.kafka.v2+json" \
       http://localhost:8082/consumers/go_json_consumer/instances/my_consumer_instance
