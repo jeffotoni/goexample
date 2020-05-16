@@ -58,7 +58,8 @@ $ docker-compose exec broker kafka-topics --describe my-topic-golang-test1 --zoo
 ```bash
 
 $ docker-compose exec broker  \
-  bash -c "seq 100 | kafka-console-producer --request-required-acks 1 --broker-list localhost:9092 --topic my-topic-golang-test1 && echo 'Produced 100 messages.'"
+  bash -c "seq 100 | kafka-console-producer --request-required-acks 1 \
+  --broker-list localhost:9092 --topic my-topic-golang-test1 && echo 'Produced 100 messages.'"
 
 ```
 
@@ -67,7 +68,8 @@ $ docker-compose exec broker  \
 ```bash
 
 $ docker-compose exec broker  \
-  kafka-console-consumer --bootstrap-server localhost:9092 --topic my-topic-golang-test1 --from-beginning --max-messages 100
+  kafka-console-consumer --bootstrap-server localhost:9092 \
+  --topic my-topic-golang-test1 --from-beginning --max-messages 100
 
 ```
 
