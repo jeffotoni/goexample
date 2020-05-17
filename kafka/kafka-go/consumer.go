@@ -25,12 +25,13 @@ func getKafkaReader(kafkaURL, topic, groupID string) *kafka.Reader {
 
 func main() {
 
+	flagHost := flag.String("host", "localhost:9092", "string")
 	flagTopic := flag.String("topic", "topicgo1", "string")
 	flagGroup := flag.String("group", "logger-group1", "string")
 	flag.Parse()
 
 	// get kafka reader using environment variables.
-	kafkaURL := "localhost:9092"
+	kafkaURL := *flagHost
 	topic := *flagTopic
 	groupID := *flagGroup
 

@@ -23,11 +23,12 @@ func newKafkaWriter(kafkaURL, topic string) *kafka.Writer {
 
 func main() {
 
+	flagHost := flag.String("host", "localhost:9092", "string")
 	flagTopic := flag.String("topic", "topicgo1", "string")
 	flag.Parse()
 
 	// get kafka writer using environment variables.
-	kafkaURL := "localhost:9092"
+	kafkaURL := *flagHost
 	topic := *flagTopic
 
 	fmt.Println("Url: ", kafkaURL)
