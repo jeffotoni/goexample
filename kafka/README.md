@@ -14,7 +14,7 @@ O Apache Kafka é uma plataforma de streaming de eventos capaz de lidar com tril
   <br />
 </h2>
 
-Existe várias formas de subirmos o Kafka, instalando local baixando tgz, utilizando Cloud ou usando docker ou docker-compose.
+Existe várias formas de subirmos o Kafka, instalando local baixando tgz, utilizando Cloud ou usando Docker ou Docker Compose.
 
 Poderiamos utilizar:
 
@@ -75,7 +75,7 @@ $ pip3 install kafka-shell
 </h2>
 
 Em nosso exemplo estamos usando a plataforma da confluent, e em seus brokers e zookeeper já possuem o kafka-sell, vou apresentar abaixo como executa-los.
-Como estamos usando docker-compose para subir todo serviço do kafka iremos usar docker-compose exec ou docker exec.
+Como estamos usando Docker Compose para subir todo serviço do kafka iremos usar Docker Compose exec ou docker exec.
 
 
 ### Usando docker-compose exec para executar kafka-shell
@@ -292,3 +292,96 @@ curl -X DELETE -H "Content-Type: application/vnd.kafka.v2+json" \
       http://localhost:8082/consumers/go_json_consumer/instances/my_consumer_instance
 
 ```
+
+### Producer feito em Go
+
+Para comunicarmos com Kafka via Go temos varias formas e algumas libs disponíveis.
+
+#### Algumas das opções disponíveis são:
+
+ - [sarama](https://github.com/Shopify/sarama) A API expõe conceitos de baixo nível do protocolo Kafka mas não suporta recursos recentes do Go, como contextos. Ele também passa todos os valores como ponteiros, o que causa um grande número de alocações de memória dinâmica, coletas de lixo mais frequentes e maior uso de memória.
+
+ - [confluent-kafka-go](https://docs.confluent.io/current/clients/confluent-kafka-go/index.html#pkg-overview) É um wrapper baseado em cgo em torno do librdkafka, o que significa que ele introduz uma dependência em uma biblioteca C em todo o código Go que usa o pacote. Existe uma nova versão desta lib.
+
+ - [goka](https://github.com/lovoo/goka) É um cliente Kafka mais recente do Go que se concentra em um padrão de uso específico. Ele fornece abstrações para usar o Kafka como uma mensagem que passa o barramento entre serviços, em vez de um log de eventos ordenado. O pacote também depende do sarama para todas as interações com o Kafka.
+
+ - [kafka-go](https://github.com/segmentio/kafka-go/) Fornece APIs de nível baixo e alto para interagir com o Kafka, espelhar conceitos e implementar interfaces da biblioteca padrão Go para facilitar o uso e a integração.
+
+
+#### Producer / lib kafka-go
+```go
+
+func main() {
+
+  flagTopic := flag.String("topic", "topicgo1", "string")
+  flag.Parse()
+
+  kafkaURL := "localhost:9092"
+  topic := *flagTopic
+
+  fmt.Println("Url: ", kafkaURL)
+  fmt.Println("Topic: ", topic)
+
+  writer := newKafkaWriter(kafkaURL, topic)
+  defer writer.Close()
+  fmt.Println("Go Start Producing ... !!")
+  for i := 0; ; i++ {
+    uuid := fmt.Sprint(uuid.New())
+    msgJson := `{"uuid":"` + uuid + `", "key":` + strconv.Itoa(i) + `,"msg":success", "event":"kafka test"}`
+    msg := kafka.Message{
+      Key:   []byte(uuid),
+      Value: []byte(msgJson),
+    }
+    err := writer.WriteMessages(context.Background(), msg)
+    if err != nil {
+      fmt.Println(err)
+    }
+    fmt.Println("Key-", i)
+  }
+}
+
+```
+
+#### Consumer / lib kafka-go
+
+```go
+
+func main() {
+
+  flagTopic := flag.String("topic", "topicgo1", "string")
+  flagGroup := flag.String("group", "logger-group1", "string")
+  flag.Parse()
+
+  kafkaURL := "localhost:9092"
+  topic := *flagTopic         
+  groupID := *flagGroup     
+
+  fmt.Println("Url: ", kafkaURL)
+  fmt.Println("Topic: ", topic)
+  fmt.Println("Group: ", groupID)
+
+  reader := getKafkaReader(kafkaURL, topic, groupID)
+
+  defer reader.Close()
+  fmt.Println("start consuming ... !!")
+  for {
+      fmt.Println("consumer: ", t.Format("2006-01-02 15:04:05"))
+      m, err := reader.ReadMessage(context.Background())
+      if err != nil {
+        log.Fatalln(err)
+      }
+
+      fmt.Printf("message at topic:%v partition:%v offset:%v  %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
+  }
+
+  fmt.Println("Ticker stopped")
+}
+
+```
+
+
+
+
+
+
+
