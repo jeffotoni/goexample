@@ -30,9 +30,9 @@ func main() {
 	flag.Parse()
 
 	// get kafka reader using environment variables.
-	kafkaURL := "localhost:9092" //os.Getenv("kafkaURL")
-	topic := *flagTopic          //os.Getenv("topic")
-	groupID := *flagGroup        //os.Getenv("groupID")
+	kafkaURL := "localhost:9092"
+	topic := *flagTopic
+	groupID := *flagGroup
 
 	fmt.Println("Url: ", kafkaURL)
 	fmt.Println("Topic: ", topic)
@@ -42,7 +42,7 @@ func main() {
 
 	defer reader.Close()
 
-	ticker := time.NewTicker(900 * time.Millisecond)
+	ticker := time.NewTicker(300 * time.Millisecond)
 	done := make(chan bool)
 	go func() {
 		fmt.Println("start consuming ... !!")

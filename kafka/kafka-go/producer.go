@@ -13,10 +13,11 @@ import (
 
 func newKafkaWriter(kafkaURL, topic string) *kafka.Writer {
 	return kafka.NewWriter(kafka.WriterConfig{
-		Brokers:      []string{kafkaURL},
-		Topic:        topic,
-		Balancer:     &kafka.LeastBytes{},
-		RequiredAcks: 1, // acks = 0, acks = 1, acks = -1
+		Brokers:        []string{kafkaURL},
+		Topic:          topic,
+		Balancer:       &kafka.LeastBytes{},
+		RequiredAcks:   1,           // acks = 0, acks = 1, acks = -1
+		CommitInterval: time.Second, // flushes commits to Kafka every second
 	})
 }
 
@@ -47,6 +48,6 @@ func main() {
 			fmt.Println(err)
 		}
 		fmt.Println("Key-", i)
-		time.Sleep(time.Millisecond * 200)
+		time.Sleep(time.Millisecond * 300)
 	}
 }

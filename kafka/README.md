@@ -166,15 +166,30 @@ Cada mensagem dentro do log possui algumas informações:
 3. Key: chave da mensagem
 4. Value: a mensagem propriamente dita chamado de payload
 
-Todas as mensagens dentro de uma partição serão um conjunto chave / valor.
+Todas as mensagens dentro de uma partição serão um conjunto chave/valor.
 
 
 ## Partições
 
 A primeira coisa a entender é que uma partição de tópico é a unidade de paralelismo em Kafka.
 
+A unidade de armazenamento de Kafka é uma partição. Uma partição é uma sequência imutável e ordenada de mensagens anexadas. Uma partição não pode ser dividida em vários intermediários ou mesmo em vários discos.
+
+Você especifica quantos dados ou por quanto tempo os dados devem ser retidos, após os quais o Kafka limpa as mensagens em ordem - independentemente de a mensagem ter sido consumida.
+
+Partições são divididas em segmentos, portanto, o Kafka precisa encontrar regularmente as mensagens no disco que precisam ser removidas. Com um único arquivo muito longo das mensagens de uma partição, essa operação é lenta e propensa a erros. Para corrigir isso (e outros problemas que veremos), a partição é dividida em segmentos.
+
 Kafka sempre fornece os dados de uma única partição para um thread do consumidor. Assim, o grau de paralelismo no consumidor (dentro de um grupo de consumidores) é limitado pelo número de partições sendo consumidas. Portanto, em geral, quanto mais partições houver em um cluster Kafka, maior será a taxa de transferência possível.
 
+#### Resumo: 
+
+ - Partições são a unidade de armazenamento da Kafka
+ - Partições são divididas em segmentos
+ - Segmentos são dois arquivos: seu log e índice
+ - Os índices mapeiam cada deslocamento para a posição de suas mensagens no log, são usados ​​para procurar mensagens
+ - Os índices armazenam compensações em relação à compensação base do seu segmento
+ - Os lotes de mensagens compactadas são agrupados como carga útil de uma mensagem do wrapper
+ - Os dados armazenados no disco são os mesmos que o broker recebe do produtor pela rede e envia aos seus consumidores
 
 ## Qual é o numero de Partições que deveriamos criar para nosso cenário?
 
@@ -301,12 +316,14 @@ Para comunicarmos com Kafka via Go temos varias formas e algumas libs disponíve
 
  - [sarama](https://github.com/Shopify/sarama) A API expõe conceitos de baixo nível do protocolo Kafka mas não suporta recursos recentes do Go, como contextos. Ele também passa todos os valores como ponteiros, o que causa um grande número de alocações de memória dinâmica, coletas de lixo mais frequentes e maior uso de memória.
 
- - [confluent-kafka-go](https://docs.confluent.io/current/clients/confluent-kafka-go/index.html#pkg-overview) É um wrapper baseado em cgo em torno do librdkafka, o que significa que ele introduz uma dependência em uma biblioteca C em todo o código Go que usa o pacote. Existe uma nova versão desta lib.
+ - [confluent-kafka-go](https://docs.confluent.io/current/clients/confluent-kafka-go/index.html#pkg-overview) É um Package que fornece aos produtores e consumidores Apache Kafka de alto nível, usando ligações na parte superior da biblioteca librdkafka C. Bem completa e muito rápida.
 
  - [goka](https://github.com/lovoo/goka) É um cliente Kafka mais recente do Go que se concentra em um padrão de uso específico. Ele fornece abstrações para usar o Kafka como uma mensagem que passa o barramento entre serviços, em vez de um log de eventos ordenado. O pacote também depende do sarama para todas as interações com o Kafka.
 
  - [kafka-go](https://github.com/segmentio/kafka-go/) Fornece APIs de nível baixo e alto para interagir com o Kafka, espelhar conceitos e implementar interfaces da biblioteca padrão Go para facilitar o uso e a integração.
 
+
+Temos exemplos utilizando a lib confluent-kafka e kafka-go
 
 #### Producer / lib kafka-go
 ```go
