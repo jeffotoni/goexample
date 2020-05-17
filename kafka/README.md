@@ -8,7 +8,7 @@ O Apache Kafka é uma plataforma de streaming de eventos capaz de lidar com tril
 
 <h2 align="center">
   <br/>
-  <img src="https://github.com/jeffotoni/goexample/blob/master/kafka/img/kafka1.png" alt="logo" width="1200" />
+  <img src="https://github.com/jeffotoni/goexample/blob/master/kafka/img/kafka1.png" alt="logo" width="1200" title="Referencia da imagem: confluent.io" />
   <br />
   <br />
   <br />
