@@ -25,7 +25,11 @@ A [confluent.io](https://confluent.io) é sem dúvidas uma das versões que part
 
 
 Aqui todo o serviço que encontra-se em nosso docker-compose.yaml irá baixar as imagens e fazer seu start.
+
 ```bash
+$ git clone https://github.com/jeffotoni/goexample.git
+
+$ cd kafka/cp-all-in-one
 
 $ docker-compose up --build
 
