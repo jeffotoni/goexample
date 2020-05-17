@@ -1,4 +1,18 @@
-## Resumo kafka
+## Kafka e Go
+
+Este final de semana fiz uma Poc do Kafka para testar as libs feitas na lignuagem Go, e antes de iniciar os producers e consumers tive que fazer um resumo e destalhamento nos pontos mais importantes do Kafka.
+
+Kafka foi Desenvolvido pelo LinkedIn e torno-se opensource no início de 2011. Em novembro de 2014, Jun Rao, Jay Kreps, e Neha Narkhede, que trabalharam com o Kafka no LinkedIn, criaram uma nova empresa chamada Confluent com foco em Kafka.
+
+Existe várias formas de subirmos o Kafka, instalando local baixando tgz, utilizando Cloud ou usando docker ou docker-compose.
+
+Poderiamos utilizar:
+
+ - [kafka.apache quickstart](https://kafka.apache.org/quickstart)
+ - [confluent.io docker](https://docs.confluent.io/current/quickstart/ce-docker-quickstart.html#ce-docker-quickstart)
+
+A confluent.io é sem dúvidas uma das versões que particularmente gosto muito pela flexibilidade e vamos utilizar exatamente ela.
+
 
 Vamos usar o confluent como plataforma e subir o kafka com todos seus serviços.
 
