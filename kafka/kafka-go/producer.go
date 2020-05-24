@@ -5,19 +5,20 @@ import (
 	"fmt"
 	//"os"
 	"flag"
-	"github.com/google/uuid"
-	kafka "github.com/segmentio/kafka-go"
-	"strconv"
+	//"strconv"
 	"time"
+
+	//"github.com/google/uuid"
+	kafka "github.com/segmentio/kafka-go"
 )
 
 func newKafkaWriter(kafkaURL, topic string) *kafka.Writer {
 	return kafka.NewWriter(kafka.WriterConfig{
-		Brokers:        []string{kafkaURL},
-		Topic:          topic,
-		Balancer:       &kafka.LeastBytes{},
-		RequiredAcks:   1,           // acks = 0, acks = 1, acks = -1
-		CommitInterval: time.Second, // flushes commits to Kafka every second
+		Brokers:      []string{kafkaURL},
+		Topic:        topic,
+		Balancer:     &kafka.LeastBytes{},
+		RequiredAcks: 1, // acks = 0, acks = 1, acks = -1
+		//CommitInterval: time.Second, // flushes commits to Kafka every second
 	})
 }
 
@@ -38,11 +39,11 @@ func main() {
 	defer writer.Close()
 	fmt.Println("Go Start Producing ... !!")
 	for i := 0; ; i++ {
-		uuid := fmt.Sprint(uuid.New())
-		msgJson := `{"uuid":"` + uuid + `", "key":` + strconv.Itoa(i) + `,"msg":success", "event":"kafka test"}`
+		//uuid := fmt.Sprint(uuid.New())
+		//msgJson := `{"uuid":"` + uuid + `", "key":` + strconv.Itoa(i) + `,"msg":success", "event":"kafka test"}`
 		msg := kafka.Message{
-			Key:   []byte(uuid),
-			Value: []byte(msgJson),
+			Key:   []byte("46ff1869-9817-4429-97db-9c3d1ff2ca9b"),
+			Value: []byte("null"),
 		}
 		err := writer.WriteMessages(context.Background(), msg)
 		if err != nil {
