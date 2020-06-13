@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/jeffotoni/goexample/kafka/kafka-confluentinc/pkg/kafka"
+	"github.com/jeffotoni/goexample/kafka/kafka.confluentinc/pkg/kafka"
 )
 
 func main() {
