@@ -63,7 +63,7 @@ var ghosts []*ghost
 var maze []string
 var score int
 var numDots int
-var lives = 3
+var lives = 12
 
 func loadConfig(file string) error {
 	f, err := os.Open(file)
@@ -118,6 +118,13 @@ func moveCursor(row, col int) {
 	}
 }
 
+func SomaScore() {
+	for {
+		time.Sleep(10000 * time.Millisecond)
+		score = score + 10
+	}
+}
+
 func printScreen() {
 	simpleansi.ClearScreen()
 	for _, line := range maze {
@@ -156,8 +163,7 @@ func printScreen() {
 	if cfg.UseEmoji {
 		livesRemaining = getLivesAsEmoji()
 	}
-
-	fmt.Println("jeffotoni/Score:", score, "\tLives:", livesRemaining)
+	fmt.Println("\033[0;36mjeffotoni/Score:", score, "\033[0m\t", "\033[0;33mLives:", livesRemaining, "\033[0m")
 }
 
 //concatenate the correct number of player emojis based on lives
@@ -332,6 +338,8 @@ func main() {
 		log.Println("failed to load configuration:", err)
 		return
 	}
+
+	go SomaScore()
 
 	// process input (async)
 	input := make(chan string)
