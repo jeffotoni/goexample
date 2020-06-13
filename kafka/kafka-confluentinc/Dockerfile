@@ -13,7 +13,7 @@ RUN make
 RUN make install
 
 # Build go binary
-WORKDIR /go/src/main
+WORKDIR /go/src/kafka.confluentinc
 
 COPY . .
 
@@ -23,16 +23,16 @@ RUN ls
 
 RUN go mod download
 
-RUN go build -o main
+RUN go build -o kafka.confluentinc
 
 RUN ls
 
-RUN cp main /go/bin/main
+RUN cp kafka.confluentinc /go/bin/kafka.confluentinc
 
 # final stage
 FROM ubuntu
 COPY --from=builder /usr/lib/pkgconfig /usr/lib/pkgconfig
 COPY --from=builder /usr/lib/librdkafka* /usr/lib/
-COPY --from=builder /go/bin/main /
+COPY --from=builder /go/bin/kafka.confluentinc /
 
-CMD ["./main"]
+CMD ["./kafka.confluentinc"]

@@ -5,8 +5,11 @@ import (
 )
 
 func main() {
-	// kafka.Producer()
 
-	kafka.Consumer()
+	// cria aqui suas especificacoes
+	// pode alterar os metodos
 
+	// pkafka.Producer()
+
+	pkafka.Consumer()
 }
