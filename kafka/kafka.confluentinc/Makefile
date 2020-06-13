@@ -8,7 +8,7 @@ GOSUMDB=off
 update:
 	@echo "########## Compilando nossa API ... "
 	rm -f go.*
-	go mod init kafka-confluentinc
+	go mod init github.com/jeffotoni/goexample/kafka/kafka.confluentinc
 	go build -o kafka.confluentinc main.go
 	@echo "buid completo..."
 	@echo "\033[0;33m################ run #####################\033[0m"
