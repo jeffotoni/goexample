@@ -10,6 +10,8 @@ Abaixo tem os passos de como vamos subir um app feito em Go para o GKE do google
 
  - Pode criar nosso GKE pela api e temos um arquivo com a chamada da api ele é o create.cluster.gke.api.sh.
 
+ - Vamos utilizar o Register do Google para armazenar nossa imagem de nossa API GO.
+
 
 ### Build go.app
 ```bash
@@ -42,17 +44,65 @@ $ gcloud auth configure-docker
 $ docker push gcr.io/projeto-eng1/go.app:latest
 ```
 
-### Credentials google
-```bash
-$ gcloud container clusters get-credentials go-app --zone us-central1-c --project projeto-eng1
-```
-
 ## GKE
 
 Para subirmos nosso projeteo para GKE precisamos criar nosso cluster
 Antes precisaremos instalar nosso kubectl e utiliza-lo em conjunto com gcloud.
 
 
+### Criando cluster GKE
+
+Se entrar dentro do arquivo create.cluster.gke.sh irá ver todos os comandos que usamos para criar um cluster utilizando gcloud.
+
+Deixei como Default os seriços que iremos subir no Kubernetes.
+
 ```bash
-$ kubectl info
+sh create.cluster.gke.sh
+```
+
+### Set Credentials
+
+Agora vamos setar nossas credentials do nosso app feito em Go.
+
+```bash
+$ gcloud container clusters get-credentials go-app --zone southamerica-east1-c --project projeto-eng1
+```
+
+### Implantar 
+
+Pronto agora vamos implamntar e subir nosso app feito em Go no cluster.
+
+```bash
+$ kubectl apply -f deployment.yaml
+```
+
+Caso queira deletar nosso app do cluster
+
+```bash
+$ kubectl delete -f deployment.yaml
+```
+
+### Forward
+Antes de expor a porta 80 e um IP público, vamos fazer um forward e testar nosso app feito em Go.
+
+Lista seus pods e seleciona
+```bash
+$ kubectl get pods
+```
+
+Agora com o pod selecionado passa como parametro para port-forward
+
+```bash
+$ kubectl port-forward go.app-7d495cf6f7-4rzgm 8080
+```
+```bash
+$ curl localhost:8080/ping
+```
+
+### Implantar Service Carga de Trabalho Export IP
+
+Agora vamos expor o IP publico para fazermos nossas chamadas na nossa api exemplo feita em Go.
+
+```bash
+$ kubectl apply -f gke.service.ip.yaml
 ```
