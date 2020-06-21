@@ -10,3 +10,4 @@ $ export GOOGLE_APPLICATION_CREDENTIALS="/path/credentials.json"
 
 Qualquer dúvida pode visitar aqui [authentication](https://cloud.google.com/docs/authentication/production#command-line)
 
+
