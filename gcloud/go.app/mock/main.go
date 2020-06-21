@@ -2,27 +2,37 @@ package main
 
 import (
 	"context"
+	"flag"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
 )
 
-func main() {
+var (
+	host = "localhost"
+)
 
+func main() {
 	var ch = make(chan bool)
-	for i := 0; i <= 1000; i++ {
-		go SendPing()
+	hostp := flag.String("host", host, "string")
+	flag.Parse()
+
+	if hostp != nil {
+		host = *hostp
 	}
 
+	for i := 0; i <= 1000; i++ {
+		go SendPing(host)
+	}
 	<-ch
 }
 
-func SendPing() {
+func SendPing(host string) {
 	ctx := context.Background()
 	ctx, cancel := context.WithTimeout(ctx, time.Second*5)
 	defer cancel()
-	endpoint := "http://35.199.113.208/ping"
+	endpoint := "http://" + host + "/ping"
 	req, err := http.NewRequestWithContext(ctx, "GET", endpoint, nil)
 	if err != nil {
 		return

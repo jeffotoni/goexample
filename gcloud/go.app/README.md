@@ -106,3 +106,15 @@ Agora vamos expor o IP publico para fazermos nossas chamadas na nossa api exempl
 ```bash
 $ kubectl apply -f gke.service.ip.yaml
 ```
+
+Para testar podemos usar o hey um programa feito em Go equivalente ao wrk ou ab.
+
+```bash
+$ hey -z 20s -n 1000 -c 30 -m GET "http://localhost/ping"
+```
+
+Outra forma de testar e entrando na pasta mock, lá tem um client para fazer chamadas em seu app.Go, basta passar o -host
+
+```bash
+$ go run main <IP-REMOTE/LOCAL>
+```
