@@ -34,20 +34,28 @@ func main() {
 
 	topic := client.Topic(nameTopic)
 	defer topic.Stop()
-	var results []*pubsub.PublishResult
+	//var results []*pubsub.PublishResult
 
 	res := topic.Publish(ctx, &pubsub.Message{
 		Data: []byte(msg)},
 	)
 
-	results = append(results, res)
-	// Do other work ...
-	for _, r := range results {
-		id, err := r.Get(ctx)
-		if err != nil {
-			log.Printf("Error Get results:%s", err.Error())
-			continue
-		}
-		fmt.Printf("Published a message with a message ID: [%s]\n", id)
+	id, err := res.Get(ctx)
+	if err != nil {
+		log.Printf("Error Get results:%s", err.Error())
+		return
 	}
+
+	fmt.Printf("Published a message with a message ID: [%s]\n", id)
+
+	// results = append(results, res)
+	// // Do other work ...
+	// for _, r := range results {
+	// 	id, err := r.Get(ctx)
+	// 	if err != nil {
+	// 		log.Printf("Error Get results:%s", err.Error())
+	// 		continue
+	// 	}
+	// 	fmt.Printf("Published a message with a message ID: [%s]\n", id)
+	// }
 }

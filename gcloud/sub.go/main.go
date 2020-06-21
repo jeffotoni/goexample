@@ -22,22 +22,24 @@ func main() {
 		subscript = *subscriptp
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
-	defer cancel()
+	for {
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+		defer cancel()
 
-	client, err := pubsub.NewClient(ctx, projectID)
-	if err != nil {
-		log.Printf("Error NewClient:%s", err.Error())
-		return
-	}
+		client, err := pubsub.NewClient(ctx, projectID)
+		if err != nil {
+			log.Printf("Error NewClient:%s", err.Error())
+			return
+		}
 
-	// Use a callback to receive messages via subscription1.
-	sub := client.Subscription(subscript)
-	err = sub.Receive(ctx, func(ctx context.Context, m *pubsub.Message) {
-		fmt.Println(string(m.Data))
-		//m.Ack() // Acknowledge that we've consumed the message.
-	})
-	if err != nil {
-		log.Println(err)
+		sub := client.Subscription(subscript)
+		err = sub.Receive(ctx, func(ctx context.Context, m *pubsub.Message) {
+			fmt.Println(string(m.Data))
+			m.Ack()
+		})
+		if err != nil {
+			log.Println(err)
+		}
+		<-time.After(time.Second * 5)
 	}
 }
