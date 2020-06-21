@@ -99,7 +99,7 @@ $ kubectl port-forward go.app-7d495cf6f7-4rzgm 8080
 $ curl localhost:8080/ping
 ```
 
-### Implantar Service Carga de Trabalho Export IP
+### Implantar Service Cargas de Trabalho Export IP
 
 Agora vamos expor o IP publico para fazermos nossas chamadas na nossa api exemplo feita em Go.
 
