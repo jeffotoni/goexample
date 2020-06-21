@@ -1,0 +1,41 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "go.app"
+  namespace: "default"
+  labels:
+    app: "go.app"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "go.app"
+  template:
+    metadata:
+      labels:
+        app: "go.app"
+    spec:
+      containers:
+      - name: "go-app-1"
+        image: "gcr.io/projeto-eng1/go.app:latest"
+# ---
+# apiVersion: "autoscaling/v2beta1"
+# kind: "HorizontalPodAutoscaler"
+# metadata:
+#   name: "go.app-hpa-4lcf"
+#   namespace: "default"
+#   labels:
+#     app: "go.app"
+# spec:
+#   scaleTargetRef:
+#     kind: "Deployment"
+#     name: "go.app"
+#     apiVersion: "apps/v1"
+#   minReplicas: 1
+#   maxReplicas: 2
+#   metrics:
+#   - type: "Resource"
+#     resource:
+#       name: "cpu"
+#       targetAverageUtilization: 85
