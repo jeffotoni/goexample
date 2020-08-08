@@ -1,0 +1,10 @@
+syntax="proto3";
+
+//option go_package = "proto.customer";
+
+package protoc;
+
+message Customer {
+      int32 Id = 1;
+      string  Name = 2;
+}
