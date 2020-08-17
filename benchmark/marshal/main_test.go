@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"encoding/gob"
 	"encoding/json"
-	"github.com/golang/protobuf/proto"
 	"io/ioutil"
 	"testing"
+
+	"github.com/golang/protobuf/proto"
 )
 
 type Book struct {
