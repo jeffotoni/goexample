@@ -5,9 +5,10 @@ package main
 import "fmt"
 
 // Interface
-type employee interface {
+type InterfaceEmployee interface {
     develop() int
     name() string
+    Cpf() bool
 }
 
 // Structure 1
@@ -16,10 +17,14 @@ type team1 struct {
     name_1     string
 }
 
-// Methods of employee interface are
+// Methods of InterfaceEmployee interface are
 // implemented by the team1 structure
 func (t1 team1) develop() int {
     return t1.totalapp_1
+}
+
+func (t1 team1) Cpf() bool {
+    return true
 }
 
 func (t1 team1) name() string {
@@ -32,7 +37,7 @@ type team2 struct {
     name_2     string
 }
 
-// Methods of employee interface are
+// Methods of InterfaceEmployee interface are
 // implemented by the team2 structure
 func (t2 team2) develop() int {
     return t2.totalapp_2
@@ -42,7 +47,11 @@ func (t2 team2) name() string {
     return t2.name_2
 }
 
-func finaldevelop(i []employee) {
+func (t2 team2) Cpf() bool {
+    return true
+}
+
+func finaldevelop(i []InterfaceEmployee) {
 
     totalproject := 0
     for _, ele := range i {
@@ -63,6 +72,6 @@ func main() {
     res2 := team2{totalapp_2: 35,
         name_2: "IOS"}
 
-    final := []employee{res1, res2}
+    final := []InterfaceEmployee{res1, res2}
     finaldevelop(final)
 }
