@@ -36,13 +36,13 @@ func (fb FixedBilling) source() string {
 	return fb.projectName
 }
 
-// func (tm TimeAndMaterial) calculate() int {
-// 	return tm.noOfHours * tm.hourlyRate
-// }
+func (tm TimeAndMaterial) calculate() int {
+	return tm.noOfHours * tm.hourlyRate
+}
 
-// func (tm TimeAndMaterial) source() string {
-// 	return tm.projectName
-// }
+func (tm TimeAndMaterial) source() string {
+	return tm.projectName
+}
 
 func calculateNetIncome(ic []Income) {
 	var netincome int = 0
@@ -53,19 +53,19 @@ func calculateNetIncome(ic []Income) {
 	println(netincome)
 }
 
-// type Advertisement struct {
-// 	adName     string
-// 	CPC        int
-// 	noOfClicks int
-// }
+type Advertisement struct {
+	adName     string
+	CPC        int
+	noOfClicks int
+}
 
-// func (a Advertisement) calculate() int {
-// 	return a.CPC * a.noOfClicks
-// }
+func (a Advertisement) calculate() int {
+	return a.CPC * a.noOfClicks
+}
 
-// func (a Advertisement) source() string {
-// 	return a.adName
-// }
+func (a Advertisement) source() string {
+	return a.adName
+}
 
 func Math() *int {
 	x := 10
@@ -95,19 +95,25 @@ func main() {
 	var b []*int
 	var e []int
 	var c *int
-	*c = 1000
+	var cx int = 200
+	c = &cx
 	b = append(b, c)
+	e = append(e, 100)
+	e = append(e, 200)
 
 	d := Math2(c)
-	println("d:", *d)
+	fmt.Println("d:", d, " b:", b)
 
 	var bb = []byte("jef")
 	var bbb []byte
 	var bbb2 = make([]byte, 8)
-	var m map[string]int
-	m["jeff"] = 19
+	var m = map[string]int{
+		"jeff1": 10,
+		"jeff2": 11,
+		"jeff3": 12,
+	}
 
-	fmt.Println(d, b, c)
+	fmt.Println(e, c)
 	fmt.Println(a)
 	fmt.Println(Math3(e))
 
@@ -118,17 +124,16 @@ func main() {
 	fmt.Println(Math5(bbb2))
 
 	project1 := FixedBilling{projectName: "Project 1", biddedAmount: 5000}
-	//project2 := FixedBilling{projectName: "Project 2", biddedAmount: 10000}
-	//project3 := TimeAndMaterial{projectName: "Project 3", noOfHours: 160, hourlyRate: 25}
+	project2 := FixedBilling{projectName: "Project 2", biddedAmount: 10000}
+	project3 := TimeAndMaterial{projectName: "Project 3", noOfHours: 160, hourlyRate: 25}
 	//var t int = 2
-	//project1.projectName = ""
+	project1.projectName = ""
 	//println(project1.calculate(&t))
-	//project2.projectName = ""
-	//project3.projectName = ""
+	project2.projectName = ""
+	project3.projectName = ""
 
-	//fmt.Println(project1, project2, project3)
-	//incomeStreams := []Income{project1, project2, project3}
-	incomeStreams := []Income{project1}
+	fmt.Println(project1, project2, project3)
+	incomeStreams := []Income{project1, project2, project3}
 	calculateNetIncome(incomeStreams)
 	println(Math())
 }
