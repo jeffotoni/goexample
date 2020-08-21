@@ -1,9 +1,11 @@
 package main_test
 
 import (
-    "encoding/json"
-    "errors"
     "fmt"
+
+    "io"
+    "os"
+
     "strconv"
     "strings"
     "testing"
@@ -27,146 +29,6 @@ qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop`
 
 const cStr = "string_jeffotoni"
 
-func BenchmarkPlus(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        _ = "string_jeffotoni" + str
-    }
-}
-
-func BenchmarkLongPlus(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        _ = "string_jeffotoni" + longStr
-    }
-}
-
-func BenchmarkConstPlus(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        _ = "string_jeffotoni" + cStr
-    }
-}
-
-func BenchmarkStr2Plus(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        _ = "string_jeffotoni" + "jeffotoni" + strconv.Itoa(1919) + "quero somente testar como" + strconv.Itoa(32343) + " se fosse long   "
-    }
-}
-
-func BenchmarkJoin(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        _ = strings.Join([]string{"string_jeffotoni%s", str}, "")
-    }
-}
-
-func BenchmarkLongJoin(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        _ = strings.Join([]string{"string_jeffotoni%s", longStr}, "")
-    }
-}
-
-func BenchmarkConstJoin(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        _ = strings.Join([]string{"string_jeffotoni%s", cStr}, "")
-    }
-}
-func BenchmarkSprintf(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        _ = fmt.Sprintf("string_jeffotoni%s", str)
-    }
-}
-
-func BenchmarkLongSprintf(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        _ = fmt.Sprintf("string_jeffotoni%s", longStr)
-    }
-}
-
-func BenchmarkConstSprintf(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        _ = fmt.Sprintf("string_jeffotoni%s", cStr)
-    }
-}
-
-func BenchmarkBuilder(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        var b strings.Builder
-        b.WriteString("string_jeffotoni")
-        b.WriteString(str)
-    }
-}
-
-func BenchmarkLongBuilder(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        var b strings.Builder
-        b.WriteString("string_jeffotoni")
-        b.WriteString(longStr)
-    }
-}
-
-func BenchmarkConstBuilder(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        var b strings.Builder
-        b.WriteString("string_jeffotoni")
-        b.WriteString(cStr)
-    }
-}
-
-func BenchmarkConcatLongBuilder(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        Concat(longStr)
-    }
-}
-
-func BenchmarkConcatStrBuilder(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        Concat(str)
-    }
-}
-func BenchmarkConcatStr2Builder(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        Concat("jeffotoni", 1919, "quero somente testar como", 23454, " se fosse long   ")
-    }
-}
-func BenchmarkConcatConstBuilder(b *testing.B) {
-    for n := 0; n < b.N; n++ {
-        Concat(cStr)
-    }
-}
-
-func BenchmarkJSONMarshal(b *testing.B) {
-    obj := generateObject()
-    b.ResetTimer()
-    for n := 0; n < b.N; n++ {
-        _, err := json.Marshal(obj)
-        if err != nil {
-            panic(err)
-        }
-    }
-}
-
-func BenchmarkJSONConcat(b *testing.B) {
-    //b.ResetTimer()
-    for n := 0; n < b.N; n++ {
-        // str := "Computação quântica V.5 vamos ver a quantidade de caracter muito mais muitooooooooooooooooooooooo grade aqui heeee..." +
-        //     "Jefferson Otoni Lima" + strconv.Itoa(1650) +
-        //     strings.Join([]string{"Escala atômica,", "Arithmetic das partículas subatômicas", "vamos testar mais posicoes hereeeeeeeeeeee."}, ",")
-        //fmt.Sprintf("%s", str)
-        strL := generateString()
-        if len(strL) <= 0 {
-            panic(errors.New("Error generateString"))
-        }
-    }
-}
-
-func BenchmarkJSONConcatNaMao(b *testing.B) {
-    //b.ResetTimer()
-    for n := 0; n < b.N; n++ {
-        str := "Computação quântica V.5 vamos ver a quantidade de caracter muito mais muitooooooooooooooooooooooo grade aqui heeee..." +
-            "Jefferson Otoni Lima" + strconv.Itoa(1650) +
-            strings.Join([]string{"Escala atômica,", "Arithmetic das partículas subatômicas", "vamos testar mais posicoes hereeeeeeeeeeee."}, ",")
-        fmt.Sprintf("%s", str)
-    }
-}
-
 func BenchmarkIntToString1(b *testing.B) {
     for n := 0; n < b.N; n++ {
         IntToString1([]int{1, 2, 3, 4, 5, 56, 6, 7, 7, 778, 8, 88, 8, 8, 8, 8, 8, 8, 9, 9, 123, 4, 4, 5, 6, 7, 77, 8, 8, 99, 9, 93, 3, 3, 3, 3, 45, 5, 6, 6, 7})
@@ -183,6 +45,46 @@ func BenchmarkIntToString3(b *testing.B) {
     for n := 0; n < b.N; n++ {
         IntToString3([]int{1, 2, 3, 4, 5, 56, 6, 7, 7, 778, 8, 88, 8, 8, 8, 8, 8, 8, 9, 9, 123, 4, 4, 5, 6, 7, 77, 8, 8, 99, 9, 93, 3, 3, 3, 3, 45, 5, 6, 6, 7})
     }
+}
+
+func BenchmarkIntToStringConcat(b *testing.B) {
+    for n := 0; n < b.N; n++ {
+        Concat([]int{1, 2, 3, 4, 5, 56, 6, 7, 7, 778, 8, 88, 8, 8, 8, 8, 8, 8, 9, 9, 123, 4, 4, 5, 6, 7, 77, 8, 8, 99, 9, 93, 3, 3, 3, 3, 45, 5, 6, 6, 7})
+    }
+}
+
+func BenchmarkIntToStringPrintln(b *testing.B) {
+    for n := 0; n < b.N; n++ {
+        Println([]int{1, 2, 3, 4, 5, 56, 6, 7, 7, 778, 8, 88, 8, 8, 8, 8, 8, 8, 9, 9, 123, 4, 4, 5, 6, 7, 77, 8, 8, 99, 9, 93, 3, 3, 3, 3, 45, 5, 6, 6, 7})
+    }
+}
+
+//Println printa com n\
+func Println(strs ...interface{}) {
+    var sb strings.Builder
+    for _, str := range strs {
+        sb.WriteString(buildStr(str))
+    }
+    sb.WriteString("\n")
+    //io.Copy(os.Stdout, strings.NewReader(sb.String()))
+}
+
+// //Print printa
+// func Print(strs ...interface{}) {
+//     var sb strings.Builder
+//     for _, str := range strs {
+//         sb.WriteString(buildStr(str))
+//     }
+//     io.Copy(os.Stdout, strings.NewReader(sb.String()))
+// }
+
+//Stdout func
+func Stdout(strs ...interface{}) {
+    var sb strings.Builder
+    for _, str := range strs {
+        sb.WriteString(buildStr(str))
+    }
+    io.Copy(os.Stdout, strings.NewReader(sb.String()))
 }
 
 func IntToString3(a []int) string {
@@ -202,6 +104,10 @@ func IntToString1(a []int) string {
 }
 
 func IntToString2(a []int) string {
+    if len(a) == 0 {
+        return ""
+    }
+
     b := make([]string, len(a))
     for i, v := range a {
         b[i] = strconv.Itoa(v)
@@ -248,10 +154,6 @@ func buildStr(str interface{}) string {
         return strconv.Itoa(int(str.(int)))
 
     case []int:
-        // concat := ""
-        // for _, val := range str.([]int) {
-        //     concat = Concat(concat, val)
-        // }
         return IntToString2(str.([]int))
     case uint:
         return strconv.FormatUint(uint64(str.(uint)), 10)
