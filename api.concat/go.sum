@@ -4,3 +4,7 @@ github.com/jeffotoni/concat v0.0.2 h1:r2CqdMDf+X3+yZ1eKZJwfkmNICPQmd5YQH0jKHzfwH
 github.com/jeffotoni/concat v0.0.2/go.mod h1:uiBgJA+SQfPoUYS1c/X1Nx5EozVmqMeNpnH1Qm+jU9k=
 github.com/jeffotoni/concat v0.0.3 h1:NRhLmXMUoNK9TYuJhtAzrOprq1Fho8zF5kl+gbKIEas=
 github.com/jeffotoni/concat v0.0.3/go.mod h1:uiBgJA+SQfPoUYS1c/X1Nx5EozVmqMeNpnH1Qm+jU9k=
+github.com/jeffotoni/gconcat v0.0.3 h1:BhnPaFED8dbkzsHLGUCTD42NFyfD7NR83ek9c+ocvZo=
+github.com/jeffotoni/gconcat v0.0.3/go.mod h1:GwfjoJwKzWUue/S4yZBTEgB+a77TM4wa2t5dNzXXs1c=
+github.com/jeffotoni/gconcat v0.0.4 h1:D+QbAPkqNKcMik6rstOnsJVKgImE9t8GhHLLOL1hjW0=
+github.com/jeffotoni/gconcat v0.0.4/go.mod h1:GwfjoJwKzWUue/S4yZBTEgB+a77TM4wa2t5dNzXXs1c=
