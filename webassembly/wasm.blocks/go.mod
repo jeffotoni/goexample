@@ -1,5 +1,3 @@
-module wasm.flappy
+module github.com/jeffotoni/goexample/webassembly/wasm.blocks
 
-go 1.14
-
-require github.com/hajimehoshi/ebiten v1.10.5 // indirect
+go 1.15
