@@ -9,29 +9,44 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "net/http"
+	"log"
+	"net/http"
 )
 
+type D struct {
+	PIS string
+}
+type Wandre struct {
+	Nome string
+	Cpf  int
+	//f func(a int) strin
+	Dados D
+}
+
 func Hello(w http.ResponseWriter, r *http.Request) {
-    w.WriteHeader(http.StatusOK)
-    w.Write([]byte("Hello, welcome to the world, Go!"))
+	println("ok:", r.Method)
+
+	var w = Wandre{Nome: "Wandre", Cpf: 2939393}
+	//w.Nome = "Wandre"
+	//w.Cpf  = 2939494
+
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Hello, welcome to the world, Go!"))
 }
 
 func main() {
 
-    mux := http.NewServeMux()
-    mux.Handle("/api/hello", http.HandlerFunc(Hello))
+	mux := http.NewServeMux()
+	mux.Handle("/api/hello", http.HandlerFunc(Hello))
 
-    server :=
-        &http.Server{
-            Addr:    ":8080",
-            Handler: mux,
-        }
+	server :=
+		&http.Server{
+			Addr:    ":8080",
+			Handler: mux,
+		}
 
-    fmt.Printf("Server Run port: 8080\n")
-    if err := server.ListenAndServe(); err != nil {
-        log.Printf("Eror while serving metrics: %s", err)
-    }
+	println("Server Run port: 8080\n")
+	if err := server.ListenAndServe(); err != nil {
+		log.Printf("Eror while serving metrics: %s", err)
+	}
 }
