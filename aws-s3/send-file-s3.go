@@ -6,6 +6,7 @@ package main
 
 import (
     "bytes"
+
     "fmt"
     "log"
     "net/http"
@@ -25,9 +26,12 @@ const (
 func main() {
 
     // Create a single AWS session (we can re use this if we're uploading many files)
-    s, err := session.NewSession(&aws.Config{Region: aws.String(S3_REGION)})
+    s, err := session.NewSession(&aws.Config{
+        Region: aws.String(S3_REGION),
+    })
     if err != nil {
         log.Fatal(err)
+        return
     }
 
     // Upload
