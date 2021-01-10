@@ -40,7 +40,7 @@ int main(int argc, char *argv[]){
 
    qtd = atoi(argv[1]);
    printf("Quant:%d\n", qtd);
-   if (qtd <= 1]) {
+   if (qtd <= 1) {
       printf("Error qtd tem que ser maior que 1!");
       return 0;
    }
@@ -57,9 +57,7 @@ int main(int argc, char *argv[]){
    }
 
    clock_t tic = clock();
-   
    quicksort(number,0,count-1);
-
    clock_t toc = clock();
 
    printf("Elapsed: %f seconds\n", (double)(toc - tic) / CLOCKS_PER_SEC);

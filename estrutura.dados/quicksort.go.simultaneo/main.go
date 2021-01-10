@@ -61,6 +61,17 @@ func main() {
 		println("O valor tem que ser maior que 1!")
 		return
 	}
+
+	slice := generateSlice2(qtd)
+
+	done := make(chan struct{})
+	start := time.Now()
+	go quickSort_go(slice, 0, len(slice)-1, done, 5)
+	<-done
+	fmt.Println("multiple goroutine: ", time.Now().Sub(start))
+}
+
+func generateSlice2(qtd int) []int {
 	rand.Seed(time.Now().UnixNano())
 	slice := make([]int, 0, qtd)
 	times := qtd
@@ -68,10 +79,5 @@ func main() {
 		val := rand.Intn(20000000)
 		slice = append(slice, val)
 	}
-
-	done := make(chan struct{})
-	start := time.Now()
-	go quickSort_go(slice, 0, len(slice)-1, done, 5)
-	<-done
-	fmt.Println("multiple goroutine: ", time.Now().Sub(start))
+	return slice
 }

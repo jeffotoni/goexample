@@ -17,7 +17,7 @@ func main() {
         return
     }
 
-    slice := generateSlice(qtd)
+    slice := generateSlice2(qtd)
 
     t1 := time.Now()
     //fmt.Println("\n--- Unsorted --- \n\n", slice)
@@ -27,9 +27,20 @@ func main() {
     //fmt.Println("\n--- Sorted ---\n\n", slice, "\n")
 }
 
+func generateSlice2(qtd int) []int {
+    rand.Seed(time.Now().UnixNano())
+    slice := make([]int, 0, qtd)
+    times := qtd
+    for i := 0; i < times; i++ {
+        val := rand.Intn(20000000)
+        slice = append(slice, val)
+    }
+
+    return slice
+}
+
 // Generates a slice of size, size filled with random numbers
 func generateSlice(size int) []int {
-
     slice := make([]int, size, size)
     rand.Seed(time.Now().UnixNano())
     for i := 0; i < size; i++ {
