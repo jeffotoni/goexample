@@ -49,18 +49,21 @@ int main(int argc, char *argv[]){
 
    int i, count;
    count = qtd;
-    
+   
+   clock_t tic1 = clock();    
    srand(time(0));
    for(i=0;i<count;i++) {
       //scanf("%d",&number[i]);
       number[i] = rand();
    }
+   clock_t toc1 = clock();
+   printf("Vetor: %f seconds\n", (double)(toc1 - tic1) / CLOCKS_PER_SEC);
 
    clock_t tic = clock();
    quicksort(number,0,count-1);
    clock_t toc = clock();
 
-   printf("Elapsed: %f seconds\n", (double)(toc - tic) / CLOCKS_PER_SEC);
+   printf("Quicksort: %f seconds\n", (double)(toc - tic) / CLOCKS_PER_SEC);
 
    // for(i=0;i<count;i++){
    //    printf(" %d",number[i]);

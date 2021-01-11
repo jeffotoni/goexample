@@ -2,6 +2,7 @@
 package main
 
 import (
+    "fmt"
     "math/rand"
     "os"
     "strconv"
@@ -17,7 +18,9 @@ func main() {
         return
     }
 
-    slice := generateSlice2(qtd)
+    start := time.Now()
+    slice := generateSlice(qtd)
+    fmt.Println("slice load:", time.Now().Sub(start))
 
     t1 := time.Now()
     //fmt.Println("\n--- Unsorted --- \n\n", slice)
@@ -35,7 +38,6 @@ func generateSlice2(qtd int) []int {
         val := rand.Intn(20000000)
         slice = append(slice, val)
     }
-
     return slice
 }
 

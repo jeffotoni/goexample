@@ -62,13 +62,15 @@ func main() {
 		return
 	}
 
+	start := time.Now()
 	slice := generateSlice2(qtd)
+	fmt.Println("slice load:", time.Now().Sub(start))
 
 	done := make(chan struct{})
-	start := time.Now()
+	start = time.Now()
 	go quickSort_go(slice, 0, len(slice)-1, done, 5)
 	<-done
-	fmt.Println("multiple goroutine: ", time.Now().Sub(start))
+	fmt.Println("Quicksort usando goroutine:", time.Now().Sub(start))
 }
 
 func generateSlice2(qtd int) []int {
