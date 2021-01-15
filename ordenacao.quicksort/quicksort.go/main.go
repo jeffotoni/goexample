@@ -57,9 +57,7 @@ func quicksort(a []int) []int {
     }
 
     left, right := 0, len(a)-1
-
     pivot := rand.Int() % len(a)
-
     a[pivot], a[right] = a[right], a[pivot]
 
     for i, _ := range a {

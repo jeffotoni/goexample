@@ -1,2 +1,4 @@
-github.com/jeffotoni/gcolor v1.0.1 h1:HaQp/CBmtL0YF+4NC0ay9q314pkSeHRYl04YOdqONSg=
-github.com/jeffotoni/gcolor v1.0.1/go.mod h1:ophnOt4KLQthzn5I0K/nT6s5LKqnkubPgIoV5Wiu0QI=
+github.com/jeffotoni/gcolor v1.0.9 h1:Lr8kYTNSqOBYOQqkS3qgUZwnLdfAFbSLFr0QnQHdMEg=
+github.com/jeffotoni/gcolor v1.0.9/go.mod h1:ophnOt4KLQthzn5I0K/nT6s5LKqnkubPgIoV5Wiu0QI=
+github.com/jeffotoni/gconcat v0.0.4 h1:D+QbAPkqNKcMik6rstOnsJVKgImE9t8GhHLLOL1hjW0=
+github.com/jeffotoni/gconcat v0.0.4/go.mod h1:GwfjoJwKzWUue/S4yZBTEgB+a77TM4wa2t5dNzXXs1c=

@@ -8,4 +8,4 @@ replace mymath => ./mymath
 
 replace mymath2 => ./mymath2
 
-go 1.12
+go 1.16
