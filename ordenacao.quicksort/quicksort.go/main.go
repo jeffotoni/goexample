@@ -24,6 +24,7 @@ func main() {
 
     t1 := time.Now()
     //fmt.Println("\n--- Unsorted --- \n\n", slice)
+    //quicksort(slice, 0, len(slice)-1)
     quicksort(slice)
     t2 := time.Now()
     println("Time:", t2.Sub(t1).String())
@@ -57,7 +58,7 @@ func quicksort(a []int) []int {
     }
 
     left, right := 0, len(a)-1
-    pivot := rand.Int() % len(a)
+    pivot := right / 2
     a[pivot], a[right] = a[right], a[pivot]
 
     for i, _ := range a {

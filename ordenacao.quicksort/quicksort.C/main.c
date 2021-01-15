@@ -5,8 +5,8 @@
 #include <time.h>
 
 void quicksort(int number[25],int first,int last){
-   int i, j, pivot, temp;
-
+   int i, j, pivot, temp,diff;
+   
    if(first<last){
       pivot=first;
       i=first;
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]){
    clock_t tic1 = clock();    
    srand(time(0));
    for(i=0;i<count;i++) {
-      //scanf("%d",&number[i]);
+      //printf("\n%d",number[i]);
       number[i] = rand();
    }
    clock_t toc1 = clock();
