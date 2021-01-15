@@ -58,7 +58,7 @@ func quickSort_go(a []int, lo, hi int, done chan struct{}, depth int) {
 func main() {
 	qtd, _ := strconv.Atoi(os.Args[1])
 	if qtd <= 1 {
-		println("O valor tem que ser maior que 1!")
+		println("The value must be greater than 1!")
 		return
 	}
 
@@ -70,7 +70,7 @@ func main() {
 	start = time.Now()
 	go quickSort_go(slice, 0, len(slice)-1, done, 5)
 	<-done
-	fmt.Println("Quicksort usando goroutine:", time.Now().Sub(start))
+	fmt.Println("Quicksort using goroutine:", time.Now().Sub(start))
 }
 
 func generateSlice2(qtd int) []int {
