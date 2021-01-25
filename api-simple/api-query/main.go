@@ -13,6 +13,7 @@ import (
 func main() {
     getProductsHandler := http.HandlerFunc(getProducts)
     http.Handle("/products", getProductsHandler)
+    log.Println("Run Server")
     http.ListenAndServe(":8080", nil)
 }
 
