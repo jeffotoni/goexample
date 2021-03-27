@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"golang.org/x/net/websocket"
 )
@@ -20,7 +21,8 @@ var err error
 
 func WriteScren() {
 
-	fmt.Println("Hello, new method....")
+	fmt.Println("Hello, new method client....")
+	time.Sleep(time.Millisecond * 300)
 }
 
 func ListenWebSocker(ws *websocket.Conn) {
@@ -31,13 +33,15 @@ func ListenWebSocker(ws *websocket.Conn) {
 
 		// Receiving client message
 		websocket.Message.Receive(ws, &reply)
+		if len(reply) > 0 {
+			msg := `{"name":"jeffotoni", "code":"x393993993_` + reply + `"}`
+			websocket.Message.Send(ws, msg) // Sending message to the client
 
-		fmt.Println("Client sent: " + reply)
-
-		msg := "Hello I'm the websocket server!"
-		websocket.Message.Send(ws, msg) // Sending message to the client
-
-		WriteScren()
+			//WriteScren()
+			time.Sleep(time.Millisecond * 300)
+			//fmt.Println("Client sent: " + reply)
+			//println("send...")
+		}
 	}
 }
 

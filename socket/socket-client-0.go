@@ -34,7 +34,11 @@ func readerServer(r io.Reader) {
 			return
 		}
 
-		println("Client got:", string(buf[0:n])) // Msg from server
+		for {
+			println("Client got:", string(buf[0:n])) // Msg from server
+			println(`{"name":"jeffotoni", "code":"x303939"}`)
+			time.Sleep(time.Second)
+		}
 	}
 }
 

@@ -30,7 +30,7 @@ func RedWriteSocket(conn net.Conn) {
 		println("Server got:", string(data))
 
 		///send client
-		_, err = conn.Write([]byte("hello Client.. I'm the server, \n"))
+		_, err := conn.Write([]byte("hello Client.. I'm the server, \n"))
 
 		if err != nil {
 			log.Fatal("Write: ", err)
