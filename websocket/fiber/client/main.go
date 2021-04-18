@@ -52,7 +52,8 @@ func main() {
 		}
 	}()
 
-	err = c.WriteMessage(websocket.TextMessage, []byte(`{"name":"jeffotoni", "code":"x39399393939"}`))
+	//err = c.WriteMessage(websocket.TextMessage, []byte(`{"name":"jeffotoni", "code":"x39399393939"}`))
+	err = c.WriteMessage(websocket.TextMessage, []byte(`0987654321`))
 	if err != nil {
 		log.Println("write:", err)
 		return

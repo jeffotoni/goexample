@@ -12,22 +12,35 @@ import (
 	"os"
 	"os/signal"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/fasthttp/websocket"
 )
 
 var addr = flag.String("addr", "localhost:3000", "http service address")
+var mutex sync.Mutex
 
 func main() {
+	if len(os.Args) != 2 {
+		log.Fatal("Uso: ./client.stress [threads]")
+	}
+	tmp1 := os.Args[1]
+
+	threads, _ := strconv.Atoi(tmp1)
 
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 	finish := make(chan bool, 1)
 
-	for i := 0; i < 10000; i++ {
+	var j int
+	for i := 0; i < threads; i++ {
 		go func() {
-			client := strconv.Itoa(i)
+			mutex.Lock()
+			j++
+			mutex.Unlock()
+
+			client := strconv.Itoa(j)
 			u := url.URL{Scheme: "ws", Host: *addr, Path: "/ws/user_" + client}
 			log.Printf("connecting to %s", u.String())
 
@@ -51,7 +64,8 @@ func main() {
 				}
 			}()
 
-			err = c.WriteMessage(websocket.TextMessage, []byte(`{"name":"jeffotoni", "code":"x39399393939"}`))
+			//err = c.WriteMessage(websocket.TextMessage, []byte(`{"name":"jeffotoni", "code":"x39399393939"}`))
+			err = c.WriteMessage(websocket.TextMessage, []byte(`0987654321`))
 			if err != nil {
 				log.Println("write:", err)
 				return

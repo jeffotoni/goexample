@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -9,7 +8,40 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
+	"github.com/nats-io/nats.go"
 )
+
+func SubscribeAsync(client string, chanpg chan string) {
+	//start := time.Now()
+	// chanpg := make(chan string)
+	// Create server connection
+
+	nc, _ := nats.Connect(nats.DefaultURL)
+	log.Println("Connected to " + nats.DefaultURL)
+	// Subscribe to subject
+	log.Printf("Subscribing to subject 'updates'\n")
+	defer nc.Close()
+
+	go func() {
+		// Subscribe
+		if _, err := nc.Subscribe("updates", func(msg *nats.Msg) {
+			chanpg <- string(msg.Data)
+		}); err != nil {
+			log.Fatal(err)
+		}
+	}()
+
+	// close(chanpg)
+	//go func() {
+	for {
+		select {
+		// case cmsgJson := <-chanpg:
+		// 	chanpg2 <- cmsgJson
+		// redis.SaveRedis(natsCount, cmsgJson)
+		// println("save:", cmsgJson)
+		}
+	}
+}
 
 func main() {
 	app := fiber.New()
@@ -41,14 +73,21 @@ func main() {
 			msg []byte
 			err error
 		)
+
+		chanpg := make(chan string)
+
+		go SubscribeAsync(c.Params("id"), chanpg)
+
 		for {
 			println("new client:", c.Params("id"))
 			if _, msg, err = c.ReadMessage(); err != nil {
 				log.Println("read:", err)
 				break
 			}
-
-			fmt.Sprintf("%s", msg)
+			//fmt.Sprintf("%s", msg)
+			if string(msg) != "0987654321" {
+				continue
+			}
 			//log.Printf("recv: %s", msg)
 
 			// if err = c.WriteMessage(mt, msg); err != nil {
@@ -62,13 +101,14 @@ func main() {
 			for {
 				select {
 
-				case t := <-ticker.C:
+				//case t := <-ticker.C:
+				case jsonStr := <-chanpg:
 					//fmt.Sprintf("%s", t.String())
-					jsonStr := `{"nome":"jefferson","code":"user_` + c.Params("id") + `_9939393xxxx", "time":"` + t.String() + `"}`
+					//jsonStr := `{"nome":"jefferson","code":"user_` + c.Params("id") + `_9939393xxxx", "time":"` + t.String() + `"}`
 					err := c.WriteMessage(websocket.TextMessage, []byte(jsonStr))
 					if err != nil {
-						log.Println("write:", err)
-						break
+						log.Println("cliente saiu:", c.Params("id"))
+						return
 					}
 				case <-interrupt:
 					log.Println("interrupt")
