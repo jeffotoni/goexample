@@ -15,5 +15,7 @@ var (
 func main() {
 	flag.Parse()
 	log.Printf("listening on %q...", *listen)
-	log.Fatal(http.ListenAndServe(*listen, http.FileServer(http.Dir(*dir))))
+	log.Fatal(
+		http.ListenAndServe(*listen,
+			http.FileServer(http.Dir(*dir))))
 }
