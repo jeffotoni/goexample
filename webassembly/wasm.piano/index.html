@@ -24,7 +24,7 @@ license that can be found in the LICENSE file.
 
       let mod, inst;
 
-      WebAssembly.instantiateStreaming(fetch("webassembly.wasm"), go.importObject).then((result) => {
+      WebAssembly.instantiateStreaming(fetch("piano.wasm"), go.importObject).then((result) => {
         mod = result.module;
         inst = result.instance;
         document.getElementById("runButton").disabled = false;

@@ -55,8 +55,8 @@ func init() {
 }
 
 const (
-	screenWidth  = 320
-	screenHeight = 240
+	screenWidth  = 420
+	screenHeight = 340
 	sampleRate   = 44100
 	baseFreq     = 220
 )
@@ -233,7 +233,7 @@ func update(screen *ebiten.Image) error {
 }
 
 func main() {
-	if err := ebiten.Run(update, screenWidth, screenHeight, 2, "Piano (Ebiten Demo)"); err != nil {
+	if err := ebiten.Run(update, screenWidth, screenHeight, 2, "Piano (Ebiten Demo - jeffotoni)"); err != nil {
 		log.Fatal(err)
 	}
 }

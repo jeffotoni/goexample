@@ -1,8 +1,9 @@
 module wasm.piano
 
-go 1.14
+go 1.16
 
 require (
-	github.com/hajimehoshi/ebiten v1.10.5 // indirect
-	golang.org/x/image v0.0.0-20200119044424-58c23975cae1 // indirect
+	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0
+	github.com/hajimehoshi/ebiten v1.12.12
+	golang.org/x/image v0.0.0-20210504121937-7319ad40d33e
 )
