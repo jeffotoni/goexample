@@ -1,24 +1,18 @@
+// websocket.Conn bindings https://pkg.go.dev/github.com/fasthttp/websocket?tab=doc#pkg-index
 package main
 
 import (
-	"log"
-	"os"
-	"os/signal"
-	"time"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
 	"github.com/nats-io/nats.go"
+	"log"
+	"os"
+	"os/signal"
 )
 
 func SubscribeAsync(client string, chanpg chan string) {
-	//start := time.Now()
-	// chanpg := make(chan string)
-	// Create server connection
-
 	nc, _ := nats.Connect(nats.DefaultURL)
 	log.Println("Connected to " + nats.DefaultURL)
-	// Subscribe to subject
 	log.Printf("Subscribing to subject 'updates'\n")
 	defer nc.Close()
 
@@ -31,21 +25,14 @@ func SubscribeAsync(client string, chanpg chan string) {
 		}
 	}()
 
-	// close(chanpg)
-	//go func() {
 	for {
 		select {
-		// case cmsgJson := <-chanpg:
-		// 	chanpg2 <- cmsgJson
-		// redis.SaveRedis(natsCount, cmsgJson)
-		// println("save:", cmsgJson)
 		}
 	}
 }
 
 func main() {
 	app := fiber.New()
-
 	app.Use("/ws", func(c *fiber.Ctx) error {
 		// IsWebSocketUpgrade returns true if the client
 		// requested upgrade to the WebSocket protocol.
@@ -57,19 +44,15 @@ func main() {
 	})
 
 	app.Get("/ws/:id", websocket.New(func(c *websocket.Conn) {
-
 		interrupt := make(chan os.Signal, 1)
 		signal.Notify(interrupt, os.Interrupt)
-
 		// c.Locals is added to the *websocket.Conn
 		log.Println(c.Locals("allowed"))  // true
 		log.Println(c.Params("id"))       // 123
 		log.Println(c.Query("v"))         // 1.0
 		log.Println(c.Cookies("session")) // ""
 
-		// websocket.Conn bindings https://pkg.go.dev/github.com/fasthttp/websocket?tab=doc#pkg-index
 		var (
-			//mt  int
 			msg []byte
 			err error
 		)
@@ -84,19 +67,18 @@ func main() {
 				log.Println("read:", err)
 				break
 			}
-			//fmt.Sprintf("%s", msg)
+
 			if string(msg) != "0987654321" {
 				continue
 			}
-			//log.Printf("recv: %s", msg)
 
 			// if err = c.WriteMessage(mt, msg); err != nil {
 			// 	log.Println("write:", err)
 			// 	break
 			// }
 
-			ticker := time.NewTicker(time.Millisecond * 100)
-			defer ticker.Stop()
+			//ticker := time.NewTicker(time.Millisecond * 100)
+			//defer ticker.Stop()
 
 			for {
 				select {
@@ -119,9 +101,9 @@ func main() {
 						log.Println("write close:", err)
 						break
 					}
-					select {
-					case <-time.After(time.Millisecond):
-					}
+					//select {
+					//case <-time.After(time.Millisecond):
+					//}
 					os.Exit(0)
 				}
 			}
