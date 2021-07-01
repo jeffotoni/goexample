@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -49,5 +50,5 @@ func Post(url string, body interface{}, headers http.Header) (*http.Response, er
 }
 
 func main() {
-
+	log.Println("jeff")
 }
