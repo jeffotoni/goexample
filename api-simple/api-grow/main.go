@@ -32,7 +32,7 @@ var(
       "Year":2003
    }
 ]
- */
+*/
 type dataGrowth struct {
 	Country   string  `json:"Country"`
 	Indicator string  `json:"Indicator"`
@@ -74,15 +74,66 @@ func Route(w http.ResponseWriter, r *http.Request){
 }
 
 func Put(w http.ResponseWriter, r *http.Request){
+	var err error
+	elem := strings.Split(r.URL.Path, "/")
+	if len(elem) != 7 {
+		log.Println("len:", len(elem), " path:", r.URL.Path)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"msg":"error in path"}`))
+		return
+	}
+
+	type putGrow struct{
+		Value float64 `json:"value"`
+	}
+
+	var putg putGrow
+	err = json.NewDecoder(r.Body).Decode(&putg)
+	if err!=nil{
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"msg":"error in decode json value has to be float"}`))
+		return
+	}
+	defer r.Body.Close()
+
+	country := strings.ToUpper(elem[4])
+	Indicator := strings.ToUpper(elem[5])
+	year := elem[6]
+	key := country + Indicator + year
+	_, ok := mapGrow.Load(key)
+	if ok {
+		mapGrow.Store(key, putg.Value)
+	} else{
+		mapGrow.LoadOrStore(key, putg.Value)
+	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"msg":"put ok"}`))
 }
 
 func Delete(w http.ResponseWriter, r *http.Request){
+	var code int = 400
+	elem := strings.Split(r.URL.Path, "/")
+	if len(elem) != 7 {
+		log.Println("len:", len(elem), " path:", r.URL.Path)
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"msg":"error in path"}`))
+		return
+	}
+
+	country := strings.ToUpper(elem[4])
+	Indicator := strings.ToUpper(elem[5])
+	year := elem[6]
+	key := country + Indicator + year
+	_, ok := mapGrow.Load(key)
+	if ok {
+		mapGrow.Delete(key)
+		code = http.StatusOK
+	}
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"msg":"delete ok"}`))
+	w.WriteHeader(code)
 }
 
 func Get(w http.ResponseWriter, r *http.Request) {
@@ -98,10 +149,10 @@ func Get(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	country := elem[4]
-	Indicator := elem[5]
+	country := strings.ToUpper(elem[4])
+	Indicator := strings.ToUpper(elem[5])
 	year := elem[6]
-	key := strings.ToUpper(country) + strings.ToUpper(Indicator) + year
+	key := country + Indicator + year
 	val, ok := mapGrow.Load(key)
 	if ok {
 		var grow dataGrowth
