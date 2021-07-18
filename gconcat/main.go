@@ -35,5 +35,8 @@ func main() {
 	s1 := g.Concat([]bool{true, false, true})
 	s := g.ConcatFunc(f1, f2, f3, f4, f5)
 	fmt.Println(s + " " + s1)
+
+	str := g.ConcatSliceFloat32([]float32{3.1,4.0,67.89,33.88,77.666})
+	fmt.Println(str)
 }
 
