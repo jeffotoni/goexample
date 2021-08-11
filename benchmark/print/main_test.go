@@ -1,4 +1,4 @@
-package main_test
+package main
 
 import (
 	"bufio"
@@ -28,6 +28,39 @@ func BenchmarkBufio(b *testing.B) {
 		writer = bufio.NewWriter(os.Stdout)
 		writer.WriteString(str)
 		//writer.Flush()
+	}
+}
+
+func BenchmarkAreaPointer(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		var CC = Circle{r: float64(n)}
+		_ = CC.area1()
+	}
+}
+
+func BenchmarkAreaCopy(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		var CC = Circle{r: float64(n)}
+		_ = CC.area2()
+	}
+}
+
+func BenchmarkAreaHeap(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		var CC = Circle{r: float64(n)}
+		_ = CC.area3()
+	}
+}
+
+func BenchmarkSweets1(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		RandomDonut1()
+	}
+}
+
+func BenchmarkSweets2(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		RandomDonut2()
 	}
 }
 
