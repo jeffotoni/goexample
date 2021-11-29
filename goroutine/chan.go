@@ -11,10 +11,19 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
+const (
+	Wirte = iota
+	Read
+	Execute
+)
+
 func EvenOne(even chan int) {
+	log.Println(Read)
+	return
 	i := 2
 	for i < 9 {
 		even <- i
@@ -35,7 +44,8 @@ func OldOne(odd chan int) {
 }
 
 func main() {
-
+	println(Read)
+	return
 	even := make(chan int)
 	odd := make(chan int)
 	go EvenOne(even)

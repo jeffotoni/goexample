@@ -1,0 +1,19 @@
+
+// apt install -y protobuf-compiler
+// protoc --version 
+// go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+// protoc --go_out=plugins=grpc:./ chat.proto
+
+syntax = "proto3";
+package main;
+
+option go_package = "./";
+
+message Message {
+  string body = 1;
+}
+
+service mainService {
+  rpc SayHello(Message) returns (Message) {}
+  rpc BroadcastMessage(Message) returns (Message) {}
+}
