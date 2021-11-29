@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	context "context"
+	"context"
 	"fmt"
 	"log"
 	"net"
