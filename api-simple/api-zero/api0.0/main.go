@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	context "context"
 	"fmt"
 	"log"
 	"net"
@@ -11,7 +12,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-// go run main.go chat.go chat.pb.go
+// go run .
 func main() {
 
 	// echo "testando tcp server" | netcat localhost 9000
@@ -20,7 +21,7 @@ func main() {
 	// nc -u localhost 3000
 	go updConnect()
 
-	// go run chat.pb.go chat.go client.grpc.go
+	// curl -i localhost:8080/api/v1/grpc
 	go grpcConnect()
 
 	// curl -i localhost:8080
@@ -31,8 +32,15 @@ func httpConnect() {
 	println("Run Server HTTP:8080")
 	log.Fatal(http.ListenAndServe("0.0.0.0:8080", http.HandlerFunc(
 		func(w http.ResponseWriter, r *http.Request) {
+			if r.URL.Path == "/api/v1/grpc" {
+				w.WriteHeader(http.StatusOK)
+				w.Write([]byte("call grpc client"))
+				clientGrpc()
+				return
+			}
 			w.WriteHeader(http.StatusOK)
-			w.Write([]byte("Let's Go to DevOpsFest ..."))
+			w.Write([]byte("Let's Go to DevOpsFest..."))
+
 		})))
 }
 
@@ -99,4 +107,28 @@ func grpcConnect() {
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %s", err)
 	}
+}
+
+func clientGrpc() {
+	var conn *grpc.ClientConn
+	conn, err := grpc.Dial("0.0.0.0:9001", grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("did not connect: %s", err)
+	}
+	defer conn.Close()
+
+	c := NewMainServiceClient(conn)
+
+	response, err := c.SayHello(context.Background(), &Message{Body: "Hello Client GRPC..."})
+	if err != nil {
+		log.Fatalf("Error when calling SayHello: %s", err)
+	}
+	log.Printf("Response from server: %s", response.Body)
+
+	response, err = c.BroadcastMessage(context.Background(), &Message{Body: "Message to Broadcast grpc tests!"})
+	if err != nil {
+		log.Fatalf("Error when calling Broadcast Message: %s", err)
+	}
+	log.Printf("Response from server: %s", response.Body)
+
 }
