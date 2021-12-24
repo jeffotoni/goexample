@@ -1,5 +1,7 @@
 module gosendmail
 
-go 1.16
+go 1.17
 
-require github.com/jeffotoni/gosendmail v0.0.0-20210810102114-4b3263d11f8e
+require gopkg.in/mail.v2 v2.3.1
+
+require gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
