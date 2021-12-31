@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Finalizar Compra</title>
+
+    <!--- CSS --->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+    <!--- Plugins --->
+    <link rel="stylesheet" href="css/toastr.min.css" />
+
+    <!--- Page --->
+    <link rel="stylesheet" href="css/style.css" />
+    
+    <!--- Fonts --->
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+</head>
+<body>
+    
+    <!--- Shadow + Loader --->
+    <div class="modal-backdrop mb-shadow-with-loader text-center vertical-align" id="shadowWithLoader">
+        <i class="vertical-align-middle loader loader-circle icon-shadow-loader"></i>
+    </div>
+
+    <!--- Navbar - Cabecalho principal --->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-custom-shadow">
+        <div class="container-fluid">
+
+            <!--- Navbar brand: Logo --->
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!--- Navbar nav: Avatar do usuario / Botoes para as paginas --->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mr-3">
+                        <img class="img-avatar-user d-inline-block mr-2" src="images/avatar-user.png" alt="" />
+                        <span class="d-inline-block mt-1" id="DadosUser__Username"></span>
+                    </li>
+                    <li class="nav-item mr-1">
+                        <a class="btn btn-pale-info" href="pedidos.html">
+                            <img class="nav-buttons-icon d-inline-block valign-middle mr-1" src="images/caixa.png" alt="" />
+                            <span class="d-inline-block valign-middle">Pedidos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-pale-danger btn-sair">
+                            <img class="nav-buttons-icon d-inline-block valign-middle mr-1" src="images/sair.png" alt="" />
+                            <span class="d-inline-block valign-middle">Sair</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!--- Pagina incial --->
+    <div class="container-fluid">
+        <div class="row">
+            
+            <!--- Carrinho de compras --->
+            <div class="col-lg-7 offset-lg-1">
+
+
+                <!--- Finalizar compra --->
+                <div>
+                    <h2 class="pg-title">Finalizar compra</h2>
+
+                    <div class="forma-pagamento">
+                        
+                        <div class="opcao-forma-pagamento opcao-fp-boleto">
+                            <label for="rdbFormaPagamentoBoleto">
+                                <div class="float-left pt-2">
+                                    <input type="radio" class="rdb-forma-pagamento" id="rdbFormaPagamentoBoleto" name="rdbFormaPagamento" value="boleto" data-forma="boleto" />
+                                </div>
+                                <div class="float-left ml-4 mr-4">
+                                    <img class="icon-forma-pagamento" src="images/boleto.png" alt="" />
+                                </div>
+                                <div class="float-left">
+                                    <span class="nome-forma-pagamento">Boleto Banc&aacute;rio (10% OFF)</span><br />
+                                    <span class="descricao-forma-pagamento">R$ 792,00</span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </label>
+                        </div>
+                        
+                        <div class="opcao-forma-pagamento opcao-fp-cartao opcao-selected">
+                            <label for="rdbFormaPagamentoCartao">
+                                <div class="float-left pt-2">
+                                    <input type="radio" class="rdb-forma-pagamento" id="rdbFormaPagamentoCartao" name="rdbFormaPagamento" value="cartao" data-forma="cartao" checked="checked" />
+                                </div>
+                                <div class="float-left ml-4 mr-4">
+                                    <img class="icon-forma-pagamento" src="images/cartao-de-credito.png" alt="" />
+                                </div>
+                                <div class="float-left">
+                                    <span class="nome-forma-pagamento">Cart&atilde;o de Cr&eacute;dito</span><br />
+                                    <span class="descricao-forma-pagamento">em at&eacute; 8x sem juros</span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </label>
+
+                            <div class="toggle-opcao-cartao">
+                                <div class="row">
+                                    <div class="col-lg-7">
+
+                                        <div class="form-cartao-credito">
+                                            
+                                            <div class="form-group">
+                                                <label>N&uacute;mero do Cart&atilde;o</label>
+
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-cartao form-required text-center" id="txtCartaoNumero1" name="txtCartaoNumero1" maxlength="4" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-cartao form-required text-center" id="txtCartaoNumero2" name="txtCartaoNumero2" maxlength="4" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-cartao form-required text-center" id="txtCartaoNumero3" name="txtCartaoNumero3" maxlength="4" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control form-control-cartao form-required text-center" id="txtCartaoNumero4" name="txtCartaoNumero4" maxlength="4" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="img-cartao-bandeira">
+                                                            <img src="images/card-american-express.png" alt="" />
+                                                        </div>
+                                                        <div class="img-cartao-bandeira">
+                                                            <img src="images/card-banrisul.png" alt="" />
+                                                        </div>
+                                                        <div class="img-cartao-bandeira">
+                                                            <img src="images/card-diners.png" alt="" />
+                                                        </div>
+                                                        <div class="img-cartao-bandeira">
+                                                            <img src="images/card-elo.png" alt="" />
+                                                        </div>
+                                                        <div class="img-cartao-bandeira">
+                                                            <img src="images/card-hipercard.png" alt="" />
+                                                        </div>
+                                                        <div class="img-cartao-bandeira">
+                                                            <img src="images/card-mastercard.png" alt="" />
+                                                        </div>
+                                                        <div class="img-cartao-bandeira">
+                                                            <img src="images/card-visa.png" alt="" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Nome do titular</label>
+                                                <input type="text" class="form-control form-required" id="txtCartaoTitular" name="txtCartaoTitular" />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>CPF</label>
+                                                <input type="text" class="form-control form-control-cpf form-required" id="txtCartaoCpf" name="txtCartaoCpf" />
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-5">
+                                                    <div class="form-group">
+                                                        <label>Data de validade</label>
+                                                        <input type="text" class="form-control form-control-validade form-required" id="txtCartaoValidade" name="txtCartaoValidade" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-7">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-lg-7">
+                                                                <label>CVV</label>
+                                                                <input type="text" class="form-control form-control-cvv form-required text-center" id="txtCartaoCvv" name="txtCartaoCvv" />
+                                                            </div>
+                                                            <div class="col-lg-5 text-right">
+                                                                <img class="icone-cvv-cartao" src="images/cvv-credit-card.png" alt="" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>Parcelas</label>
+                                                <select class="form-control form-required" id="txtCartaoParcelas" name="txtCartaoParcelas">
+                                                    <option value="1">&Agrave; vista</option>
+                                                    <option value="2">2x de R$ 440,00 (sem juros)</option>
+                                                    <option value="3">3x de R$ 293,34 (sem juros)</option>
+                                                    <option value="4">4x de R$ 220,00 (sem juros)</option>
+                                                    <option value="5">5x de R$ 176,00 (sem juros)</option>
+                                                    <option value="6">6x de R$ 146,67 (sem juros)</option>
+                                                    <option value="7">7x de R$ 125,72 (sem juros)</option>
+                                                    <option value="8">8x de R$ 110,00 (sem juros)</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-5">
+                                        <div class="cartao-display">
+                                            <div class="cartao-bandeira">
+                                                <img src="" alt="" />
+                                            </div>
+
+                                            <div class="cartao-numero">**** **** **** ****</div>
+
+                                            <div class="cartao-nome-titular">NOME E SOBRENOME</div>
+                                            <div class="cartao-vencimento">MM/AAAA</div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5">
+                            <button type="button" class="btn btn-dark-info btn-lg btn-block btn-efetuar-pagamento">
+                                <div class="loader">
+                                    <i class="fa fa-spin fa-spinner"></i>
+                                </div>
+                                <div class="text">
+                                    <img class="nav-buttons-icon d-inline-block valign-middle mr-2" src="images/carrinho.png" alt="" />
+                                    <span class="d-inline-block valign-middle">Finalizar Compra</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="alerta-finalizar alerta-finalizar-erro">
+                            <div class="img-alerta-icon">
+                                <img src="images/alerta-aviso.png" alt="" />
+                            </div>
+                            <div class="alerta-titulo alerta-titulo-erro">Erro ao processar pagamento!</div>
+                            <div class="alerta-mensagem"></div>
+                            <div class="alerta-botao">
+                                <button type="button" class="btn btn-dark-info btn-lg btn-block btn-ok-close">
+                                    <div class="loader">
+                                        <i class="fa fa-spin fa-spinner"></i>
+                                    </div>
+                                    <div class="text">OK</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="alerta-finalizar alerta-finalizar-sucesso">
+                            <div class="img-alerta-icon">
+                                <img src="images/alerta-sucesso.png" alt="" />
+                            </div>
+                            <div class="alerta-titulo alerta-titulo-sucesso">Compra efetuada com sucesso!</div>
+                            <div class="alerta-mensagem">
+                                Ol&aacute; <span id="AlertaUserNome"></span>! Obrigado por comprar conosco.<br /><br />
+                                Seu pedido de n&uacute;mero <span class="alerta-numero-pedido" id="AlertaNumeroPedido"></span> foi finalizado com sucesso e voc&ecirc; pode acompanhar os pedidos clicando em "Pedidos".
+                            </div>
+                            <div class="alerta-botao">
+                                <button type="button" class="btn btn-dark-info btn-lg btn-block btn-ok-close">
+                                    <div class="loader">
+                                        <i class="fa fa-spin fa-spinner"></i>
+                                    </div>
+                                    <div class="text">OK</div>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!--- Identificação --->
+            <div class="col-lg-3 col-sidebar">
+
+                <div>
+                    <h3>Endere&ccedil;o</h3>
+
+                    <div class="box-endereco">
+                        <div class="float-left w-icon-pin">
+                            <img class="icon-pin" src="images/pin.png" alt="" />
+                        </div>
+                        <div class="float-left w-dados-endereco">
+                            <div class="font-weight-bold" id="DadosUser__Nome"></div>
+                            <div>
+                                <span id="DadosUser__Logradouro"></span>, <span id="DadosUser__Numero"></span> <span id="DadosUser__Complemento"></span><br />
+                                CEP <span id="DadosUser__Cep"></span>, <span id="DadosUser__Bairro"></span> - <span id="DadosUser__Cidade"></span>/<span id="DadosUser__Uf"></span>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <h3>Selecione a forma de entrega</h3>
+
+                    <div class="frete-item">
+                        <label for="txtFreteEntregaRapida">
+                            <div class="float-left pt-2 mr-3">
+                                <input type="radio" class="rdb-frete" id="txtFreteEntregaRapida" name="txtFrete" value="Entrega Rapida" data-dias="8" data-valor="15" />
+                            </div>
+                            <div class="float-left">
+                                <span class="frete-item-nome">Entrega R&aacute;pida</span><br />
+                                <span class="frete-item-descricao">em m&eacute;dia 8 dias &uacute;teis</span>
+                            </div>
+                            <div class="float-right pt-2">
+                                <span class="frete-item-nome">R$ 15,00</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </label>
+                    </div>
+
+                    <div class="frete-item">
+                        <label for="txtFretePac">
+                            <div class="float-left pt-2 mr-3">
+                                <input type="radio" class="rdb-frete" id="txtFretePac" name="txtFrete" value="PAC" checked="checked" data-dias="13" data-valor="8" />
+                            </div>
+                            <div class="float-left">
+                                <span class="frete-item-nome">PAC</span><br />
+                                <span class="frete-item-descricao">em m&eacute;dia 13 dias &uacute;teis</span>
+                            </div>
+                            <div class="float-right pt-2">
+                                <span class="frete-item-nome">R$ 8,00</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </label>
+                    </div>
+
+                    <div class="frete-item">
+                        <label for="txtFreteSedex">
+                            <div class="float-left pt-2 mr-3">
+                                <input type="radio" class="rdb-frete" id="txtFreteSedex" name="txtFrete" value="Sedex" data-dias="4" data-valor="32" />
+                            </div>
+                            <div class="float-left">
+                                <span class="frete-item-nome">Sedex</span><br />
+                                <span class="frete-item-descricao">em m&eacute;dia 4 dias &uacute;teis</span>
+                            </div>
+                            <div class="float-right pt-2">
+                                <span class="frete-item-nome">R$ 32,00</span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </label>
+                    </div>
+
+                    <br />
+
+                    <h3>Resumo</h3>
+
+                    <div class="box-resumo">
+                        <div class="resumo-qtd-itens float-left">10 itens</div>
+                        <div class="float-right">
+                            <img class="resumo-toggle arrow-down" src="images/arrow.png" alt="" />
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <div class="produto-item">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <img class="produto-imagem" src="images/camiseta-go1.jpg" alt="" />
+                                </div>
+                                <div class="col-lg-5">
+                                    <span class="produto-nome">Camisa Docker Go</span><br />
+                                    <span class="produto-codigo">C&Oacute;D4623784</span>
+                                </div>
+                                <div class="col-lg-2 pt-2 text-center">
+                                    <span class="produto-preco-qtd">Qtd. 1</span>
+                                </div>
+                                <div class="col-lg-3 text-right pb-1">
+                                    <span class="produto-preco-por">R$ 79,00</span><br />
+                                    <span class="produto-preco-de">R$ 99,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="produto-item">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <img class="produto-imagem" src="images/camiseta-go2.jpg" alt="" />
+                                </div>
+                                <div class="col-lg-5">
+                                    <span class="produto-nome">Camisa Zombie Go</span><br />
+                                    <span class="produto-codigo">C&Oacute;D2344567</span>
+                                </div>
+                                <div class="col-lg-2 pt-2 text-center">
+                                    <span class="produto-preco-qtd">Qtd. 2</span>
+                                </div>
+                                <div class="col-lg-3 text-right pb-1">
+                                    <span class="produto-preco-por">R$ 168,00</span><br />
+                                    <span class="produto-preco-de">R$ 198,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="produto-item">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <img class="produto-imagem" src="images/camiseta-go.jpg" alt="" />
+                                </div>
+                                <div class="col-lg-5">
+                                    <span class="produto-nome">Camisa Go</span><br />
+                                    <span class="produto-codigo">C&Oacute;D9871237</span>
+                                </div>
+                                <div class="col-lg-2 pt-2 text-center">
+                                    <span class="produto-preco-qtd">Qtd. 4</span>
+                                </div>
+                                <div class="col-lg-3 text-right pb-1">
+                                    <span class="produto-preco-por">R$ 356,00</span><br />
+                                    <span class="produto-preco-de">R$ 396,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="produto-item">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <img class="produto-imagem" src="images/camiseta-go3.jpg" alt="" />
+                                </div>
+                                <div class="col-lg-5">
+                                    <span class="produto-nome">Camisa Dragon Ball Go</span><br />
+                                    <span class="produto-codigo">C&Oacute;D6547893</span>
+                                </div>
+                                <div class="col-lg-2 pt-2 text-center">
+                                     <span class="produto-preco-qtd">Qtd. 3</span>
+                                </div>
+                                <div class="col-lg-3 text-right pb-1">
+                                    <span class="produto-preco-por">R$ 277,00</span><br />
+                                    <span class="produto-preco-de">R$ 297,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="resumo-item">
+                        <div class="float-left">
+                            <span class="resumo-item-title" id="FreteNome">PAC</span><br />
+                            <span class="resumo-item-description">em m&eacute;dia <span id="FreteDias">13</span> dias &uacute;teis</span>
+                        </div>
+                        <div class="float-right">
+                            <span class="resumo-item-title">R$ <span id="FreteValor">8</span>,00</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="resumo-item">
+                        <div class="float-left">
+                            <span class="resumo-item-title" id="FormaPagamentoNome">Cart&atilde;o de Cr&eacute;dito</span><br />
+                            <span class="resumo-item-description" id="FormaPagamentoDescricao"></span>
+                        </div>
+                        <div class="float-right">
+                            <span class="resumo-item-title" id="FormaPagamentoValor">&Agrave; vista</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="resumo-item">
+                        <div class="float-left">
+                            <span class="resumo-item-title font-weight-bold">Total</span><br />
+                        </div>
+                        <div class="float-right">
+                            <span class="resumo-item-title font-weight-bold" id="PedidoValorTotal">R$ 880,00</span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--- JS --->
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/LocalStorage.js"></script>
+    <script src="js/axios.min.js"></script>
+
+    <!--- Plugins --->
+    <script src="js/plugins/formatter/jquery.formatter.min.js"></script>
+    <script src="js/plugins/toastr/toastr.min.js"></script>
+
+    <!--- JS Pagina --->
+    <script src="js/global.js"></script>
+    <script src="js/finalizar-compra.js"></script>
+</body>
+</html>

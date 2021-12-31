@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Pedidos</title>
+
+    <!--- CSS --->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+    <!--- Plugins --->
+    <link rel="stylesheet" href="css/toastr.min.css" />
+
+    <!--- Page --->
+    <link rel="stylesheet" href="css/style.css" />
+    
+    <!--- Fonts --->
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+</head>
+<body>
+    
+    <!--- Shadow + Loader --->
+    <div class="modal-backdrop mb-shadow-with-loader text-center vertical-align" id="shadowWithLoader">
+        <i class="vertical-align-middle loader loader-circle icon-shadow-loader"></i>
+    </div>
+
+    <!--- Navbar - Cabecalho principal --->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-custom-shadow">
+        <div class="container-fluid">
+
+            <!--- Navbar brand: Logo --->
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!--- Navbar nav: Avatar do usuario / Botoes para as paginas --->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mr-4">
+                        <div class="circle-websocket-nul" id="connect_status"></div>
+                    </li>
+                    <li class="nav-item nav-item-avatar mr-3">
+                        <img class="img-avatar-user d-inline-block mr-2" src="images/avatar-user.png" alt="" />
+                        <span class="d-inline-block mt-1" id="DadosUser__Username"></span>
+                    </li>
+                    <li class="nav-item mr-1">
+                        <a class="btn btn-pale-info" href="finalizar-compra.html">
+                            <img class="nav-buttons-icon d-inline-block valign-middle mr-1" src="images/carrinho.png" alt="" />
+                            <span class="d-inline-block valign-middle">Finalizar compra</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-pale-danger btn-sair">
+                            <img class="nav-buttons-icon d-inline-block valign-middle mr-1" src="images/sair.png" alt="" />
+                            <span class="d-inline-block valign-middle">Sair</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!--- Lista de pedidos realizados --->
+    <div class="mt-5 container-fluid">
+        <div class="row">
+            <div class="col-lg-12" id="tabledit">
+                <table class="table table-pedidos">
+                    <thead>
+                        <tr>
+                            <th>N&ordm; pedido</th>
+                            <th>N&ordm; IP</th>
+                            <th>Cliente</th>
+                            <th>CEP</th>
+                            <th>Cidade</th>
+                            <th class="text-center">Pagamento</th>
+                            <th class="text-center">Frete</th>
+                            <th class="text-center" title="Quantidade de Itens">Itens</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-center">Data</th>
+                            <th class="text-center">Hora</th>
+                            <th class="text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                       <!--  <tr>
+                            <td>#344557</td>
+                            <td>Joyce Ferreira Otoni</td>
+                            <td class="text-center">Boleto</td>
+                            <td class="text-center">PAC</td>
+                            <td class="text-center">4</td>
+                            <td class="text-center">R$241,00</td>
+                            <td class="text-center">22/06/2020</td>
+                            <td class="text-center">17:53:00</td>
+                            <td class="text-center">Em andamento</td>
+                        </tr>
+                        <tr>
+                            <td>#344556</td>
+                            <td>Joyce Ferreira Otoni</td>
+                            <td class="text-center">Cart&atilde;o de Cr&eacute;dito</td>
+                            <td class="text-center">Sedex</td>
+                            <td class="text-center">2</td>
+                            <td class="text-center">R$179,00</td>
+                            <td class="text-center">22/06/2020</td>
+                            <td class="text-center">17:53:00</td>
+                            <td class="text-center">Em an&aacute;lise</td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!--- JS --->
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/LocalStorage.js"></script>
+    <script src="js/axios.min.js"></script>
+
+    <!--- Plugins --->
+    <script src="js/plugins/toastr/toastr.min.js"></script>
+
+    <!--- JS Pagina --->
+    <script src="js/global.js"></script>
+    <script src="js/pedidos.js"></script>
+
+    <script language="javascript" type="text/javascript">
+        
+          //var wsUri = "ws://localhost:3000";
+          var wsUri = "ws://34.71.242.94:3000";
+          var output;
+
+          function init()
+          {
+            output = document.getElementById("output");
+            testWebSocket();
+          }
+
+          function testWebSocket()
+          {
+            websocket = new WebSocket(wsUri);
+            websocket.onopen = function(evt) { onOpen(evt) };
+            //websocket.onclose = function(evt) { onClose(evt) };
+            websocket.onmessage = function(evt) { onMessage(evt) };
+            websocket.onerror = function(evt) { onError(evt) };
+          }
+
+          function onOpen(evt)
+          {
+            var  element = document.getElementById("connect_status");
+            element.classList.add("circle-websocket-on");
+            writeToScreenStart("CONNECTED");
+            //verdinho
+            doSend("Envia esta msg para o server..");
+          }
+
+          function onClose(evt)
+          {
+            writeToScreenStart("DISCONNECTED");
+            var  element = document.getElementById("connect_status");
+            element.classList.add("circle-websocket-off");
+            //vermelho
+          }
+
+          function onMessage(evt)
+          {
+            console.log(evt.data);
+            //writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>');
+            //websocket.close();
+            writeToScreenTable(evt.data)
+          }
+
+          function onError(evt)
+          {
+            writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
+          }
+
+          function doSend(message)
+          {
+            writeToScreenStart("SENT: " + message);
+            writeToScreenStart("....................................................................");
+            websocket.send(message);
+          }
+
+          function writeToScreen(message)
+          {
+            var pre = document.createElement("p");
+            pre.style.wordWrap = "break-word";
+            pre.innerHTML = message;
+            output.appendChild(pre);
+
+            var node = document.getElementById("output").lastChild;
+            var list = document.getElementById("output");
+            list.insertBefore(node, list.childNodes[0]);
+
+          }
+
+          
+           function writeToScreenTable(message) {
+
+              var element = JSON.parse(message);
+              var elementos = element.data
+
+              // get the reference for the body
+              var body = document.getElementsByTagName("body")[0];
+
+              // creates a <table> element and a <tbody> element
+              var tbl = document.getElementById("tabledit");
+              var tblBody = document.getElementById("tbody");
+
+              // creating all cells
+              for (var i = 0; i < 1; i++) {
+                // creates a table row
+                var row = document.createElement("tr");
+
+                  //////////////// ---------------
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["pedidoid"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["ped_ip"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["nome"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["endereco_cep"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["endereco_cidade"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["pagamento"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["entrega_nome"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["itens"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["total"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["data"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["hora"]);
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                  var cell = document.createElement("td");
+                  var cellText = document.createTextNode(elementos["status"]);
+                  //var //cellText.style.color=elementos["cor"];
+                  cell.style.color = elementos["cor"];
+                  cell.appendChild(cellText);
+                  row.appendChild(cell);
+
+                // add the row to the end of the table body
+                tblBody.appendChild(row);
+                var node = document.getElementById("tbody").lastChild;
+                var list = document.getElementById("tbody");
+                //console.log(list.childNodes)
+                // console.log(list[0])
+                 list.insertBefore(node, list.childNodes[0]);
+              }
+
+              // put the <tbody> in the <table>
+              //tbl.appendChild(tblBody);
+              // appends <table> into <body>
+              //body.appendChild(tbl);
+              // sets the border attribute of tbl to 2;
+              //tbl.setAttribute("border", "2");
+          }
+
+          function writeToScreenStart(message)
+          {
+            //var pre = document.createElement("p");
+            //pre.style.wordWrap = "break-word";
+            //pre.innerHTML = message;
+            //output_start.appendChild(pre);
+          }
+
+          window.addEventListener("load", init, false);
+
+        </script>
+</body>
+</html>

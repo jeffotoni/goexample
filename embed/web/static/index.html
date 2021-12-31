@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Carrinho de compras</title>
+
+    <!--- CSS --->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+
+    <!--- Plugins --->
+    <link rel="stylesheet" href="css/toastr.min.css" />
+
+    <!--- Page --->
+    <link rel="stylesheet" href="css/style.css" />
+    
+    <!--- Fonts --->
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+
+</head>
+<body>
+
+    <!--- Shadow + Loader --->
+    <div class="modal-backdrop mb-shadow-with-loader text-center vertical-align" id="shadowWithLoader">
+        <i class="vertical-align-middle loader loader-circle icon-shadow-loader"></i>
+    </div>
+
+    <!--- Navbar - Cabecalho principal --->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-custom-shadow">
+        <div class="container-fluid">
+
+            <!--- Navbar brand: Logo --->
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!--- Navbar nav: Avatar do usuario / Botoes para as paginas --->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mr-1">
+                        <a class="btn btn-pale-info" href="pedidos.html">
+                            <img class="nav-buttons-icon d-inline-block valign-middle mr-1" src="images/caixa.png" alt="" />
+                            <span class="d-inline-block valign-middle">Pedidos</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!--- Pagina incial --->
+    <div class="container-fluid">
+        <div class="row">
+            
+            <div class="col-lg-7 offset-lg-1">
+                
+                <!--- Carrinho de compras --->
+                <div id="PageCarrinhoCompras">
+                    <h2 class="pg-title">Carrinho de Compras</h2>
+
+                    <div class="carrinho-compras">
+
+                        <div class="produto-item">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <img class="produto-imagem" src="images/camiseta-go1.jpg" alt="" />
+                                </div>
+                                <div class="col-lg-3 pt-3">
+                                    <h4 class="produto-nome">Camisa Docker Go</h4>
+                                    <span class="produto-codigo">C&Oacute;D4623784</span>
+                                </div>
+                                <div class="col-lg-3 text-right pt-4">
+                                    <div class="icon-qtd-carrinho d-inline-block valign-middle">-</div>
+                                    <input type="text" class="form-control form-carrinho-disabled w-50 ml-2 mr-2 d-inline-block valign-middle text-center" id="" name="" value="1" readonly="readonly" />
+                                    <div class="icon-qtd-carrinho d-inline-block valign-middle">+</div>
+                                </div>
+                                <div class="col-lg-4 text-right pt-2">
+                                    <span class="produto-preco-de">R$ 99,00</span> <span class="produto-preco-por">R$ 79,00</span><br />
+                                    <span class="produto-preco-economia">Economia de R$ 20,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="produto-item">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <img class="produto-imagem" src="images/camiseta-go2.jpg" alt="" />
+                                </div>
+                                <div class="col-lg-3 pt-3">
+                                    <h4 class="produto-nome">Camisa Zombie Go</h4>
+                                    <span class="produto-codigo">C&Oacute;D2344567</span>
+                                </div>
+                                <div class="col-lg-3 text-right pt-4">
+                                    <div class="icon-qtd-carrinho d-inline-block valign-middle">-</div>
+                                    <input type="text" class="form-control form-carrinho-disabled w-50 ml-2 mr-2 d-inline-block valign-middle text-center" id="" name="" value="2" readonly="readonly" />
+                                    <div class="icon-qtd-carrinho d-inline-block valign-middle">+</div>
+                                </div>
+                                <div class="col-lg-4 text-right pt-2">
+                                    <span class="produto-preco-de">R$ 198,00</span> <span class="produto-preco-por">R$ 168,00</span><br />
+                                    <span class="produto-preco-economia">Economia de R$ 30,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="produto-item">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <img class="produto-imagem" src="images/camiseta-go.jpg" alt="" />
+                                </div>
+                                <div class="col-lg-3 pt-3">
+                                    <h4 class="produto-nome">Camisa Go</h4>
+                                    <span class="produto-codigo">C&Oacute;D9871237</span>
+                                </div>
+                                <div class="col-lg-3 text-right pt-4">
+                                    <div class="icon-qtd-carrinho d-inline-block valign-middle">-</div>
+                                    <input type="text" class="form-control form-carrinho-disabled w-50 ml-2 mr-2 d-inline-block valign-middle text-center" id="" name="" value="4" readonly="readonly" />
+                                    <div class="icon-qtd-carrinho d-inline-block valign-middle">+</div>
+                                </div>
+                                <div class="col-lg-4 text-right pt-2">
+                                    <span class="produto-preco-de">R$ 396,00</span> <span class="produto-preco-por">R$ 356,00</span><br />
+                                    <span class="produto-preco-economia">Economia de R$ 40,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="produto-item">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <img class="produto-imagem" src="images/camiseta-go3.jpg" alt="" />
+                                </div>
+                                <div class="col-lg-3 pt-3">
+                                    <h4 class="produto-nome">Camisa Dragon Ball Go</h4>
+                                    <span class="produto-codigo">C&Oacute;D6547893</span>
+                                </div>
+                                <div class="col-lg-3 text-right pt-4">
+                                    <div class="icon-qtd-carrinho d-inline-block valign-middle">-</div>
+                                    <input type="text" class="form-control form-carrinho-disabled w-50 ml-2 mr-2 d-inline-block valign-middle text-center" id="" name="" value="3" readonly="readonly" />
+                                    <div class="icon-qtd-carrinho d-inline-block valign-middle">+</div>
+                                </div>
+                                <div class="col-lg-4 text-right pt-2">
+                                    <span class="produto-preco-de">R$ 297,00</span> <span class="produto-preco-por">R$ 277,00</span><br />
+                                    <span class="produto-preco-economia">Economia de R$ 20,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--- Sidebar - Identificação --->
+            <div class="col-lg-3 col-sidebar">
+
+                <div id="SidebarCarrinhoCompras">
+                    <h3>Identifica&ccedil;&atilde;o</h3>
+
+                    <!--- Formulario de nome e endereco --->
+                    <div>
+                        <div class="form-group">
+                            <label>* Nome e sobrenome</label>
+                            <input type="text" class="form-control form-required" id="txtNome" name="txtNome" />
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    <label>* CEP</label>
+                                    <input type="text" class="form-control form-control-cep form-required" id="txtCep" name="txtCep" />
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="button" class="btn btn-dark-info btn-block btn-buscar-cep">
+                                        <div class="loader">
+                                            <i class="fa fa-spin fa-spinner"></i>
+                                        </div>
+                                        <div class="text">Buscar</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="FormCep" style="visibility: hidden;">
+                        
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>* Estado</label>
+                                        <input type="text" class="form-control form-required" id="txtCepUf" name="txtCepUf" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>* Cidade</label>
+                                        <input type="text" class="form-control form-required" id="txtCepCidade" name="txtCepCidade" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>* Bairro</label>
+                                <input type="text" class="form-control form-required" id="txtCepBairro" name="txtCepBairro" />
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>* Rua/Avenida</label>
+                                        <input type="text" class="form-control form-required" id="txtCepLogradouro" name="txtCepLogradouro" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>* N&uacute;mero</label>
+                                        <input type="text" class="form-control form-control-numero form-required text-center" id="txtCepNumero" name="txtCepNumero" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Complemento</label>
+                                <input type="text" class="form-control" id="txtCepComplemento" name="txtCepComplemento" />
+                            </div>
+
+                            <div class="mt-4">
+                                <button type="button" class="btn btn-dark-info btn-lg btn-block btn-finalizar-compra">
+                                    <div class="loader">
+                                        <i class="fa fa-spin fa-spinner"></i>
+                                    </div>
+                                    <div class="text">
+                                        <img class="nav-buttons-icon d-inline-block valign-middle mr-2" src="images/carrinho.png" alt="" />
+                                        <span class="d-inline-block valign-middle">Finalizar Compra</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+    <!--- JS --->
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/LocalStorage.js"></script>
+    <script src="js/axios.min.js"></script>
+
+    <!--- Plugins --->
+    <script src="js/plugins/formatter/jquery.formatter.min.js"></script>
+    <script src="js/plugins/toastr/toastr.min.js"></script>
+
+    <!--- JS Pagina --->
+    <script src="js/global.js"></script>
+    <script src="js/carrinho.js"></script>
+
+</body>
+</html>
