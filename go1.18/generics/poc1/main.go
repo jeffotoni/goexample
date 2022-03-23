@@ -2,6 +2,14 @@ package main
 
 import "fmt"
 
+type iMyinterface interface {
+	int | int64 | int32
+	~float64
+	~string
+	~[]byte
+	MyMethod()
+}
+
 func NoGenericFuncInts(i []int) {
 	for _, v := range i {
 		fmt.Sprintf("%v", v)
@@ -37,7 +45,7 @@ var any1 string
 var T string
 
 func main() {
-
+	println("version...")
 	GenericsSlice([]int{1, 2, 3, 4, 5, 6, 7, 8, 9})
 	println("")
 	GenericsSlice([]string{"a", "b", "c", "d"})
