@@ -84,7 +84,6 @@ func NoGenericInterface(a, b interface{}) bool {
 			}
 		}
 		return true
-		return true
 	}
 
 	return false
@@ -95,9 +94,8 @@ var T string
 
 func main() {
 	println("version...")
-
 	var t bool
-	a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
+	a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21}
 	b := a
 	t = NoGenericFuncInts(a, b)
 	println(t)
@@ -118,5 +116,4 @@ func main() {
 
 	t = NoGenericInterface(s1, s2)
 	println(t)
-
 }
