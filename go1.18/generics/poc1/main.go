@@ -1,11 +1,27 @@
 package main
 
+import "log"
+
 type iMyinterface interface {
 	int | int64 | int32
 	~float64
 	~string
 	~[]byte
 	MyMethod()
+}
+
+//go:noinline
+func deleteMap(m map[string]int) {
+	for i := range m {
+		delete(m, i)
+	}
+}
+
+//go:noinline
+func gdeleteMap[M ~map[K]V, K comparable, V any](m M) {
+	for i := range m {
+		delete(m, i)
+	}
 }
 
 func NoGenericFuncInts(a, b []int) bool {
@@ -93,6 +109,15 @@ var any1 string
 var T string
 
 func main() {
+	log.Println("Generics Map")
+
+	m := make(map[string]int)
+	deleteMap(m)
+
+	m2 := make(map[string]string)
+	gdeleteMap(m2)
+
+	log.Println("Generics Map")
 	println("version...")
 	var t bool
 	a := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21}

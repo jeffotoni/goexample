@@ -3,15 +3,17 @@
 package main
 
 import (
-   "crypto/aes"
-   "crypto/cipher"
-   "crypto/rand"
-   "crypto/sha256"
-   "encoding/json"
-   "fmt"
-   "log"
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"io"
+	"log"
 
-   "golang.org/x/crypto/pbkdf2"
+	"golang.org/x/crypto/pbkdf2"
 )
 
 var pmid string = `{
@@ -88,56 +90,137 @@ var pmid string = `{
  }`
 
 type InputURI struct {
-   InputURIParams InputURIParams `json:"inputUriParams"`
+	InputURIParams InputURIParams `json:"inputUriParams"`
 }
 type InputURIParams struct {
-   Channel     string `json:"channel"`
-   SocialSecNo string `json:"socialSecNo"`
+	Channel     string `json:"channel"`
+	SocialSecNo string `json:"socialSecNo"`
 }
 
+var (
+	KeyPmid = "95803820"
+)
+
 func main() {
-   out := map[string]string{"cpf": "1234"}
-   fmt.Println(`map out:`, out)
-   fmt.Println(out["cpf"])
-   b, _ := json.Marshal(out)
-   fmt.Println(string(b))
-   var i InputURI
-   json.Unmarshal([]byte(pmid), &i)
-   fmt.Println(i)
-   fmt.Println(`valor de cpf:`, i.InputURIParams.SocialSecNo)
-   var my = make(map[string]interface{}, 1)
-   my["cpf"] = i.InputURIParams.SocialSecNo
-   fmt.Println(my)
-   encrypt()
+	out := map[string]string{"cpf": "1234"}
+	fmt.Println(`map out:`, out)
+	fmt.Println(out["cpf"])
+	b, _ := json.Marshal(out)
+	fmt.Println(string(b))
+	var i InputURI
+	json.Unmarshal([]byte(pmid), &i)
+	fmt.Println(i)
+	fmt.Println(`valor de cpf:`, i.InputURIParams.SocialSecNo)
+	var my = make(map[string]interface{}, 1)
+	my["cpf"] = i.InputURIParams.SocialSecNo
+	fmt.Println(my)
+
+	keyHexStr, nonceHexStr, err := genNonce()
+	key, nonce, err := validNonce(i.InputURIParams.SocialSecNo, keyHexStr, nonceHexStr)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	plainText := "Este é o texto plano a ser cifrado jeffotoni!!"
+	cipherText, err := encrypt(key, nonce, plainText)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	println("success crypt")
+	fmt.Printf("%x\n", cipherText)
+	println("....................................................")
+	println("decrypt:")
+	plainDecryt, err := decrypt(key, nonce, cipherText)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	fmt.Println(plainDecryt)
 }
+
+func validNonce(cpf, keyHexStr, nonceHexStr string) ([]byte, []byte, error) {
+	// key, err := hex.DecodeString(keyHexStr)
+	// if err != nil {
+	// 	return nil, nil, err
+	// }
+	key, _ := deriveKey(cpf, []byte(KeyPmid))
+
+	nonce, err := hex.DecodeString(nonceHexStr)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return key, nonce, nil
+}
+
+func genNonce() (string, string, error) {
+	// The key argument should be the AES key, either 16 or 32 bytes
+	// to select AES-128 or AES-256.
+	key := make([]byte, 32)
+	if _, err := io.ReadFull(rand.Reader, key); err != nil {
+		return "", "", err
+	}
+
+	// Never use more than 2^32 random nonces with a given key because of
+	// the risk of a repeat.
+	nonce := make([]byte, 12)
+	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
+		return "", "", err
+	}
+
+	return fmt.Sprintf("%x", key), fmt.Sprintf("%x", nonce), nil
+
+}
+
 func deriveKey(passphrase string, salt []byte) ([]byte, []byte) {
-   if salt == nil {
-      salt = make([]byte, 8)
-      // http://www.ietf.org/rfc/rfc2898.txt
-      // Salt.
-      rand.Read(salt)
-   }
-   return pbkdf2.Key([]byte(passphrase), salt, 1000, 32, sha256.New), salt
+	if salt == nil {
+		salt = make([]byte, 8)
+		// http://www.ietf.org/rfc/rfc2898.txt
+		// Salt.
+		rand.Read(salt)
+	}
+	return pbkdf2.Key([]byte(passphrase), salt, 1000, 32, sha256.New), salt
 }
-func encrypt() {
-   var i InputURI
-   publicKey, err := deriveKey(i.InputURIParams.SocialSecNo, []byte("95803820"))
-   if err != nil {
-      log.Println(err)
-      return
-   }
-   return
-   plaintext := []byte("Este é o texto plano a ser cifrado")
-   block, err := aes.NewCipher(publicKey)
-   if err != nil {
-      log.Println(err)
-      return
-   }
-   nonce, _ := deriveKey(i.InputURIParams.SocialSecNo, []byte("02830859"))
-   aesgcm, err := cipher.NewGCM(block)
-   if err != nil {
-      panic(err.Error())
-   }
-   ciphertext := aesgcm.Seal(nil, nonce, plaintext, nil)
-   fmt.Printf("Ciphertext: %x\n", ciphertext)
+
+func encrypt(publicKey, nonce []byte, plaintext string) (ciphertext string, err error) {
+
+	block, err := aes.NewCipher(publicKey)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	aesgcm, err := cipher.NewGCM(block)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	ciphertextBtye := aesgcm.Seal(nil, nonce, []byte(plaintext), nil)
+	return fmt.Sprintf("%x", ciphertextBtye), nil
+}
+
+func decrypt(key []byte, nonce []byte, cipherHexStr string) (string, error) {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		return "", err
+	}
+
+	aesgcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return "", err
+	}
+
+	cipherText, err := hex.DecodeString(cipherHexStr)
+	if err != nil {
+		return "", err
+	}
+
+	plainText, err := aesgcm.Open(nil, nonce, []byte(cipherText), nil)
+	if err != nil {
+		return "", err
+	}
+
+	return string(plainText), nil
 }
