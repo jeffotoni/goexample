@@ -1,6 +1,10 @@
 package main
 
-import "log"
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+)
 
 type iMyinterface interface {
 	int | int64 | int32
@@ -108,7 +112,23 @@ func NoGenericInterface(a, b interface{}) bool {
 var any1 string
 var T string
 
+type My struct {
+	Name string
+	Cpf  int
+}
+
+func stringToStruct(n any) {
+	b, err := json.Marshal(n)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	fmt.Println(string(b))
+}
+
 func main() {
+
+	stringToStruct(My{Name: "jeffotoni", Cpf: 1329393})
 	log.Println("Generics Map")
 
 	m := make(map[string]int)
