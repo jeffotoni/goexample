@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 )
 
 //type MyStructGeneric[T any] struct {
@@ -20,30 +21,44 @@ type MyStructGeneric[T any] struct {
 }
 
 func NewMyStructGeneric[T any]() MyStructGeneric[T] {
-	return MyStructGeneric[T]{
-	}
+	return MyStructGeneric[T]{}
 }
+
 type User struct {
 	ID   string
 	Name string
 	Cpf  int
 }
 type Company struct {
-	ID   int
-	Phone string
+	ID            int
+	Phone         string
 	CorporateName string
 }
 
 type Covid struct {
 	Week   int
-	Data string
+	Data   string
 	County string
 }
 
 type Universities struct {
-	Name   string
+	Name    string
 	Acronym string
 	Country string
+}
+
+type RabbitMQ struct {
+	Headers string
+	Payload string
+}
+
+func myFunc(n any) {
+	b, err := json.Marshal(&n)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	fmt.Println(string(b))
 }
 
 func main() {
@@ -52,16 +67,19 @@ func main() {
 	u.field.Acronym = "UFRJ"
 	u.field.Country = "Brasil"
 	fmt.Println(u)
-	bj, _ := json.Marshal(&u.field)
-	println("json")
-	fmt.Println(string(bj))
 
-	var c  MyStructGeneric[Covid]
+	myFunc(u.field)
+
+	// bj, _ := json.Marshal(&u.field)
+	// println("json")
+	// fmt.Println(string(bj))
+
+	var c MyStructGeneric[Covid]
 	c.field.Week = 202211
 	c.field.Data = "2022-03-18"
 	c.field.County = "Cruzeiro do Sul"
 	fmt.Println(c)
-	bj, _ = json.Marshal(&c.field)
+	bj, _ := json.Marshal(&c.field)
 	println("json")
 	fmt.Println(string(bj))
 
@@ -83,4 +101,9 @@ func main() {
 	bj, _ = json.Marshal(&p.field)
 	println("json")
 	fmt.Println(string(bj))
+
+	r := NewMyStructGeneric[RabbitMQ]()
+	r.field.Headers = "Content-Type:application/json"
+	r.field.Payload = `{"name":"my name","doc":"23232"}`
+	myFunc(r.field)
 }
