@@ -11,14 +11,14 @@ func TestStructGeneric(t *testing.T) {
 	}{
 		{MyStructGeneric[User]{
 			User{
-				ID:"303939939393",
+				ID:   "303939939393",
 				Name: "jeffotoni",
-				Cpf: 293399393,
+				Cpf:  293399393,
 			}},
 			MyStructGeneric[Company]{
 				Company{
-					ID:123456,
-					Phone: "5531234567897",
+					ID:            123456,
+					Phone:         "5531234567897",
 					CorporateName: "COMPANY LTDA.",
 				},
 			}},
@@ -32,12 +32,12 @@ func TestStructGeneric(t *testing.T) {
 func FuzzStructGeneric(f *testing.F) {
 	testcasesID := []string{"123456", "9499002", "093938"}
 	for _, tc := range testcasesID {
-		f.Add(tc)  // Use f.Add to provide a seed corpus
+		f.Add(tc) // Use f.Add to provide a seed corpus
 	}
 
 	testcasesName := []string{"joao", "fabricio", "Neymar"}
 	for _, tc := range testcasesName {
-		f.Add(tc)  // Use f.Add to provide a seed corpus
+		f.Add(tc) // Use f.Add to provide a seed corpus
 	}
 
 	f.Fuzz(func(t *testing.T, orig string) {
@@ -45,4 +45,18 @@ func FuzzStructGeneric(f *testing.F) {
 		u.field.ID = orig
 		t.Log(u)
 	})
+}
+
+func BenchmarkVarInt(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		var a int = i
+		_ = a
+	}
+}
+
+func BenchmarkVarInt2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		a := i
+		_ = a
+	}
 }
