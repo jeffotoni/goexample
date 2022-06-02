@@ -1,3 +1,6 @@
+// @jeffotoni
+// go test -run=. -bench=. -benchtime=3s -cou   nt 1 -benchmem
+//
 package test
 
 import (
