@@ -15,7 +15,7 @@ type MyStruct struct {
 	Point int
 }
 
-func BenchmarkReflect_New(b *testing.B) {
+func BenchmarkReflectNew(b *testing.B) {
 	var s *MyStruct
 	sv := reflect.TypeOf(MyStruct{})
 	b.ResetTimer()
@@ -25,7 +25,7 @@ func BenchmarkReflect_New(b *testing.B) {
 	}
 	_ = s
 }
-func BenchmarkDirect_New(b *testing.B) {
+func BenchmarkDirectNew(b *testing.B) {
 	var s *MyStruct
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -33,7 +33,7 @@ func BenchmarkDirect_New(b *testing.B) {
 	}
 	_ = s
 }
-func BenchmarkReflect_Set(b *testing.B) {
+func BenchmarkReflectSet(b *testing.B) {
 	var s *MyStruct
 	sv := reflect.TypeOf(MyStruct{})
 	b.ResetTimer()
@@ -46,7 +46,7 @@ func BenchmarkReflect_Set(b *testing.B) {
 		s.Point = 100
 	}
 }
-func BenchmarkReflect_SetFieldByName(b *testing.B) {
+func BenchmarkReflectSetFieldByName(b *testing.B) {
 	sv := reflect.TypeOf(MyStruct{})
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -57,7 +57,7 @@ func BenchmarkReflect_SetFieldByName(b *testing.B) {
 		sn.FieldByName("Point").SetInt(100)
 	}
 }
-func BenchmarkReflect_SetFieldByIndex(b *testing.B) {
+func BenchmarkReflectSetFieldByIndex(b *testing.B) {
 	sv := reflect.TypeOf(MyStruct{})
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -68,7 +68,7 @@ func BenchmarkReflect_SetFieldByIndex(b *testing.B) {
 		sn.Field(3).SetInt(100)
 	}
 }
-func BenchmarkDirect_Set(b *testing.B) {
+func BenchmarkDirectSet(b *testing.B) {
 	var s *MyStruct
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
