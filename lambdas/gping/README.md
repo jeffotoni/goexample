@@ -35,15 +35,23 @@ $ aws lambda create-function \
 ### Send .zip to AWS LAMBDA
 
 ```bash
-$ aws lambda update-function-code --function-name gping --zip-file fileb://function.zip
+$ aws lambda update-function-code \
+--function-name gping \
+--zip-file fileb://function.zip
 ```
 
 ### Test Lambda function
 
 ```bash
-$ aws lambda update-function-code --function-name gping --zip-file fileb://function.zip
+$ aws lambda invoke \
+  --function-name gping \
+  --payload '{"input": "ping"}' \
+  response.json
 ```
 
+```bash
+$ cat response.json
+```
 ### Makefile
 
 ```bash
