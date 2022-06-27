@@ -30,3 +30,30 @@ func BenchmarkMakeSize(b *testing.B) {
     }
   }
 }
+
+func BenchmarkMakeMap(b *testing.B) {
+  for n := 0; n < b.N; n++ {
+    data := make(map[int]int, 0)
+    for i := 0; i < size; i++ {
+      data[i] = i * 2
+    }
+  }
+}
+
+func BenchmarkMakeMapNil(b *testing.B) {
+  for n := 0; n < b.N; n++ {
+    data := map[int]int{}
+    for i := 0; i < size; i++ {
+      data[i] = i * 2
+    }
+  }
+}
+
+func BenchmarkMakeMapIn(b *testing.B) {
+  for n := 0; n < b.N; n++ {
+    data := make(map[int]interface{}, 0)
+    for i := 0; i < size; i++ {
+      data[i] = i * 2
+    }
+  }
+}
