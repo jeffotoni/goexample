@@ -25,11 +25,18 @@ $ CGO_ENABLED=0 GOOS=linux go build -o gping gping.go
 ### Create Lambda Function
 ```bash
 $ aws lambda create-function \
-  --code "ImageUri=${AWS_REPOSITORY_URI}:0.0.1" \
-  --function-name gping \
-  --package-type Image \
-  --region us-us-east-1 \
-  --role ${LAMBDA_ROLE_ARN}
+    --function-name gping \
+    --runtime go1.x \
+    --zip-file fileb://function.zip \
+    --handler index.handler \
+    --role arn:aws:iam::123456789012:role/lambda-url-role
+```
+
+### Create URL endpoint
+```bash
+aws lambda create-function-url-config \
+    --function-name gping \
+    --auth-type NONE
 ```
 
 ### Send .zip to AWS LAMBDA
