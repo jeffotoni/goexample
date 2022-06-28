@@ -4,7 +4,7 @@ import "testing"
 
 const size = 1000000
 
-func BenchmarkMake(b *testing.B) {
+func BenchmarkMakeAppend(b *testing.B) {
   for n := 0; n < b.N; n++ {
     data := make([]int, 0)
     for i := 0; i < size; i++ {
@@ -13,7 +13,7 @@ func BenchmarkMake(b *testing.B) {
   }
 }
 
-func BenchmarkMakeNil(b *testing.B) {
+func BenchmarkWithoutMakeAppend(b *testing.B) {
   for n := 0; n < b.N; n++ {
     data := []int{}
     for i := 0; i < size; i++ {
@@ -22,7 +22,7 @@ func BenchmarkMakeNil(b *testing.B) {
   }
 }
 
-func BenchmarkMakeNilTwo(b *testing.B) {
+func BenchmarkMakeNilWithoutAppend(b *testing.B) {
   for n := 0; n < b.N; n++ {
     data := [size]int{}
     for i := 0; i < size; i++ {
@@ -31,7 +31,7 @@ func BenchmarkMakeNilTwo(b *testing.B) {
   }
 }
 
-func BenchmarkMakeSize(b *testing.B) {
+func BenchmarkMakeSizeAppend(b *testing.B) {
   for n := 0; n < b.N; n++ {
     data := make([]int, 0, size)
     for i := 0; i < size; i++ {
@@ -49,7 +49,7 @@ func BenchmarkMakeMap(b *testing.B) {
   }
 }
 
-func BenchmarkMakeMapNil(b *testing.B) {
+func BenchmarkWithoutMakeMapNil(b *testing.B) {
   for n := 0; n < b.N; n++ {
     data := map[int]int{}
     for i := 0; i < size; i++ {
@@ -58,7 +58,7 @@ func BenchmarkMakeMapNil(b *testing.B) {
   }
 }
 
-func BenchmarkMakeMapIn(b *testing.B) {
+func BenchmarkMakeMapInterface(b *testing.B) {
   for n := 0; n < b.N; n++ {
     data := make(map[int]interface{}, 0)
     for i := 0; i < size; i++ {
