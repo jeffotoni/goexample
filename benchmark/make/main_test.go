@@ -22,6 +22,15 @@ func BenchmarkMakeNil(b *testing.B) {
   }
 }
 
+func BenchmarkMakeNilTwo(b *testing.B) {
+  for n := 0; n < b.N; n++ {
+    data := [size]int{}
+    for i := 0; i < size; i++ {
+      data[i] = i * 3
+    }
+  }
+}
+
 func BenchmarkMakeSize(b *testing.B) {
   for n := 0; n < b.N; n++ {
     data := make([]int, 0, size)
