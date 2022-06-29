@@ -12,25 +12,26 @@ import (
 func BenchmarkConcat(b *testing.B) {
     var str string
     for n := 0; n < b.N; n++ {
-        str += "x"
+        str += "jeffotoni" + " Go is life!"
     }
     b.StopTimer()
 
-    if s := strings.Repeat("x", b.N); str != s {
-        b.Errorf("unexpected result; got=%s, want=%s", str, s)
-    }
+    // if s := strings.Repeat("x", b.N); str != s {
+    //     b.Errorf("unexpected result; got=%s, want=%s", str, s)
+    // }
 }
 
 func BenchmarkBuffer(b *testing.B) {
     var buffer bytes.Buffer
     for n := 0; n < b.N; n++ {
-        buffer.WriteString("x")
+        buffer.WriteString("jeffotoni")
+        buffer.WriteString(" Go is life!")
     }
     b.StopTimer()
 
-    if s := strings.Repeat("x", b.N); buffer.String() != s {
-        b.Errorf("unexpected result; got=%s, want=%s", buffer.String(), s)
-    }
+    // if s := strings.Repeat("x", b.N); buffer.String() != s {
+    //     b.Errorf("unexpected result; got=%s, want=%s", buffer.String(), s)
+    // }
 }
 
 func BenchmarkCopy(b *testing.B) {
@@ -39,31 +40,33 @@ func BenchmarkCopy(b *testing.B) {
 
     b.ResetTimer()
     for n := 0; n < b.N; n++ {
-        bl += copy(bs[bl:], "x")
+        bl += copy(bs[bl:], "jeffotoni")
+        bl += copy(bs[bl:], " Go is life!")
     }
     b.StopTimer()
 
-    if s := strings.Repeat("x", b.N); string(bs) != s {
-        b.Errorf("unexpected result; got=%s, want=%s", string(bs), s)
-    }
+    // if s := strings.Repeat("x", b.N); string(bs) != s {
+    //     b.Errorf("unexpected result; got=%s, want=%s", string(bs), s)
+    // }
 }
 
 func BenchmarkStringBuilder(b *testing.B) {
     var strBuilder strings.Builder
     b.ResetTimer()
     for n := 0; n < b.N; n++ {
-        strBuilder.WriteString("x")
+        strBuilder.WriteString("jeffotoni")
+        strBuilder.WriteString(" Go is life!")
     }
     b.StopTimer()
 
-    if s := strings.Repeat("x", b.N); strBuilder.String() != s {
-        b.Errorf("unexpected; got=%s, want=%s", strBuilder.String(), s)
-    }
+    // if s := strings.Repeat("x", b.N); strBuilder.String() != s {
+    //     b.Errorf("unexpected; got=%s, want=%s", strBuilder.String(), s)
+    // }
 }
 
 func BenchmarkSprintf(b *testing.B) {
-    var str1 = "string1"
-    var str2 = "string2"
+    var str1 = "jeffotoni"
+    var str2 = " Go is life!"
     var out string
 
     b.ResetTimer()
