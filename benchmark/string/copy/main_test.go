@@ -28,14 +28,10 @@ func BenchmarkBuffer(b *testing.B) {
         buffer.WriteString(" Go is life!")
     }
     b.StopTimer()
-
-    // if s := strings.Repeat("x", b.N); buffer.String() != s {
-    //     b.Errorf("unexpected result; got=%s, want=%s", buffer.String(), s)
-    // }
 }
 
 func BenchmarkCopy(b *testing.B) {
-    bs := make([]byte, b.N)
+    bs := make([]byte, 0, b.N)
     bl := 0
 
     b.ResetTimer()
@@ -44,10 +40,6 @@ func BenchmarkCopy(b *testing.B) {
         bl += copy(bs[bl:], " Go is life!")
     }
     b.StopTimer()
-
-    // if s := strings.Repeat("x", b.N); string(bs) != s {
-    //     b.Errorf("unexpected result; got=%s, want=%s", string(bs), s)
-    // }
 }
 
 func BenchmarkStringBuilder(b *testing.B) {
