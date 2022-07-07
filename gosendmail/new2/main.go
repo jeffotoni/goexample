@@ -18,7 +18,7 @@ func main() {
 	m.BCC = []string{"<bc-email>@gmail.com"}
 	m.AttachFile("./love.png")
 	m.AttachFile("./love.png")
-	err := email.Send(m)
+	err := email.Send2(m)
 	if err != nil {
 		log.Println("Error when sending:", err.Error())
 		return
