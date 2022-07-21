@@ -1,5 +1,5 @@
 package main
 
 func main() {
-	println("vim-go")
+	println("Marco Hello Win...")
 }
