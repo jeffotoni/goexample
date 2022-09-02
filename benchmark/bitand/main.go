@@ -19,7 +19,7 @@ func FixBirdCountLog(birdsPerDay []int) []int {
 
 func FixBirdCountLog2(birdsPerDay []int) []int {
 	for i := range birdsPerDay {
-		if i % 2 == 0 {
+		if i%2 == 0 {
 			//fmt.Println("i:", i, " i&1", i&1)
 			birdsPerDay[i]++
 		}

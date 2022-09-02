@@ -7,7 +7,7 @@ import (
 
 func main() {
 	f1 := func(a float64) float64 {
-		return 1 * 2.2
+		return 1 * 2.2		
 	}(float64(55.55))
 
 	f2 := func(s string) string {
