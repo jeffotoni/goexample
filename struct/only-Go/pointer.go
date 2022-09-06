@@ -12,9 +12,13 @@ type Vertex struct {
 }
 
 func main() {
-	v := Vertex{1, 2}
-	p := &v
-	p.X = 1e9
-	fmt.Println(v)
-	fmt.Println(p.Y)
+	var v =  Vertex{1, 2}
+	v.X = 2
+	v.Y = 3
+	//p := &v
+	//p.X = 1e9
+
+	fmt.Sprintf("%v %v", v, v)	
+	//fmt.Println(v)
+	//fmt.Println(p.Y)
 }
