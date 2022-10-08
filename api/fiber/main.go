@@ -4,10 +4,12 @@ package main
 
 import (
 	"os"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/google/uuid"
 )
 
 func main() {
@@ -33,11 +35,31 @@ func main() {
 }
 
 func Check(c *fiber.Ctx) error {
+	ID, err := RandomID()
+	if err != nil {
+		return c.Status(400).SendString(`{"msg":"Bad Request RandomID"}`)
+	}
+	c.Set("ID", ID)
 	return c.Status(200).SendString(`{"msg":"ok", "token":"xxxxxxxxxxxxxxxxxx3993"}`)
 }
 
 func Healthz(c *fiber.Ctx) error {
-	c.Set("ID", "2992929292")
+	ID, err := RandomID()
+	if err != nil {
+		return c.Status(400).SendString(`{"msg":"Bad Request RandomID"}`)
+	}
+
+	c.Set("ID", ID)
 	c.Set("Content-Type", "application/json")
 	return c.Status(200).SendString("")
+}
+
+func RandomID() (string, error) {
+	id, err := uuid.NewRandom()
+	if err != nil {
+		return "", err
+	}
+	correlationID := strings.ToUpper(strings.Replace(id.String(), "-", "", -1))[:24]
+	//lg.Infof(correlationID, "Generated correlationId: %s", correlationID)
+	return correlationID, nil
 }
