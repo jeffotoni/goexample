@@ -2,7 +2,10 @@ module fiber
 
 go 1.19
 
-require github.com/gofiber/fiber/v2 v2.38.1
+require (
+	github.com/gofiber/fiber/v2 v2.38.1
+	github.com/google/uuid v1.3.0
+)
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
