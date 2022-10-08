@@ -5,6 +5,7 @@ WORKDIR /go/src/api
 COPY . .
 
 ENV GO111MODULE=on
+
 RUN CGO_ENABLED=0 GOOS=linux go build --trimpath -ldflags="-s -w" -o api main.go
 
 RUN cp api /go/bin/api
