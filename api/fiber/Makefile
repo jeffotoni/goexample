@@ -5,7 +5,7 @@
 update: 
 	@echo "########## Update nossa API ... "
 	rm -f go.*
-	go mod init fiber
+	go mod init github.com/jeffotoni/goexample/api/fiber
 	go mod tidy
 	@echo "########## DONE ... "
 build:

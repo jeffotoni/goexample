@@ -4,12 +4,11 @@ package main
 
 import (
 	"os"
-	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/google/uuid"
+	"github.com/jeffotoni/goexample/api/fiber/crypt"
 )
 
 func main() {
@@ -35,7 +34,7 @@ func main() {
 }
 
 func Check(c *fiber.Ctx) error {
-	ID, err := RandomID()
+	ID, err := crypt.RandomID()
 	if err != nil {
 		return c.Status(400).SendString(`{"msg":"Bad Request RandomID"}`)
 	}
@@ -44,7 +43,7 @@ func Check(c *fiber.Ctx) error {
 }
 
 func Healthz(c *fiber.Ctx) error {
-	ID, err := RandomID()
+	ID, err := crypt.RandomID()
 	if err != nil {
 		return c.Status(400).SendString(`{"msg":"Bad Request RandomID"}`)
 	}
@@ -52,14 +51,4 @@ func Healthz(c *fiber.Ctx) error {
 	c.Set("ID", ID)
 	c.Set("Content-Type", "application/json")
 	return c.Status(200).SendString("")
-}
-
-func RandomID() (string, error) {
-	id, err := uuid.NewRandom()
-	if err != nil {
-		return "", err
-	}
-	correlationID := strings.ToUpper(strings.Replace(id.String(), "-", "", -1))[:24]
-	//lg.Infof(correlationID, "Generated correlationId: %s", correlationID)
-	return correlationID, nil
 }

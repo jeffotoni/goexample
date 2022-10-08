@@ -1,4 +1,4 @@
-module fiber
+module github.com/jeffotoni/goexample/api/fiber
 
 go 1.19
 
