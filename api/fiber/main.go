@@ -11,7 +11,15 @@ import (
 )
 
 func main() {
-	app := fiber.New(fiber.Config{BodyLimit: 10 * 1024 * 1024})
+	app := fiber.New(
+		fiber.Config{
+			BodyLimit:                1 * 512,
+			DisableStartupMessage:    false,
+			Prefork:                  false,
+			Concurrency:              1 * 1024 * 1024,
+			DisableHeaderNormalizing: false,
+		},
+	)
 	app.Use(cors.New())
 	app.Use(logger.New(logger.Config{
 		Format:     "${pid} ${time} ${method} ${path} - ${ip} - ${status} - ${latency}\n",
@@ -19,8 +27,8 @@ func main() {
 		Output:     os.Stdout,
 	}))
 
-	app.Post("/auth/check", Check)
 	app.Get("/healthz", Healthz)
+	app.Post("/auth/check", Check)
 	app.Listen("0.0.0.0:8080")
 }
 
