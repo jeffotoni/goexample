@@ -3,11 +3,8 @@
 FROM golang:1.19 as builder
 WORKDIR /go/src/api
 COPY . .
-
 ENV GO111MODULE=on
-
-RUN CGO_ENABLED=0 GOOS=linux go build --trimpath -ldflags="-s -w" -o api main.go
-
+RUN CGO_ENABLED=0 GOOS=linux go build -o api main.go
 RUN cp api /go/bin/api
 RUN ls -lh
 
