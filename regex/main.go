@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println(formatPhoneNumber("62983386460"))
+	fmt.Println(formatPhoneNumber("62983386760"))
 }
 
 func formatPhoneNumber(number string) string {
