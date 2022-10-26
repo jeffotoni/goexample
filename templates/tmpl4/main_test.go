@@ -12,23 +12,23 @@ func Test_tmpFunc(t *testing.T) {
 	}{
 		// TODO: Add test cases.
 		{
-			name: "tmp_test_",
+			name: "tmp_test_01",
 			args: args{
 				[]App{
 					{
-						Version: "1.0.1",
+						Version: "1.0.0.0",
 						Release: Release{
 							Name: "One",
 						},
-						Title: "Lang .C",
+						Title: "Lang C",
 					},
 				},
 			},
 		},
 
-		{name: "tmp_test_", args: args{[]App{
-			{Version: "1.0.1", Release: Release{Name: "One"},
-				Title: "Lang .C",
+		{name: "tmp_test_02", args: args{[]App{
+			{Version: "2.0.0.0", Release: Release{Name: "Two"},
+				Title: "Lang Go",
 			},
 		}}},
 	}
