@@ -29,6 +29,18 @@ func (rm *SyncMap) Load(key string) (Appc Growth, ok bool) {
 	return
 }
 
+func (rm *SyncMap) Delete(key string) {
+	rm.Lock()
+	delete(rm.App, key)
+	rm.Unlock()
+}
+
+func (rm *SyncMap) Store(key string, Appc Growth) {
+	rm.Lock()
+	rm.App[key] = Appc
+	rm.Unlock()
+}
+
 func (rm *SyncMap) Get(key string) Growth {
 	var Appc Growth
 	var ok bool
@@ -40,16 +52,4 @@ func (rm *SyncMap) Get(key string) Growth {
 		return Appc
 	}
 	return Growth{}
-}
-
-func (rm *SyncMap) Delete(key string) {
-	rm.Lock()
-	delete(rm.App, key)
-	rm.Unlock()
-}
-
-func (rm *SyncMap) Store(key string, Appc Growth) {
-	rm.Lock()
-	rm.App[key] = Appc
-	rm.Unlock()
 }
