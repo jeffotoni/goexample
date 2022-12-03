@@ -1,6 +1,9 @@
 # Spring Boot vs Go
 
 Projeto para observarmos e analisarmos a execução do Spring Boot vs Go.
+Você poderá utilizar docker, docker-compose para subir as aplicações locais se desejar é uma possibilidade.
+
+
 Para conseguir rodar e executar os serviços terá que instalar:
 
 	- Java
@@ -227,4 +230,28 @@ default ✓ [======================================] 100 VUs  1m30s
      iterations.....................: 1864368 20714.381246/s
      vus............................: 100     min=100        max=100  
      vus_max........................: 100     min=100        max=100  
+```
+
+### Usando docker-compose
+
+Podemos também usar o docker-compose ou docker se desejar, já existe o arquivo Dockerfile para você brincar.
+
+**docker-compose**
+```bash
+$ cd go.http.client
+$ docker-compose up
+reating gserver     ... done
+Creating gmockserver ... done
+Attaching to gmockserver, gserver
+gmockserver    | 2022/12/03 18:32:43 Run Server Mock 0.0.0.0:3000
+gmockserver    | 2022/12/03 18:32:43 [GET] /v1/customer
+gserver        | 2022/12/03 18:32:43 Run Server port 0.0.0.0:8080
+gserver        | 2022/12/03 18:32:43 [GET] /v1/client
+
+```
+
+**Vamos testar**
+```bash
+$ curl -i -XGET http://localhost:8080/v1/client
+
 ```
