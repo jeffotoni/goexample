@@ -236,6 +236,8 @@ default ✓ [======================================] 100 VUs  1m30s
 
 Podemos também usar o docker-compose ou docker se desejar, já existe o arquivo Dockerfile para você brincar.
 
+Eu criei as imagens e subir para um registry e deixei público para facilitar, mas fiquem a vontade em fazer da forma que achar melhor.
+
 **docker-compose**
 ```bash
 $ cd go.http.client
