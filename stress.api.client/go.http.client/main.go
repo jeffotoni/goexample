@@ -6,11 +6,13 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
 
 var client = &http.Client{}
+var Domain = os.Getenv("DOMAIN")
 
 func main() {
 	http.HandleFunc("/v1/client", Get)
@@ -44,7 +46,10 @@ func connect() (body []byte, code int, err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 	defer cancel()
 
-	var Url string = "http://localhost:3000/v1/customer"
+	if len(Domain) == 0 {
+		Domain = "http://127.0.0.1:3000"
+	}
+	var Url string = Domain + "/v1/customer"
 	req, err := http.NewRequestWithContext(ctx, "GET", Url, nil)
 	if err != nil {
 		fmt.Printf("Error %s", err)
