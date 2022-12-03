@@ -9,7 +9,8 @@ var j = []byte(`[{"createdAt":"2022-11-04T19:10:17.305Z","name":"BillyStoltenber
 
 func main() {
 	http.HandleFunc("/v1/customer", Mock)
-	log.Println("Run Server Mock :3000")
+	log.Println("Run Server Mock 0.0.0.0:3000")
+	log.Println("[GET] /v1/customer")
 	log.Fatal(http.ListenAndServe("0.0.0.0:3000", nil))
 }
 
