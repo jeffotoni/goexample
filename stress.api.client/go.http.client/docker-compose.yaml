@@ -4,15 +4,16 @@ services:
   gserver:
     image: public.ecr.aws/v5p3h8r5/gserver
     container_name: gserver
-    # hostname: apigoserver
-    # domainname: apigoserver.local.com
+    hostname: apigoserver
+    domainname: apigoserver.local.com
     environment:
+      - "DOMAIN=http://api.gmockserver.local.com:3000"
       - "TZ=America/Sao_Paulo"
       - "API_ENV=prod"
     networks:
-      - gserverapi
-           # aliases:
-           #    - apigoserver.local.com
+        gserverapi:
+           aliases:
+              - apigoserver.local.com
     ports:
        - 8080:8080
     restart: always
@@ -20,15 +21,15 @@ services:
   gmockserver:
     image: public.ecr.aws/v5p3h8r5/gmockserver
     container_name: gmockserver
-    #hostname: 127.0.0.1
-    #domainname: api.gmockserver.local.com
+    hostname: api.gmockserver
+    domainname: api.gmockserver.local.com
     environment:
       - "TZ=America/Sao_Paulo"
       - "API_ENV=prod"
     networks:
-      - gserverapi
-           #aliases:
-           #   - api.gmockserver.local.com
+        gserverapi:
+           aliases:
+              - api.gmockserver.local.com
     ports:
        - 3000:3000
     restart: always
