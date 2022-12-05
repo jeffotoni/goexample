@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.function.ServerRequest;
 
 @RestController
 @RequestMapping(path = "/v1/client")
@@ -25,23 +26,36 @@ public class ClientController {
 	//@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<String> client() throws URISyntaxException, IOException, InterruptedException {
-
-		HttpClient httpClient = HttpClient.newBuilder()
-		.version(HttpClient.Version.HTTP_1_1)
-		.build();
+		HttpRequest request = null;
+		try {
+			HttpClient httpClient = HttpClient.newBuilder()
+			.version(HttpClient.Version.HTTP_1_1)
+			.build();
+			
+			request = HttpRequest.newBuilder()
+			.uri(new URI("http://localhost:3000/v1/customer"))
+			.GET()
+			.setHeader("Content-Type", "application/json")
+			.setHeader("User-Agent", "Java 11 HttpClient Bot")
+			.build();
 		
-		HttpRequest request = HttpRequest.newBuilder()
-		.uri(new URI("http://localhost:3000/v1/customer"))
-		.GET()
-		.setHeader("Content-Type", "application/json")
-		.setHeader("User-Agent", "Java 11 HttpClient Bot")
-		.build();
-		
-		HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+			HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-		return ResponseEntity.created(URI.create(String.format("/v1/client"))).
+			return ResponseEntity.created(URI.create(String.format("/v1/client"))).
 				header("Engine", "Spring Boot")
 				.header("Content-Type", "application/json")
 				.body(response.body());
+
+		} catch(URISyntaxException | IOException | InterruptedException e) {
+			System.err.println(e.toString());
+
+			if (request == null) {
+				return null;
+			}
+			return ResponseEntity.created(URI.create(String.format("/v1/client"))).
+				header("Engine", "Spring Boot")
+				.header("Content-Type", "application/json")
+				.body(e.getMessage());
+		}
 	}
 }
