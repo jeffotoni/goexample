@@ -1,5 +1,5 @@
 #################################################
-# Alpine + Strach + Muiltistage
+# Golang + Strach + Muiltistage
 #################################################
 FROM golang:1.19 AS builder
 WORKDIR /go/src/main
