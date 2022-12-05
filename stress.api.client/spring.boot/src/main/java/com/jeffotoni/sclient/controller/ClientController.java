@@ -12,22 +12,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.function.ServerRequest;
 
 @RestController
 @RequestMapping(path = "/v1/client")
 public class ClientController {
-
-	private static final String SECONDS = null;
-
 	@Value("#{environment.DOMAIN}")
 	private String DOMAIN = "http://127.0.0.1:3000/v1/client";
 
 	@GetMapping
-	//@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<String> client() throws URISyntaxException, IOException, InterruptedException {
 		HttpRequest request = null;
