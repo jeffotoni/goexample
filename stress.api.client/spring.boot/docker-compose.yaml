@@ -1,0 +1,41 @@
+version: '3.5'
+
+services:
+  jserver:
+    image: public.ecr.aws/v5p3h8r5/jserver
+    container_name: jserver
+    hostname: apijserver
+    domainname: apijserver.local.com
+    environment:
+      - "DOMAIN=http://api.gmockserver.local.com:3000"
+      - "TZ=America/Sao_Paulo"
+      - "API_ENV=prod"
+    networks:
+        gserverapi:
+           aliases:
+              - apijserver.local.com
+    ports:
+       - 8080:8080
+    restart: always
+
+  gmockserver:
+    image: public.ecr.aws/v5p3h8r5/gmockserver
+    container_name: gmockserver
+    hostname: api.gmockserver
+    domainname: api.gmockserver.local.com
+    environment:
+      - "TZ=America/Sao_Paulo"
+      - "API_ENV=prod"
+    networks:
+        gserverapi:
+           aliases:
+              - api.gmockserver.local.com
+    ports:
+       - 3000:3000
+    restart: always
+
+networks:
+  gserverapi:
+      driver: bridge
+
+

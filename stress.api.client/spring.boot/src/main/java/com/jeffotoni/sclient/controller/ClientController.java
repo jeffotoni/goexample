@@ -7,6 +7,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,18 +23,28 @@ public class ClientController {
 
 	private static final String SECONDS = null;
 
+	@Value("#{environment.DOMAIN}")
+	private String DOMAIN = "http://127.0.0.1:3000/v1/client";
+
 	@GetMapping
 	//@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<String> client() throws URISyntaxException, IOException, InterruptedException {
 		HttpRequest request = null;
 		try {
+
+			// if (DOMAIN.length() == 0 ) {
+			// 	DOMAIN = "http://127.0.0.1:3000/v1/client";
+			// }
+			
+			System.out.println(DOMAIN);
+
 			HttpClient httpClient = HttpClient.newBuilder()
 			.version(HttpClient.Version.HTTP_1_1)
 			.build();
 			
 			request = HttpRequest.newBuilder()
-			.uri(new URI("http://localhost:3000/v1/customer"))
+			.uri(new URI(DOMAIN))
 			.GET()
 			.setHeader("Content-Type", "application/json")
 			.setHeader("User-Agent", "Java 11 HttpClient Bot")

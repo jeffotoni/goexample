@@ -238,7 +238,14 @@ Podemos também usar o docker-compose ou docker se desejar, já existe o arquivo
 
 Eu criei as imagens e subir para um registry e deixei público para facilitar, mas fiquem a vontade em fazer da forma que achar melhor.
 
-**docker-compose**
+**docker-compose Go**
+
+Foi utilizado para gerar a imagem Go o seguinte docker build:
+```bash
+$ docker build --no-cache -t public.ecr.aws/v5p3h8r5/gserver .
+$ docker run --name gserver -p 8080:8080 --rm public.ecr.aws/v5p3h8r5/gserver:latest
+```
+
 ```bash
 $ cd go.http.client
 $ docker-compose up
@@ -256,4 +263,38 @@ gserver        | 2022/12/03 18:32:43 [GET] /v1/client
 ```bash
 $ curl -i -XGET http://localhost:8080/v1/client
 
+```
+
+**docker-compose Spring Boot**
+
+Foi utilizado para gerar a imagem Spring Boot o seguinte docker build:
+```bash
+$ docker build -t public.ecr.aws/v5p3h8r5/jserver
+$ docker run --name jserver -p 8080:8080 --rm public.ecr.aws/v5p3h8r5/jserver:latest
+```
+
+```bash
+$ cd spring.boot
+$ docker-compose up
+➜  spring.boot git:(master) ✗ docker-compose up
+jserver is up-to-date
+Starting gmockserver ... done
+Attaching to jserver, gmockserver
+gmockserver    | 2022/12/05 22:40:01 Run Server Mock 0.0.0.0:3000
+gmockserver    | 2022/12/05 22:40:01 [GET] /v1/customer
+jserver        | 
+jserver        |   .   ____          _            __ _ _
+jserver        |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+jserver        | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+jserver        |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+jserver        |   '  |____| .__|_| |_|_| |_\__, | / / / /
+jserver        |  =========|_|==============|___/=/_/_/_/
+jserver        |  :: Spring Boot ::                (v2.7.5)
+jserver        | 
+
+```
+
+**Vamos testar**
+```bash
+$ curl -i -XGET http://localhost:8080/v1/client
 ```
