@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"io"
@@ -8,33 +9,71 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
-var client = &http.Client{}
+var client = &http.Client{Transport: &http.Transport{
+	DisableKeepAlives: true,
+	//MaxIdleConns:      10,
+}}
+
 var Domain = os.Getenv("DOMAIN")
 
 func main() {
-	http.HandleFunc("/v1/client", Get)
+	http.HandleFunc("/v1/client/get", Get)
+	http.HandleFunc("/v1/client/post", Post)
 	log.Println("Run Server port 0.0.0.0:8080")
-	log.Println("[GET] /v1/client")
+	log.Println("[GET]  /v1/client/get")
+	log.Println("[POST] /v1/client/post")
 	log.Fatal(http.ListenAndServe("0.0.0.0:8080", nil))
 }
 
 func Get(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Engine", "Go")
-	w.Header().Set("Location", "/v1/client")
+	w.Header().Set("Location", "/v1/client/get")
 	w.Header().Set("Date", time.Now().Format("2006-01-02T15:04:05.000Z"))
 
-	body, code, err := connect()
+	body, code, err := AdapterConnect("get", nil)
 	if err != nil {
-		log.Println("Error Server:", err, " code:", code)
+		log.Println("Error Server connect:", err, " code:", code)
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(``))
+		return
+	}
+	length := strconv.Itoa(len(body))
+	w.Header().Set("Content-Length", length)
+	w.WriteHeader(code)
+	w.Write(body)
+	return
+}
+
+func Post(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Engine", "Go")
+	w.Header().Set("Location", "/v1/client/post")
+	w.Header().Set("Date", time.Now().Format("2006-01-02T15:04:05.000Z"))
+
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		log.Println("Error Server ReadAll:", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(``))
 		return
 	}
 
+	// println("b:", string(body))
+	start := time.Now()
+	body, code, err := AdapterConnect("post", body)
+	if err != nil {
+		log.Println("Error Server connect:", err, " code:", code)
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(``))
+		return
+	}
+	end := time.Now().Sub(start)
+	log.Println("Service Adapter [POST] timeTotal:", end.String())
 	length := strconv.Itoa(len(body))
 	w.Header().Set("Content-Length", length)
 	w.WriteHeader(http.StatusOK)
@@ -42,20 +81,46 @@ func Get(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func connect() (body []byte, code int, err error) {
+func AdapterConnect(method string, bodyPost []byte) (body []byte, code int, err error) {
+
+	// var client2 = &http.Client{
+	// 	Transport: &http.Transport{
+	// 		DisableKeepAlives: true,
+	// 		MaxIdleConns:      2,
+	// 		// MaxIdleConnsPerHost: 10,
+	// 		// MaxConnsPerHost:     10,
+	// 		// IdleConnTimeout: time.Duration(time.Millisecond * 10),
+	// 	}}
+
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 	defer cancel()
 
 	if len(Domain) == 0 {
 		Domain = "http://127.0.0.1:3000"
 	}
-	var Url string = Domain + "/v1/customer"
-	req, err := http.NewRequestWithContext(ctx, "GET", Url, nil)
-	if err != nil {
-		fmt.Printf("Error %s", err)
-		return
-	}
 
+	// send POST
+
+	var Url string = Domain + "/v1/customer"
+	var req = &http.Request{}
+
+	if strings.ToLower(method) == "get" {
+		Url = Url + "/get"
+		req, err = http.NewRequestWithContext(ctx, "GET", Url, nil)
+		if err != nil {
+			fmt.Printf("Error %s", err)
+			return
+		}
+	} else if strings.ToLower(method) == "post" {
+		bodysend := bytes.NewBuffer(bodyPost)
+		Url = Url + "/post"
+		req, err = http.NewRequestWithContext(ctx, "POST", Url, bodysend)
+		if err != nil {
+			fmt.Printf("Error %s", err)
+			return
+		}
+	}
+	//println("url:", Url)
 	//req.ContentLength = int64(-1)
 	//req.TransferEncoding = []string{"identity"}
 	req.Header.Set("Content-Type", "application/json")
@@ -65,14 +130,14 @@ func connect() (body []byte, code int, err error) {
 		fmt.Printf("Error %s", err)
 		return
 	}
-
 	defer resp.Body.Close()
+	code = resp.StatusCode
+
 	body, err = io.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Printf("Error %s", err)
 		return
 	}
 
-	code = resp.StatusCode
 	return
 }
