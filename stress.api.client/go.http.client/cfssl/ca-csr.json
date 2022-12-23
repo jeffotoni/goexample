@@ -1,0 +1,20 @@
+{
+    "CN": "localhost",
+    "hosts": [
+        "example.net",
+        "www.example.net",
+        "localhost"
+    ],
+    "key": {
+        "algo": "ecdsa",
+        "size": 256
+    },
+    "names": [
+        {
+            "C": "US",
+            "ST": "CA",
+            "L": "San Francisco"
+        }
+    ]
+}
+

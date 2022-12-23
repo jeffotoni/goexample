@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	// "golang.org/x/net/http2"
 )
 
 var client = &http.Client{Transport: &http.Transport{
@@ -18,15 +19,34 @@ var client = &http.Client{Transport: &http.Transport{
 	//MaxIdleConns:      10,
 }}
 
-var Domain = os.Getenv("DOMAIN")
+var (
+	Domain = os.Getenv("DOMAIN")
+	key    = "key.pem"
+	cert   = "cert.pem"
+
+	cfsslkey  = "./cfssl/server-key.pem"
+	cfsslcert = "./cfssl/server.pem"
+
+	serverCrt = "./certs/server.crt"
+	serverKey = "./certs/server.key"
+)
 
 func main() {
+
 	http.HandleFunc("/v1/client/get", Get)
 	http.HandleFunc("/v1/client/post", Post)
 	log.Println("Run Server port 0.0.0.0:8080")
 	log.Println("[GET]  /v1/client/get")
 	log.Println("[POST] /v1/client/post")
-	log.Fatal(http.ListenAndServe("0.0.0.0:8080", nil))
+
+	server := &http.Server{
+		//Addr: "0.0.0.0:443",
+		Addr: "0.0.0.0:8080",
+	}
+
+	//http2.ConfigureServer(server, &http2.Server{})
+	//log.Fatal(server.ListenAndServeTLS(cert, key))
+	log.Fatal(server.ListenAndServe())
 }
 
 func Get(w http.ResponseWriter, r *http.Request) {
@@ -103,6 +123,8 @@ func AdapterConnect(method string, bodyPost []byte) (body []byte, code int, err 
 
 	var Url string = Domain + "/v1/customer"
 	var req = &http.Request{}
+
+	// http2.ConfigureTransport(client.Transport)
 
 	if strings.ToLower(method) == "get" {
 		Url = Url + "/get"
