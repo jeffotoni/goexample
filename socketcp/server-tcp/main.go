@@ -1,3 +1,5 @@
+package main
+
 // import (
 // 	"net"
 // )
@@ -33,6 +35,10 @@ import (
 	"fmt"
 	"net"
 )
+
+func main() {
+	startTCPServer("3000")
+}
 
 // Criar um servidor TCP
 func startTCPServer(port string) {
