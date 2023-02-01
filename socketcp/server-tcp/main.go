@@ -1,43 +1,15 @@
 package main
 
-// import (
-// 	"net"
-// )
-
-// Criar um servidor TCP
-// func startTCPServer(port string) {
-// 	// Criar um endereço
-// 	addr, err := net.ResolveTCPAddr("tcp", port)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	// Criar o servidor
-// 	listener, err := net.ListenTCP("tcp", addr)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	// Aceitar e lidar com solicitações
-// 	for {
-// 		conn, err := listener.Accept()
-// 		if err != nil {
-// 			panic(err)
-// 		}
-
-// 		// Iniciar uma goroutine para lidar com a conexão
-// 		go handleConnection(conn)
-// 	}
-// }
-
 import (
 	"bufio"
 	"fmt"
 	"net"
+	"log"
 )
 
 func main() {
-	startTCPServer("3000")
+	log.Println("Run Server :3000")
+	startTCPServer(":3000")
 }
 
 // Criar um servidor TCP
