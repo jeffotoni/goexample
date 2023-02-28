@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Exemplo de requisição HTTP POST com javascript puro para quick server</title>
+</head>
+
+<body>
+    <h3>Exemplo quick sendo chamado por javascript</h3>
+    <input type="text" id="url" style="width:400px;font-size: 16px;height: 30px;border-color: blueviolet;" 
+    value="http://localhost:8080/v1/user">
+    <br/>
+    <br/>
+    <input type="text" id="jsonText" name="jsonText"
+    style="width:400px;font-size: 16px;height: 30px;border-color: blueviolet;" 
+    value='{ "name": "jeffotoni@email.com", "year": 1990}'>
+    <br/>
+    <br/>
+    <button onclick="sendJson('pure-javascript');" style="font-size: 16px;width:408px;height: 35px;border-color: blueviolet;">Enviar Json</button>
+    <hr />
+    <div id="resposta">Mensagem irá aparecer aqui...</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script type="text/javascript">
+
+        var urlPost = 'http://localhost:8080/v1/user';
+        var jsonText = "";
+
+        var sendJson = function (callType) {
+            urlPost = document.getElementById('url').value;
+            jsonText = document.getElementById('jsonText').value;
+
+            if (callType == 'fetch') {
+                sendJsonFetch();
+            } else if (callType == 'fetch-cors') {
+                sendJsonFetchCors();
+            } else if (callType == 'pure-javascript') {
+                sendJsonPureJavascript();
+            } else if (callType == 'jquery') {
+                sendJsonJquery();
+            } else if (callType == 'axios') {
+                sendJsonAxios();
+            }
+            return;
+        };
+        
+        var sendJsonFetch = function () {
+            // console.log('(sendJsonFetch) ', jsonText);
+            // var newJson = { "name": "gui@test.com", "year": 1990 };
+            
+            console.log('(sendJsonFetch) ', newJson);
+
+            fetch(urlPost, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                // body: JSON.stringify(newJson)
+                body: jsonText
+            })
+            .then(response => response.json())
+            .then(response => console.log(JSON.stringify(response)))
+        };
+        
+        var sendJsonFetchCors = function () {
+            console.log('(sendJsonFetchCors) ', jsonText);
+
+            fetch(urlPost, {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                // body: JSON.stringify({ "id": 78912 })
+                body: jsonText,
+            })
+            .then(response => response.json())
+            .then(response => console.log(JSON.stringify(response)))
+        };
+        
+        var sendJsonPureJavascript = function () {
+            console.log('(sendJsonPureJavascript) ', jsonText);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", urlPost, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(jsonText);
+
+            xhr.onreadystatechange = function () {
+                console.log(xhr.status);
+                if (xhr.readyState === 4) {
+                    console.log(xhr.status);
+                    console.log(xhr.responseText);
+                    document.getElementById("resposta").innerHTML = xhr.responseText;
+                }
+            };
+        };
+        
+        var sendJsonJquery = function () {
+            // console.log('(sendJsonJquery) ', jsonText);
+            // var newJson = { "name": "gui@test.com", "year": 1990 };
+
+            console.log('(sendJsonJquery) ', newJson);
+
+            $.ajax({
+                type: "POST",
+                url: urlPost,
+                // data: JSON.stringify(newJson),
+                data: jsonText,
+                success: function (data) { 
+                    console.log('success! ', data);
+                    document.getElementById('resposta').innerHTML = data;
+                },
+                dataType: 'json'
+            });
+        };
+        
+        var sendJsonAxios = function () {
+            // console.log('(sendJsonAxios) ', jsonText);
+            //var newJson = { "name": "gui2@test.com", "year": 1990 };
+            
+            console.log('(sendJsonAxios) ', jsonText);
+
+            // axios.post(urlPost, newJson)
+            // .then(function (response) {
+            //     console.log(response);
+            // })
+            // .catch(function (error) {
+            //     console.error(error);
+            // });
+
+            axios({
+              method: "post",
+              url: urlPost,
+              // data: newJson,
+              data: jsonText,
+            });
+        };
+
+
+    </script>
+
+</body>
+</html>

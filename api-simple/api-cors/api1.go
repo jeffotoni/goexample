@@ -7,6 +7,7 @@
 package main
 
 import (
+	"io"
 	"log"
 	"net/http"
 
@@ -14,23 +15,29 @@ import (
 )
 
 func User(w http.ResponseWriter, r *http.Request) {
+	b, err := io.ReadAll(r.Body)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"msg":"error:` + err.Error() + `"}`))
+		return
+	}
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"user":"jeffotoni","email":"jeffotoni@gmail.com"}`))
+	w.Write(b)
 }
 
 func main() {
 
 	mux := http.NewServeMux()
-	mux.Handle("/user", http.HandlerFunc(User))
+	mux.Handle("/v1/user", http.HandlerFunc(User))
 
 	corsmux := cors.Default().Handler(mux)
-
+	// cors.New().Handler
 	server :=
 		&http.Server{
-			Addr:    ":8080",
+			Addr:    "0.0.0.0:8080",
 			Handler: corsmux,
 		}
-	log.Println("Server Run port: 8080")
+	log.Println("Server Run port: 0.0.0.0:8080")
 	if err := server.ListenAndServe(); err != nil {
 		log.Printf("Error server: %s", err)
 	}
