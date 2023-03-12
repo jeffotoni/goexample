@@ -22,5 +22,6 @@ func Healthz(c *fiber.Ctx) error {
 
 	c.Set("ID", ID)
 	c.Set("Content-Type", "application/json")
+	//return c.Status(200)
 	return c.Status(200).SendString("")
 }
