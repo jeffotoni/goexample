@@ -2,7 +2,7 @@
 
 Iremos criar uma Lib em Go uma biblioteca .go em seguida vamos gerar arquivos para serem consumidos em C, iremos gerar .h e um .so para que possamos abrir e executar em C.
 
-#### Arquivo em G
+#### Arquivo em Go
 
 ```go
 package main
