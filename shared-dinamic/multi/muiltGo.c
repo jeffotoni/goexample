@@ -67,7 +67,7 @@ int main()
   char *error;
   
   ///dlopen => abrindo biblioteca
-  handle = dlopen("./C/libmulti.so",RTLD_LAZY);
+  handle = dlopen("../C/libmulti.so",RTLD_LAZY);
   
   if(!handle)
   {

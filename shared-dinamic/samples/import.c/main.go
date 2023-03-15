@@ -1,7 +1,7 @@
 package main
 
 /*
-int sum(int a,int b) {
+int soma(int a,int b) {
 	return a+b;
 }
 */
@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	r := C.sum(2, 2)
-	fmt.Printf("sum(2,2) = %v\r\n", r)
+	r := C.soma(2, 10)
+	fmt.Printf("resultado= %v\r\n", r)
 
 }
