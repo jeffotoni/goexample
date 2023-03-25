@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	pro "github.com/jeffotoni/goexample/grpc/simples/sever/proto"
+	pro "github.com/jeffotoni/goexample/grpc/simples/proto"
 )
 
 var ADDR = "0.0.0.0:50051"

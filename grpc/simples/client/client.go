@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/jeffotoni/goexample/grpc/simples/server/proto"
+	"github.com/jeffotoni/goexample/grpc/simples/proto"
 	"google.golang.org/grpc"
 )
 
