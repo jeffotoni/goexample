@@ -1,5 +1,7 @@
 package main
 
+//go:generate protoc --go_out=. ./proto/poduto.proto
+
 import (
 	"context"
 	"fmt"

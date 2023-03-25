@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/jeffotoni/goexample/grcp/simples";
+option go_package = "./";
 
 service PostService {
   rpc CreatePost (PostRequest) returns (PostResponse) {}

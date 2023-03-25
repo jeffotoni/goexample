@@ -2,10 +2,9 @@ $ sudo apt install protobuf-compiler
 
 $ go install github.com/golang/protobuf/protoc-gen-go@latest
 
-$ protoc --go_out=. produto.proto
+$ protoc --go_out=plugins=grpc:proto -I=proto produto.proto
 
-$ //go:generate protoc --go_out=. ./produto/poduto.proto
-
+$ //go:generate protoc --go_out=. ./proto/poduto.proto
 $ go generate
 
 
