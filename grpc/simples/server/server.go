@@ -14,6 +14,8 @@ import (
 	pro "github.com/jeffotoni/goexample/grpc/simples/proto"
 )
 
+var ADDR = "0.0.0.0:50051"
+
 type postServiceServer struct{}
 
 func (s *postServiceServer) CreatePost(ctx context.Context, in *pro.PostRequest) (*pro.PostResponse, error) {
@@ -23,7 +25,7 @@ func (s *postServiceServer) CreatePost(ctx context.Context, in *pro.PostRequest)
 }
 
 func main() {
-	lis, err := net.Listen("tcp", "0.0.0.0:50051")
+	lis, err := net.Listen("tcp", ADDR)
 	if err != nil {
 		log.Printf("failed to listen: %v", err)
 		return
@@ -33,6 +35,7 @@ func main() {
 	pro.RegisterPostServiceServer(s, &postServiceServer{})
 	reflection.Register(s)
 
+	fmt.Println("Run Server port:", ADDR)
 	if err := s.Serve(lis); err != nil {
 		log.Printf("failed to serve: %v", err)
 		return

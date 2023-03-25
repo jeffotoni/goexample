@@ -9,9 +9,11 @@ import (
 	"google.golang.org/grpc"
 )
 
+var ADDR = "localhost:50051"
+
 func main() {
 	// Conectar ao servidor GRPC
-	conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+	conn, err := grpc.Dial(ADDR, grpc.WithInsecure())
 	if err != nil {
 		log.Printf("Não foi possível conectar ao servidor: %v", err)
 		return
