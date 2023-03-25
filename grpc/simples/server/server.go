@@ -1,6 +1,6 @@
 package main
 
-//go:generate protoc --go_out=. ./proto/poduto.proto
+//go:generate protoc --go_out=plugins=grpc:proto -I=proto produto.proto
 
 import (
 	"context"
@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 
-	pro "github.com/jeffotoni/goexample/grpc/simples/proto"
+	pro "github.com/jeffotoni/goexample/grpc/simples/sever/proto"
 )
 
 var ADDR = "0.0.0.0:50051"
@@ -20,8 +20,8 @@ type postServiceServer struct{}
 
 func (s *postServiceServer) CreatePost(ctx context.Context, in *pro.PostRequest) (*pro.PostResponse, error) {
 
-	fmt.Println("Capturando dados:", in)
-	return &pro.PostResponse{Status: 201, Msg: fmt.Sprintf("Criando Produto: %s", in.Id)}, nil
+	fmt.Println("chamada realizada por um client, e estamos enviando:", in)
+	return &pro.PostResponse{Status: 201, Msg: fmt.Sprintf("Criando Produto: %d", in.Id)}, nil
 }
 
 func main() {

@@ -2,9 +2,12 @@ $ sudo apt install protobuf-compiler
 
 $ go install github.com/golang/protobuf/protoc-gen-go@latest
 
+Este comando irá ser feito em sua raiz que neste cenário está no nivel grpc/simples
 $ protoc --go_out=plugins=grpc:proto -I=proto produto.proto
 
-$ //go:generate protoc --go_out=. ./proto/poduto.proto
+Caso queira gerar diretamente usando Go, basta adicionar a linha no inicio do code depois do package
+e poderá gerar o seu proto apartir do server.go
+$ //go:generate protoc --go_out=plugins=grpc:proto -I=proto produto.proto
 $ go generate
 
 

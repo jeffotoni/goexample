@@ -2,10 +2,11 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 
-	"github.com/jeffotoni/goexample/grpc/simples/proto"
+	"github.com/jeffotoni/goexample/grpc/simples/server/proto"
 	"google.golang.org/grpc"
 )
 
@@ -20,10 +21,10 @@ func main() {
 	}
 	defer conn.Close()
 
-	client := proto.NewClienteServiceClient(conn)
+	client := proto.NewPostServiceClient(conn)
 
 	req := &proto.PostRequest{
-		ID:   12345678,
+		Id:   12345678,
 		Nome: "Produto CHAT/GPT-4",
 	}
 
@@ -33,5 +34,11 @@ func main() {
 		return
 	}
 
-	fmt.Println(res)
+	fmt.Println("Objeto:\n", res)
+	b, err := json.Marshal(&res)
+	if err != nil {
+		fmt.Println("error:", err)
+		return
+	}
+	fmt.Println("Json:\n", string(b))
 }
