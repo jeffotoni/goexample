@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "github.com/jeffotoni/goexample/grcp/simples";
+
+service PostService {
+  rpc CreatePost (PostRequest) returns (PostResponse) {}
+}
+
+message PostRequest {
+  int64 id = 1;
+  string nome = 2;
+}
+
+message PostResponse {
+  int32 status = 1;
+  string msg = 2;
+}
