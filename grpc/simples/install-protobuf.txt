@@ -7,6 +7,8 @@ $ protoc --go_out=plugins=grpc:proto -I=proto produto.proto
 
 Caso queira gerar diretamente usando Go, basta adicionar a linha no inicio do code depois do package
 e poderá gerar o seu proto apartir do server.go
+Cuidado com o path que o protoc irá utilizar, geralemente funciona bem 
+quando o path está no raiz do server
 $ //go:generate protoc --go_out=plugins=grpc:proto -I=proto produto.proto
 $ go generate
 

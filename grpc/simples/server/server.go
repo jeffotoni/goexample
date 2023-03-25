@@ -1,6 +1,6 @@
 package main
 
-//go:generate protoc --go_out=plugins=grpc:proto -I=proto produto.proto
+//go:generate protoc --go_out=plugins=grpc:proto -I=../proto produto.proto
 
 import (
 	"context"
