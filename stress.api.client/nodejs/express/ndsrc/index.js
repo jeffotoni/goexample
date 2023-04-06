@@ -9,7 +9,7 @@ app.get("/ping", (req, res) => {
     res.status(200).json({ name: "pong" });
 });
 
-app.get("/v1/client", (req, res) => {
+app.get("/v1/client/get", (req, res) => {
     res.setHeader("Content-Type", "application/json");
 
     let rpromisse = new Promise((resolve, reject) => {
