@@ -4,6 +4,8 @@ import (
 	"embed"
 	"log"
 	"net/http"
+
+	"github.com/rs/cors"
 )
 
 var (
@@ -19,8 +21,9 @@ func main() {
 	mux := http.NewServeMux()
 	fs := http.FileServer(http.FS(contentfs))
 	mux.Handle("/", authIp(http.StripPrefix("", fs)))
+	handler := cors.Default().Handler(mux) // cors
 	log.Println("Executando o servidor na porta 8080...")
-	log.Fatal(http.ListenAndServe(":8080", mux))
+	log.Fatal(http.ListenAndServe(":8080", handler))
 }
 
 func authIp(next http.Handler) http.Handler {
