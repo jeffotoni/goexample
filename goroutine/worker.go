@@ -12,8 +12,10 @@
 
 package main
 
-import "fmt"
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 // Here's the worker, of which we'll run several
 // concurrent instances. These workers will receive
