@@ -11,9 +11,5 @@ func main() {
 		return c.Status(quick.StatusOK).SendString("Bem-vindo ao meu site!")
 	})
 
-	q.Get("/api", func(c *quick.Ctx) error {
-		return c.Status(quick.StatusOK).SendString("Você acessou a API!")
-	})
-
 	q.Listen(":8080")
 }
