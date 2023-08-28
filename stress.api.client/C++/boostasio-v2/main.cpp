@@ -39,15 +39,16 @@ void handle_request(http::request<http::string_body>& req, http::response<http::
     res.version(req.version());
     res.keep_alive(false);
 
-    if (req.method() == http::verb::get) {
+   // if (req.method() == http::verb::get) {
+    if (req.method() == http::verb::get && req.target() == "/v1/client/get") {
         res.result(http::status::ok);
         res.set(http::field::content_type, "application/json");
         res.body() = fetch_customer_data(ioc);
         res.content_length(res.body().size());
     } else {
         res.result(http::status::bad_request);
-        res.set(http::field::content_type, "text/plain");
-        res.body() = "Invalid request.";
+        res.set(http::field::content_type, "application/json");
+        res.body() = "{\"msg\":\"Invalid request.\"}";
         res.content_length(res.body().size());
     }
 }
@@ -72,10 +73,14 @@ void session(tcp::socket socket, asio::io_context& ioc) {
     socket.shutdown(tcp::socket::shutdown_send);
 }
 
+// https://github.com/boostorg/boost
+// g++ -std=c++17 -Wall -Wextra -I /usr/include main.cpp -o server -L /usr/lib -lboost_system -lboost_thread -lpthread -lboost_coroutine -lboost_context -lboost_chrono -lboost_date_time
 int main() {
     try {
         auto const address = asio::ip::make_address("0.0.0.0");
         auto const port = static_cast<unsigned short>(8080);
+        
+        std::cout << "Run Server C++ Port: 0.0.0.0:8080" << std::endl;
 
         asio::io_context ioc{1};
 
@@ -90,6 +95,5 @@ int main() {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
-
     return 0;
 }
