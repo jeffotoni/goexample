@@ -1,0 +1,10 @@
+github.com/cactus/go-statsd-client v3.1.1+incompatible/go.mod h1:cMRcwZDklk7hXp+Law83urTHUiHMzCev/r4JMYr/zU0=
+github.com/cep21/circuit v3.0.0+incompatible h1:hCh/r5YVX+2wRiatG4/DQ0IiouOvtoW3IXhj/mX0w2o=
+github.com/cep21/circuit v3.0.0+incompatible/go.mod h1:IYFTZLwEh0jvbURztvjxE45GH5IzZb884I/8xaiwEAA=
+github.com/cep21/circuit/v3 v3.2.2 h1:Z3M1n0+YbEvEvJsjCNV8oYNr2vLhB39drQCdawbS/kk=
+github.com/cep21/circuit/v3 v3.2.2/go.mod h1:B0ph0u7kxRGgf4AcDPHcs9qwWrbNvmt6hDHxTVTPWfg=
+github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
+github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
