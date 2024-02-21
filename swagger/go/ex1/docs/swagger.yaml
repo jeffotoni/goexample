@@ -1,0 +1,36 @@
+basePath: /
+definitions:
+  main.UserResponse:
+    description: estrutura de resposta para uma criação bem-sucedida de usuário
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /v1/user:
+    post:
+      consumes:
+      - application/json
+      description: adiciona um novo usuário ao sistema
+      operationId: user-create
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.UserResponse'
+      summary: Adiciona um novo usuário
+swagger: "2.0"
