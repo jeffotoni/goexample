@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	_ "github.com/jeffotoni/goexample/swagger/go/ex1/docs"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 // @description estrutura de resposta para uma criação bem-sucedida de usuário
@@ -32,10 +33,11 @@ type User struct {
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @BasePath /
 func main() {
+	http.Handle("/swagger/", httpSwagger.WrapHandler)
 	http.HandleFunc("/v1/user", userHandler)
-
 	log.Println("Run Server 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
+
 }
 
 // User handler
@@ -44,6 +46,7 @@ func main() {
 // @ID user-create
 // @Accept  json
 // @Produce  json
+// @Param  user  body  User  true  "Dados do usuário"
 // @Success 201 {object} UserResponse
 // @Router /v1/user [post]
 func userHandler(w http.ResponseWriter, r *http.Request) {
@@ -59,8 +62,7 @@ func userHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Aqui você pode processar os dados do usuário conforme necessário
-
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(UserResponse{Message: "Usuário criado com sucesso"})
+	//json.NewEncoder(w).Encode(UserResponse{Message: "Usuário:" + user.Nome})
+	json.NewEncoder(w).Encode(user)
 }

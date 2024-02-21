@@ -1,5 +1,15 @@
 basePath: /
 definitions:
+  main.User:
+    description: estrutura de dados do usuário
+    properties:
+      cpf:
+        type: string
+      email:
+        type: string
+      nome:
+        type: string
+    type: object
   main.UserResponse:
     description: estrutura de resposta para uma criação bem-sucedida de usuário
     properties:
@@ -25,6 +35,13 @@ paths:
       - application/json
       description: adiciona um novo usuário ao sistema
       operationId: user-create
+      parameters:
+      - description: Dados do usuário
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/main.User'
       produces:
       - application/json
       responses:

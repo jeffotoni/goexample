@@ -35,6 +35,17 @@ const docTemplate = `{
                 ],
                 "summary": "Adiciona um novo usuário",
                 "operationId": "user-create",
+                "parameters": [
+                    {
+                        "description": "Dados do usuário",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.User"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Created",
@@ -47,6 +58,21 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "main.User": {
+            "description": "estrutura de dados do usuário",
+            "type": "object",
+            "properties": {
+                "cpf": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "nome": {
+                    "type": "string"
+                }
+            }
+        },
         "main.UserResponse": {
             "description": "estrutura de resposta para uma criação bem-sucedida de usuário",
             "type": "object",
