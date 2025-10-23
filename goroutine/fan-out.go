@@ -9,12 +9,12 @@ func main() {
 
 	in := gen(2, 3)
 
-	// Distribui sq Work trabalhar em duas goroutine que tanto ler em
+	// Distributes sq Work work in two goroutine that both read in
 	// FAN-OUT
 	c1 := sq(in)
 	c2 := sq(in)
 
-	// consume e da merge em saida de c1 e c2
+	// consume and merge on output of c1 and c2
 	// // FAN-IN
 	for n := range merge(c1, c2) {
 		fmt.Println(n)
@@ -35,7 +35,6 @@ func gen(nums ...int) <-chan int {
 }
 
 func sq(in <-chan int) <-chan int {
-
 	out := make(chan int)
 	go func() {
 		for n := range in {
@@ -44,7 +43,6 @@ func sq(in <-chan int) <-chan int {
 		}
 		close(out)
 	}()
-
 	return out
 }
 

@@ -1,6 +1,7 @@
 package main
 
 import "github.com/gofiber/fiber/v2"
+import "fmt"
 
 type userPost struct {
   Name string `json:"name"`
@@ -12,7 +13,7 @@ func main() {
 	app := fiber.New()
   app.Get("/api/v1/ping", Ping)
   app.Post("/api/v1/user", User)
-	app.Listen(":8080")
+	app.Listen(":3000")
 }
 
 func Ping(c *fiber.Ctx) error {
@@ -22,7 +23,9 @@ func Ping(c *fiber.Ctx) error {
 }
 
 func User(c *fiber.Ctx) (err error) {
-  var user userPost
+  //var user userPost
+  fmt.Println("****** api billnet***")
+  var user interface{}
   err = c.BodyParser(&user)
   if err !=nil{
     return c.Status(400).SendString(`{"msg":"error parse, json:`+err.Error()+`"}`)
