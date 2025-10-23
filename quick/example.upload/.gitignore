@@ -1,0 +1,17 @@
+# Binários
+upload-server
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Diretório de uploads
+uploads/
+
+# Arquivos de teste
+test_image.png
+*.test
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
