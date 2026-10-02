@@ -273,7 +273,16 @@ dist
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
+
+### Project-local IDE and agent metadata ###
+**/.vscode/
+**/.idea/
+**/.kilo/
 .history
 .ionide
+
+### Local Go example environments ###
+**/go.mod
+**/go.sum
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,goland,node

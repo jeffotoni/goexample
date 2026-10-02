@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+  <title id="title">JavaScript Promise mental model</title>
+  <desc id="desc">Synchronous code creates a pending Promise, external work finishes, resolve or reject schedules a microtask, and the callback runs when the call stack is free.</desc>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="620" fill="#f8fafc"/>
+  <text x="600" y="44" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#0f172a">Promise in JavaScript</text>
+  <text x="600" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#475569">A Promise coordinates the future result while the runtime handles async execution</text>
+
+  <g filter="url(#shadow)">
+    <rect x="55" y="125" width="235" height="110" rx="16" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+    <text x="172" y="162" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#1e3a8a">Current code</text>
+    <text x="172" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#1e40af">call stack</text>
+    <text x="172" y="214" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#1e40af">new Promise + then</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="350" y="125" width="235" height="110" rx="16" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="467" y="162" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#78350f">Promise</text>
+    <text x="467" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#92400e">pending</text>
+    <text x="467" y="214" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#92400e">waiting for completion</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="645" y="125" width="235" height="110" rx="16" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="762" y="162" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#14532d">Runtime</text>
+    <text x="762" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#166534">timer / network / I/O</text>
+    <text x="762" y="214" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#166534">external work</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="940" y="125" width="205" height="110" rx="16" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+    <text x="1042" y="162" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#831843">Completion</text>
+    <text x="1042" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" fill="#9d174d">resolve / reject</text>
+    <text x="1042" y="214" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#9d174d">exactly once</text>
+  </g>
+
+  <path d="M290 180 H350" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M585 180 H645" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M880 180 H940" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="220" y="315" width="760" height="210" rx="20" fill="#ffffff" stroke="#94a3b8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#0f172a">Event loop and queues</text>
+
+  <rect x="275" y="385" width="285" height="90" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+  <text x="417" y="419" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#4c1d95">Microtask queue</text>
+  <text x="417" y="447" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#5b21b6">then / catch / finally</text>
+
+  <rect x="640" y="385" width="285" height="90" rx="14" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+  <text x="782" y="419" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#0c4a6e">Call stack is free</text>
+  <text x="782" y="447" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#075985">callback can run</text>
+
+  <path d="M1042 235 C1042 285 417 270 417 385" fill="none" stroke="#db2777" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M560 430 H640" stroke="#334155" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="600" y="419" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#475569">after the stack becomes free</text>
+
+  <text x="600" y="580" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#64748b">A Promise is not a thread. It represents and coordinates a future result.</text>
+</svg>
