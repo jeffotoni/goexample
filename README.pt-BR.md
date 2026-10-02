@@ -84,9 +84,9 @@ GO111MODULE=off go test .
 
 ## Política de dependências
 
-Os arquivos de dependência são locais e temporários de propósito. Assim o repositório fica focado no código e não mantém alertas antigos causados por manifestos de experimentos históricos.
+Os manifestos de dependência são locais e temporários de propósito. Isso inclui exemplos em Go, Node.js, PHP e Java. O repositório fica focado no código e não mantém dependências antigas de experimentos no dependency graph.
 
-O script auxiliar executa `go mod tidy` dentro de um diretório temporário. Ele nunca grava arquivos de módulo no repositório.
+O script auxiliar executa `go mod tidy` dentro de um diretório temporário para exemplos Go. Ele nunca grava um arquivo de módulo no repositório. As outras linguagens devem seguir o mesmo princípio de ambiente local.
 
 ## Estilo do projeto
 

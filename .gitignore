@@ -285,4 +285,13 @@ dist
 **/go.mod
 **/go.sum
 
+### Local Node, PHP, and Java example environments ###
+**/package.json
+**/package-lock.json
+**/yarn.lock
+**/pnpm-lock.yaml
+**/composer.json
+**/composer.lock
+**/pom.xml
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,goland,node

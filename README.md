@@ -84,9 +84,9 @@ GO111MODULE=off go test .
 
 ## Dependency policy
 
-Dependency files are deliberately local and temporary. This keeps the repository focused on source code and prevents old experiment manifests from keeping stale dependency alerts alive.
+Dependency manifests are deliberately local and temporary. This includes Go, Node.js, PHP, and Java examples. The repository stays focused on source code and avoids keeping stale experiment dependencies in the dependency graph.
 
-The helper script runs `go mod tidy` inside a temporary directory. It never writes a module file into the repository.
+The helper script runs `go mod tidy` inside a temporary directory for Go examples. It never writes a module file into the repository. Other languages should follow the same local environment principle.
 
 ## Project style
 
